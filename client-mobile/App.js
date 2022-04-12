@@ -3,6 +3,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import LogNavigator from "./src/navigators/LogNavigator";
 
+import Login from "./src/screens/Login";
+
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
@@ -20,7 +22,8 @@ export default function App() {
           headerShown: false,
         }}
       >
-        <Stack.Screen name="LogNavigator" component={LogNavigator} />
+        <Stack.Screen name="Login" component={Login} />
+        {/* <Stack.Screen name="LogNavigator" component={LogNavigator} /> */}
 
       </Stack.Navigator>
     </NavigationContainer>
