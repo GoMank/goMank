@@ -68,8 +68,10 @@ class ClientController {
                     message:'invalid email or password'    
                 })
             }
-
+            delete client.password
+            res.status(200).json(client)
         } catch (error) {
+            console.log(error);
             if(error.code === 400){
                 res.status(400).json({message:error.message})
             }else{

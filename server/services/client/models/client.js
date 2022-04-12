@@ -47,7 +47,7 @@ class Client {
             const db = getDataBase()
             const client = await db
                 .collection('clients')
-                .findOne(data)
+                .findOne({email:data.email})
             return client
         } catch (error) {
             throw (error)
