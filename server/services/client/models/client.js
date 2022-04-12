@@ -2,7 +2,7 @@ const { ObjectId } = require("mongodb");
 const { getDataBase } = require("../config/mongoDb");
 
 
-class User {
+class Client {
     static async findAllClient() {
         try {
             const db = getDataBase()
@@ -41,6 +41,18 @@ class User {
             throw (error)
         }
     }
+
+    static async loginClient(data) {
+        try {
+            const db = getDataBase()
+            const client = await db
+                .collection('clients')
+                .findOne(data)
+            return client
+        } catch (error) {
+            throw (error)
+        }
+    }
 }
 
-module.exports = { User }
+module.exports = { Client }
