@@ -1,7 +1,20 @@
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 const { ApolloServer } = require('apollo-server');
+const PORT = process.env.PORT || 4000;
 
 const server = new ApolloServer({
-    modules: [require('./modules/mamang'), require('./modules/order')],
+    modules: [
+        require('./modules/mamang'),
+        require('./modules/order'),
+        require('./modules/client'),
+        require('./modules/history'),
+    ],
+    playground: true,
+    introspection: true,
 });
 
-server.listen().then(({ url }) => console.log(`server started at ${url}`));
+server.listen(PORT).then(({ url }) => {
+    console.log(`🚀  Server ready at ${url}`);
+});
