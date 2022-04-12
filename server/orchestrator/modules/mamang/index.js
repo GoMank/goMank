@@ -34,11 +34,6 @@ const typeDefs = gql`
         deleteMamang(id: ID!): Mamang
     }
 
-    type Skill {
-        id: ID!
-        name: String!
-    }
-
     type Mamang {
         id: ID!
         name: String!
@@ -48,7 +43,6 @@ const typeDefs = gql`
         phone: String!
         image: String!
         norek: String!
-        skills: [Skill]
         saldo: Int!
     }
 `;
