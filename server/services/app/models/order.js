@@ -2,6 +2,8 @@
 const {
   Model
 } = require('sequelize');
+
+const localizer = require('../helpers/dateLocalizer')
 module.exports = (sequelize, DataTypes) => {
   class Order extends Model {
     /**
@@ -16,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   Order.init({
     invoiceNumber: {
       type: DataTypes.STRING,
+      defaultValue: "INV",
       allowNull: false,
       validate: {
         notNull: {
@@ -30,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     price: {
       type: DataTypes.INTEGER,
+      defaultValue: 50000,
       allowNull: false,
       validate: {
         notNull: {
@@ -44,6 +48,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     orderStatus: {
       type: DataTypes.STRING,
+      defaultValue: 'Received',
       allowNull: false,
       validate: {
         isIn: [['Received', 'Done', 'Canceled']], 
@@ -59,6 +64,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     paymentStatus: {
       type: DataTypes.STRING,
+      defaultValue: "Unpaid",
       allowNull: false,
       validate: {
         isIn: [['Paid', 'Unpaid']], 
@@ -148,10 +154,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Order.beforeCreate((instance, options) => {
-    instance.invoiceNumber = 'INV-'
-    instance.price = 50000
-    instance.orderStatus = 'Received'
-    instance.paymentStatus = 'Unpaid'
+    instance.invoiceNumber = `INV-${instance.id}-`;
   })
 
   return Order;

@@ -1,10 +1,14 @@
-const localizer = (longdate) => {
+const localizer = () => {
 
-    const date = longdate;
+    const date = new Date();
 
-    var date_regex = /^\d{2}\/\d{2}\/\d{4}$/ ;
-    return date_regex.test(date);
+    let dd = String(date.getDate()).padStart(2, '0');
+    let mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = date.getFullYear();
+    let today = mm + '-' + yyyy;
+
+    return today;
 
 }
 
-console.log(localizer('2022-04-10 09:26:31.372'))
+module.exports = localizer;
