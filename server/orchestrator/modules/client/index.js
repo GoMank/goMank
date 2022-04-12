@@ -1,7 +1,7 @@
 const { gql } = require('apollo-server');
 const axios = require('axios');
 const redis = require('../../config');
-const url = 'http://localhost:3000/';
+const url = 'http://04d5-139-0-237-101.ngrok.io/clients';
 
 const typeDefs = gql`
     extend type Query {
