@@ -3,11 +3,12 @@ import { StyleSheet, Text, View, Image } from "react-native";
 export default function LogPage() {
   return (
     <View style={styles.container}>
+      <View style={{ marginTop: 20 }} />
       <View style={styles.card}>
-        <View style={{justifyContent:'center'}}>
+        <View style={{ justifyContent: "center" }}>
           <Image source={require("../../assets/LogoGomank.png")} style={styles.Image} />
         </View>
-        <View style={{justifyContent:'center'}}>
+        <View style={{ justifyContent: "center" }}>
           <Text style={styles.title}>Booking Status CANCEL</Text>
           <Text style={styles.subTitle}>No: 2019100007</Text>
           <Text style={styles.description}>Your booking status no. 2019100007 has been canceled</Text>
@@ -22,16 +23,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#E5E5E5",
     alignItems: "center",
-    
   },
   card: {
     flexDirection: "row",
-    // justifyContent: "space-between",
     padding: 20,
     margin: 5,
     backgroundColor: "white",
-    width: "94%",
-    height: 135,
+    width: "90%",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.8,
     shadowRadius: 3,

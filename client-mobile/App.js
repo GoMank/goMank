@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, StatusBar } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
-import LogPage from './src/screens/LogPage';
+import LogNavigator from "./src/navigators/LogNavigator";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -20,7 +20,8 @@ export default function App() {
           headerShown: false,
         }}
       >
-        <Stack.Screen name="log" component={LogPage} />
+        <Stack.Screen name="LogNavigator" component={LogNavigator} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
