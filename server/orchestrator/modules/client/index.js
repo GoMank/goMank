@@ -16,25 +16,25 @@ const typeDefs = gql`
 
     extend type Mutation {
         createClient(
-            name: String!
-            email: String!
-            password: String!
-            address: String!
-            phone: String!
-            image: String!
-            norek: String!
-            saldo: Int!
+            name: String
+            email: String
+            password: String
+            address: String
+            phone: String
+            image: String
+            norek: String
+            saldo: Int
         ): Client
         updateClient(
-            id: ID!
-            name: String!
-            email: String!
-            password: String!
-            address: String!
-            phone: String!
-            image: String!
-            norek: String!
-            saldo: Int!
+            id: ID
+            name: String
+            email: String
+            password: String
+            address: String
+            phone: String
+            image: String
+            norek: String
+            saldo: Int
         ): Client
         deleteClient(id: ID!): Client
     }
@@ -52,6 +52,7 @@ const typeDefs = gql`
 const resolvers = {
     Query: {
         clients: async () => {
+            console.log(`masuk clients`);
             try {
                 const clientsCache = await redis.get('clients');
                 let clients = JSON.parse(clientsCache);
@@ -68,7 +69,7 @@ const resolvers = {
 
         client: async (parent, args, context, info) => {
             try {
-                console.log(`masuk ko ga ${args.id}`);
+                console.log(`masuk ko findClient ${args.id}`);
                 const clientCache = await redis.get('clients');
                 let clients = JSON.parse(clientCache);
                 let client;
@@ -88,12 +89,13 @@ const resolvers = {
 
     Mutation: {
         createClient: async (parent, args, context, info) => {
+            console.log(`masuk create client`, args, context);
             try {
                 const client = await axios.post(url + 'clients', args);
                 await redis.del('clients');
                 return client.data;
             } catch (err) {
-                console.log(err);
+                // console.log(err);
             }
         },
 
