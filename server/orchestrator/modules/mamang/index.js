@@ -9,6 +9,19 @@ const typeDefs = gql`
         mamang(id: ID!): Mamang
     }
 
+    extend type Mutation {
+        createMamang(
+            name: String!
+            email: String!
+            password: String!
+            address: String!
+            phone: String!
+            image: String!
+            norek: String!
+            saldo: Int!
+        ): Mamang
+    }
+
     type Skill {
         id: ID!
         name: String!

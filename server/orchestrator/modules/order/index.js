@@ -16,6 +16,10 @@ const typeDefs = gql`
         order: Order
     }
 
+    extend type History {
+        order: Order
+    }
+
     type Order {
         id: ID!
         service: String
@@ -88,6 +92,24 @@ const resolvers = {
     },
 
     Client: {
+        order: async (parent, args, context, info) => {
+            try {
+                const orderCache = await redis.get('orders');
+                let orders = JSON.parse(orderCache);
+                let order;
+                if (!orders) {
+                    order = await axios.get(url + 'orders' + args.id);
+                    order = order.data;
+                }
+                order = orders.find((order) => order.id === args.id);
+                return order;
+            } catch (err) {
+                throw new Error(err);
+            }
+        },
+    },
+
+    History: {
         order: async (parent, args, context, info) => {
             try {
                 const orderCache = await redis.get('orders');
