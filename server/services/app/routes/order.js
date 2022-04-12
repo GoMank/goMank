@@ -4,6 +4,7 @@ let routerOrder = express.Router()
 
 routerOrder.get('/', orderController.getAllOrders)
 routerOrder.post('/', orderController.addOrder)
+routerOrder.get('/:id', orderController.getOrderById)
 routerOrder.patch('/edit/done/:id', orderController.updateStatusOrderDone)
 routerOrder.patch('/edit/cancel/:id', orderController.updateStatusOrderCancel)
 routerOrder.delete('/delete/:id', orderController.deleteOrder)

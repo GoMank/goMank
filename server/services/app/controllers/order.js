@@ -16,6 +16,19 @@ class orderController {
 
     }
 
+    static async getOrderById(req, res) {
+        const {id} = req.params
+        try {
+            let order = await Order.findByPk(id)
+            res.status(200).json(order)
+        } catch (err) {
+            res.status(500).json({
+                message: err.errors
+            })
+        }
+
+    }
+
     static async addOrder(req, res) {
         const {clientId, clientName, mamangId, mamangName, address} = req.body
         
@@ -51,7 +64,7 @@ class orderController {
         
         try {
             const update = await Order.update({orderStatus: orderStatus, paymentStatus}, {where: {id: id}})
-            res.status(200).json(update)
+            res.status(200).json({message: 'Order status has been updated to Done'})
         } catch (err) {
             res.status(500).json({
                 message: err.errors
@@ -66,8 +79,7 @@ class orderController {
         
         try {
             const update = await Order.update({orderStatus: orderStatus}, {where: {id: id}})
-            await Order.destroy({where: {id: id}})
-            res.status(200).json(update)
+            res.status(200).json({message: 'Order status has been updated to Cancel and deleted'})
         } catch (err) {
             res.status(500).json({
                 message: err.errors
@@ -81,7 +93,7 @@ class orderController {
         
         try {
             let deleted = await Order.destroy({where: {id: id}})
-            res.status(200).json(deleted)
+            res.status(200).json({message: 'Order status has been deleted'})
         } catch (err) {
             res.status(500).json({
                 message: err.errors
