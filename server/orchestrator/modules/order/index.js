@@ -9,6 +9,35 @@ const typeDefs = gql`
         order(id: ID!): Order
     }
 
+    extend type Mutation {
+        createOrder(
+            service: String
+            noInvoice: String
+            price: Int
+            date: String
+            statusOrder: String
+            statusPayment: String
+            address: String
+            paymentMethod: String
+            clientId: ID!
+            mamangId: ID!
+        ): Order
+        updateOrder(
+            id: ID!
+            service: String
+            noInvoice: String
+            price: Int
+            date: String
+            statusOrder: String
+            statusPayment: String
+            address: String
+            paymentMethod: String
+            clientId: ID!
+            mamangId: ID!
+        ): Order
+        deleteOrder(id: ID!): Order
+    }
+
     extend type Mamang {
         order: Order
     }
@@ -67,6 +96,37 @@ const resolvers = {
                 }
                 order = orders.find((order) => order.id === args.id);
                 return order;
+            } catch (err) {
+                throw new Error(err);
+            }
+        },
+    },
+
+    Mutation: {
+        createOrder: async (parent, args, context, info) => {
+            try {
+                const order = await axios.post(url + 'orders', args);
+                await redis.del('orders');
+                return order.data;
+            } catch (err) {
+                throw new Error(err);
+            }
+        },
+
+        updateOrder: async (parent, args, context, info) => {
+            try {
+                const order = await axios.put(url + 'orders/' + args.id, args);
+                await redis.del('orders');
+                return order.data;
+            } catch (err) {
+                throw new Error(err);
+            }
+        },
+        deleteOrder: async (parent, args, context, info) => {
+            try {
+                const order = await axios.delete(url + 'orders/' + args.id);
+                await redis.del('orders');
+                return order.data;
             } catch (err) {
                 throw new Error(err);
             }
