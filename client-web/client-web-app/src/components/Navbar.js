@@ -74,7 +74,7 @@ export default function Navbar() {
                 <div className="flex items-center relative">
                     {/* <!-- Icon --> */}
                     <div class="flex space-x-2 justify-center">
-                        <button type="button" class="inline-block px-6 py-2.5 bg-gomank-yellow text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-yellow-700 hover:shadow-lg focus:bg-yellow-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-800 active:shadow-lg transition duration-150 ease-in-out">Pesan Sekarang</button>
+                        <button type="button" class="inline-block px-6 py-2.5 bg-gomank-yellow text-gray-800 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-yellow-700 hover:shadow-lg focus:bg-yellow-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-800 active:shadow-lg transition duration-150 ease-in-out">Pesan Sekarang</button>
                     </div>
                     {/* <a className="text-white opacity-60 hover:opacity-80 focus:opacity-80 mr-4" >
         <svg
