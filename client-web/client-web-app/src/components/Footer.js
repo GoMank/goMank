@@ -5,9 +5,7 @@ export default function Footer() {
 
 
 
-    const logout = () => {
-        localStorage.clear()
-    }
+    
 
     return (
 
@@ -17,12 +15,9 @@ export default function Footer() {
                 <div className="grid grid-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
                     <div className="font-semibold">
                        
-                        <p className="my-2 " >
-                            <div className="flex pl-8">
+                    <div className="flex pl-8">
                             <img className="w-1/3" src={require('../gomank-logo.jpg')}></img>
                             </div>
-                           
-                        </p>
                         <p>
                         PT Gomank Sejahtera
                         
@@ -165,7 +160,7 @@ export default function Footer() {
                     </div>
                 </div>
             </div>
-            <div className="text-center p-6 bg-red-800">
+            <div className="text-center p-6 bg-gomank-blue">
                 <span className="text-white">© 2022 Copyright:</span>
                 <a className="text-white font-semibold" href="https://tailwind-elements.com/"> Gomank Sejahtera</a>
             </div>
