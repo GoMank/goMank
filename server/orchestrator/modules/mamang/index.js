@@ -9,9 +9,29 @@ const typeDefs = gql`
         mamang(id: ID!): Mamang
     }
 
-    type Skill {
-        id: ID!
-        name: String!
+    extend type Mutation {
+        createMamang(
+            name: String!
+            email: String!
+            password: String!
+            address: String!
+            phone: String!
+            image: String!
+            norek: String!
+            saldo: Int!
+        ): Mamang
+        updateMamang(
+            id: ID!
+            name: String!
+            email: String!
+            password: String!
+            address: String!
+            phone: String!
+            image: String!
+            norek: String!
+            saldo: Int!
+        )
+        deleteMamang(id: ID!): Mamang
     }
 
     type Mamang {
@@ -23,7 +43,6 @@ const typeDefs = gql`
         phone: String!
         image: String!
         norek: String!
-        skills: [Skill]
         saldo: Int!
     }
 `;
@@ -59,6 +78,36 @@ const resolvers = {
                 }
                 mamang = mamangs.find((mamang) => mamang.id === args.id);
                 return mamang;
+            } catch (err) {
+                throw new Error(err);
+            }
+        },
+    },
+
+    Mutation: {
+        createMamang: async (parent, args, context, info) => {
+            try {
+                const { data } = await axios.post(url + 'mamangs', args);
+                redis.del('mamangs');
+                return data;
+            } catch (err) {
+                throw new Error(err);
+            }
+        },
+        updateMamang: async (parent, args, context, info) => {
+            try {
+                const { data } = await axios.put(url + 'mamangs/' + args.id, args);
+                redis.del('mamangs');
+                return data;
+            } catch (err) {
+                throw new Error(err);
+            }
+        },
+        deleteMamang: async (parent, args, context, info) => {
+            try {
+                const { data } = await axios.delete(url + 'mamangs/' + args.id);
+                redis.del('mamangs');
+                return data;
             } catch (err) {
                 throw new Error(err);
             }
