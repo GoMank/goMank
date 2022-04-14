@@ -1,12 +1,16 @@
 const { gql } = require('apollo-server');
 const axios = require('axios');
 const redis = require('../../config');
-const url = 'http://localhost:3000/';
+const url = 'http://2dc8-139-0-237-101.ngrok.io/';
 
 const typeDefs = gql`
     extend type Query {
         mamangs: [Mamang]
         mamang(id: ID!): Mamang
+    }
+
+    type responseMamang {
+        message: String
     }
 
     extend type Mutation {
@@ -15,35 +19,38 @@ const typeDefs = gql`
             email: String!
             password: String!
             address: String!
-            phone: String!
+            phoneNumber: String!
+            gender: String!
             image: String!
-            norek: String!
-            saldo: Int!
+            rekNumber: String!
         ): Mamang
         updateMamang(
-            id: ID!
-            name: String!
-            email: String!
-            password: String!
-            address: String!
-            phone: String!
-            image: String!
-            norek: String!
-            saldo: Int!
-        )
-        deleteMamang(id: ID!): Mamang
+            _id: ID!
+            name: String
+            email: String
+            password: String
+            address: String
+            phoneNumber: String
+            gender: String
+            image: String
+            rekNumber: String
+            saldo: Int
+        ): Mamang
+
+        deleteMamang(id: ID!): responseMamang
     }
 
     type Mamang {
-        id: ID!
-        name: String!
-        email: String!
-        password: String!
-        address: String!
-        phone: String!
-        image: String!
-        norek: String!
-        saldo: Int!
+        _id: ID!
+        name: String
+        email: String
+        password: String
+        address: String
+        phoneNumber: String
+        gender: String
+        image: String
+        rekNumber: String
+        saldo: Int
     }
 `;
 
@@ -56,11 +63,9 @@ const resolvers = {
 
                 if (!mamangs) {
                     mamangs = await axios.get(url + 'mamangs');
-                    console.log(mamangs);
                     mamangs = mamangs.data;
                     redis.set('mamangs', JSON.stringify(mamangs));
                 }
-
                 return mamangs;
             } catch (err) {
                 throw new Error(err);
@@ -76,7 +81,8 @@ const resolvers = {
                     mamang = await axios.get(url + args.id);
                     mamang = mamang.data;
                 }
-                mamang = mamangs.find((mamang) => mamang.id === args.id);
+                mamang = mamangs.find((mamang) => mamang._id === args.id);
+                console.log(mamang);
                 return mamang;
             } catch (err) {
                 throw new Error(err);
@@ -87,24 +93,33 @@ const resolvers = {
     Mutation: {
         createMamang: async (parent, args, context, info) => {
             try {
-                const { data } = await axios.post(url + 'mamangs', args);
+                console.log(args);
+                const { data } = await axios.post(url + 'mamangs/register', args);
+                console.log(data, '<<<<<<<<<<<<');
                 redis.del('mamangs');
                 return data;
             } catch (err) {
-                throw new Error(err);
+                console.log(err.response);
+                throw new Error(err.response.message);
             }
         },
+
         updateMamang: async (parent, args, context, info) => {
             try {
-                const { data } = await axios.put(url + 'mamangs/' + args.id, args);
+                console.log(`masuk ga`, args);
+                const { data } = await axios.patch(url + 'mamangs/address/' + args._id, {
+                    address: args.address,
+                });
                 redis.del('mamangs');
                 return data;
             } catch (err) {
                 throw new Error(err);
             }
         },
+
         deleteMamang: async (parent, args, context, info) => {
             try {
+                console.log(`masuk ga`, args);
                 const { data } = await axios.delete(url + 'mamangs/' + args.id);
                 redis.del('mamangs');
                 return data;
