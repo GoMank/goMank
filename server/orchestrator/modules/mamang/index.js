@@ -1,7 +1,7 @@
 const { gql } = require('apollo-server');
 const axios = require('axios');
 const redis = require('../../config');
-const url = 'https://cc89-139-0-237-101.ngrok.io/';
+const url = 'http://2dc8-139-0-237-101.ngrok.io/';
 
 const typeDefs = gql`
     extend type Query {
@@ -12,6 +12,7 @@ const typeDefs = gql`
     type responseMamang {
         message: String
     }
+
     extend type Mutation {
         createMamang(
             name: String!
@@ -35,6 +36,7 @@ const typeDefs = gql`
             rekNumber: String
             saldo: Int
         ): Mamang
+
         deleteMamang(id: ID!): responseMamang
     }
 
@@ -101,11 +103,12 @@ const resolvers = {
                 throw new Error(err.response.message);
             }
         },
+
         updateMamang: async (parent, args, context, info) => {
             try {
                 console.log(`masuk ga`, args);
-                const { data } = await axios.patch(url + 'mamangs/' + args._id, {
-                    saldo: args.saldo,
+                const { data } = await axios.patch(url + 'mamangs/address/' + args._id, {
+                    address: args.address,
                 });
                 redis.del('mamangs');
                 return data;
@@ -113,6 +116,7 @@ const resolvers = {
                 throw new Error(err);
             }
         },
+
         deleteMamang: async (parent, args, context, info) => {
             try {
                 console.log(`masuk ga`, args);
