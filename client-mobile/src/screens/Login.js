@@ -1,17 +1,74 @@
-import { StyleSheet, Text, View, Pressable, ImageBackground } from "react-native";
+import {  StyleSheet, Text, TextInput, View, TouchableOpacity, ImageBackground, Image } from "react-native";
+import { useState, useEffect } from "react";
+import { useIsFocused } from "@react-navigation/native";
+// import BaseButton from "../components/BaseButton";
+export default function Login({ navigation }) {
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
 
-export default function Login({navigation}) {
+  const [loginInput, setLoginInput] = useState({
+    email: "",
+    password: "",
+  });
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    setLoginInput({
+      email: "",
+      password: "",
+    })
+  },[!isFocused])
+
+  console.log(isFocused);
+
+  const submitLogin2 = () => {
+    console.log('ini gabungan',loginInput.email,loginInput.password );
+    return navigation.navigate("Register")
+  }
   return (
     <View style={styles.container}>
-      <ImageBackground source={require("../../assets/bannerLogin.jpg")} style={styles.backgroundImage}>
-        <View style={styles.frontText}>
-          
-          <Text style={styles.text}>Hello Welcome To KEELINK</Text>
-          <Text style={styles.sideText}>Watch your favorite movie just from home without going outside</Text>
-          
-          <Pressable style={styles.button} onPress={() => navigation.navigate("AppNavigator")}>
-            <Text style={styles.textButton}>Next</Text>
-          </Pressable>
+      <ImageBackground source={require("../../assets/bannerLogin1.jpg")} style={styles.backgroundImage}>
+        <View style={styles.formContainer}>
+          <View style={{ flexDirection: "row", width: "100%", justifyContent: "space-between" }}>
+            <View style={{ marginBottom: "8%" }}>
+              <Text style={styles.mainText}>Hey,</Text>
+              <Text style={styles.mainText}>Login Now.</Text>
+            </View>
+
+            <View>
+              <Image source={require("../../assets/LogoGomank.png")} style={styles.Image} />
+            </View>
+          </View>
+
+          <TextInput 
+            style={styles.button} 
+            value={loginInput.email}
+            onChangeText={(email) => setLoginInput({...loginInput, email})}
+            placeholder="Email"    
+          />
+
+          <TextInput 
+            secureTextEntry={true} 
+            style={styles.button}
+            value={loginInput.password}
+            onChangeText={(password) => setLoginInput({...loginInput, password})} 
+            placeholder="Password"  
+          />
+
+          <Text style={styles.textForgot}>Forgot Password</Text>
+
+          <View style={{ marginBottom: "15%" }} />
+
+          <TouchableOpacity style={styles.buttonLogin} onPress={submitLogin2} >
+            <Text style={styles.textButton}>Login</Text>
+          </TouchableOpacity>
+
+          <View style={{ alignItems: "center" }}>
+            <Text style={styles.textForgot}>Don't have a account</Text>
+            <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+              <Text style={styles.textCreate}>Create New</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ImageBackground>
     </View>
@@ -21,48 +78,43 @@ export default function Login({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
-  },
-  mainButton: {
-    // width: "100%",
-    backgroundColor: "red",
   },
   backgroundImage: {
     flex: 1,
     resizeMode: "cover", // or 'stretch'
-    justifyContent: "center",
   },
-  frontText: {
-    padding: 25,
+  formContainer: {
+    paddingHorizontal: "15%",
     backgroundColor: "transparent",
-    // alignItems: 'center',
     position: "absolute",
-    bottom: "1%",
-    // left: "5%",
+    bottom: "2%",
+    width: "100%",
+    alignItems: "center",
   },
-  text: {
-    fontSize: 38,
+  mainText: {
+    fontSize: 32,
     fontWeight: "bold",
-    color: "#FF0000",
-    marginBottom: 10,
-    
+    color: "#0386EE",
+    marginBottom: -5,
   },
-  sideText: {
-    fontSize: 18,
-    // fontWeight: 'bold',
-    color: "white",
-    paddingBottom: "10%",
+
+  Image: {
+    height: 72,
+    width: 55,
+    resizeMode: "contain",
   },
 
   button: {
+    marginVertical: 8,
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 16,
     paddingHorizontal: 32,
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: 'rgb(170, 0, 0)',
-    borderRadius:25
+    backgroundColor: "white",
+    borderRadius: 10,
+    width: "100%",
   },
   textButton: {
     fontSize: 16,
@@ -72,5 +124,26 @@ const styles = StyleSheet.create({
     color: "white",
   },
 
-  
+  buttonLogin: {
+    marginVertical: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: "#0386EE",
+    borderRadius: 15,
+    width: "100%",
+  },
+
+  textForgot: {
+    color: "#0386EE",
+    alignSelf: "flex-start",
+  },
+
+  textCreate: {
+    color: "#0386EE",
+    fontSize: 16,
+  },
 });
