@@ -11,13 +11,14 @@ mutation CreateClient($name: String, $email: String, $password: String, $address
 `
 
 export const FETCH_CLIENT = gql`
-  query Query {
-  clients {
+query Query {
+  mamangs {
     name
+    _id
     email
     password
+    address
     phoneNumber
-    id
   }
 }
 `
