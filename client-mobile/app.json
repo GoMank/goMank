@@ -23,6 +23,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.example.uberclone",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAlqVN_Y9I6JGPrCIgA5LR0iytHX1hIRaY"
+        }
       }
     },
     "web": {
