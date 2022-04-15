@@ -1,4 +1,5 @@
 import React from "react";
+import { a, NavLink } from "react-router-dom";
 export default function Navbar() {
     return (
         <nav
@@ -40,29 +41,29 @@ export default function Navbar() {
           <a className="nav-link text-white" >Dashboard</a>
         </li> */}
                         <li className="nav-item p-2">
-                            <a
+                            <NavLink to={'/'}
                                 className="nav-link font-semibold  text-gray-900 opacity-60 hover:opacity-80 focus:opacity-80 p-0"
                                 href="#"
-                            >Home</a>
+                            >Home</NavLink>
                         </li>
                         <li className="nav-item p-2">
-                            <a
+                            <NavLink to={'price'}
                                 className="nav-link font-semibold  text-gray-900 opacity-60 hover:opacity-80 focus:opacity-80 p-0"
                                 href="#"
-                            >Price</a>
+                            >Price</NavLink>
                         </li>
 
                         <li className="nav-item p-2">
-                            <a
+                            <NavLink to={'/join'}
                                 className="nav-link font-semibold  text-gray-900 opacity-60 hover:opacity-80 focus:opacity-80 p-0"
                                 href="#"
-                            >Join Us</a>
+                            >Join Us</NavLink>
                         </li>
                         <li className="nav-item p-2">
-                            <a
+                            <NavLink to={'/about'}
                                 className="nav-link font-semibold  text-gray-900 opacity-60 hover:opacity-80 focus:opacity-80 p-0"
                                 href="#"
-                            >About Us</a>
+                            >About Us</NavLink>
                         </li>
 
                     </ul>
@@ -73,8 +74,8 @@ export default function Navbar() {
     <!-- Right elements --> */}
                 <div className="flex items-center relative">
                     {/* <!-- Icon --> */}
-                    <div class="flex space-x-2 justify-center">
-                        <button type="button" class="inline-block px-6 py-2.5 bg-gomank-yellow text-gray-800 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-yellow-700 hover:shadow-lg focus:bg-yellow-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-800 active:shadow-lg transition duration-150 ease-in-out">Pesan Sekarang</button>
+                    <div className="flex space-x-2 justify-center">
+                        <button type="button" className="inline-block px-6 py-2.5 bg-gomank-yellow text-gray-800 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-yellow-700 hover:shadow-lg focus:bg-yellow-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-800 active:shadow-lg transition duration-150 ease-in-out">Pesan Sekarang</button>
                     </div>
                     {/* <a className="text-white opacity-60 hover:opacity-80 focus:opacity-80 mr-4" >
         <svg
