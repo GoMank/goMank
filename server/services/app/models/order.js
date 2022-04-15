@@ -1,9 +1,7 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
-
+const { Model } = require('sequelize');
 const localizer = require('../helpers/dateLocalizer')
+
 module.exports = (sequelize, DataTypes) => {
   class Order extends Model {
     /**
@@ -12,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Order.hasMany(models.Log, {foreignKey: 'orderId'})
     }
   }
   Order.init({
@@ -51,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 'Received',
       allowNull: false,
       validate: {
-        isIn: [['Received', 'Done', 'Canceled']], 
+        isIn: [['Received', 'Done', 'Cancelled']], 
         notNull: {
           args: true,
           msg: 'Order Status is null'
@@ -59,6 +57,21 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: {
           args: true,
           msg: 'Order Status cannot be empty'
+        }
+      }
+    },
+    paymentMethod: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isIn: [['Cash', 'Cashless']], 
+        notNull: {
+          args: true,
+          msg: 'Payment Method is null'
+        },
+        notEmpty: {
+          args: true,
+          msg: 'Payment Method cannot be empty'
         }
       }
     },
@@ -154,7 +167,8 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Order.beforeCreate((instance, options) => {
-    instance.invoiceNumber = `INV-${instance.id}-`;
+    const {date, invNumber} = localizer()
+    instance.invoiceNumber = `INV-${invNumber}-${date}`;
   })
 
   return Order;

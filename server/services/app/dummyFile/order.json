@@ -2,6 +2,7 @@
     {
         "invoiceNumber": "INV-00-04-2022",
         "price": 50000,
+        "paymentMethod": "Cash",
         "orderStatus": "Received",
         "paymentStatus": "Unpaid",
         "clientId": 1,

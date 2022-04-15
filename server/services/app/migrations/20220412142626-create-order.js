@@ -24,6 +24,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      paymentMethod: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
       clientId: {
         allowNull: false,
         type: Sequelize.INTEGER
