@@ -30,17 +30,9 @@ module.exports = {
       },
       clientId: {
         allowNull: false,
-        type: Sequelize.INTEGER
-      },
-      clientName: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       mamangId: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
-      mamangName: {
         allowNull: false,
         type: Sequelize.STRING
       },

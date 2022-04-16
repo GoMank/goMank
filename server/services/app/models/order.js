@@ -92,7 +92,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     clientId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notNull: {
@@ -105,22 +105,8 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    clientName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          args: true,
-          msg: 'Client Name is null'
-        },
-        notEmpty: {
-          args: true,
-          msg: 'Client Name cannot be empty'
-        }
-      }
-    },
     mamangId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notNull: {
@@ -130,20 +116,6 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: {
           args: true,
           msg: 'Mamang ID cannot be empty'
-        }
-      }
-    },
-    mamangName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          args: true,
-          msg: 'Mamang Name is null'
-        },
-        notEmpty: {
-          args: true,
-          msg: 'Mamang Name cannot be empty'
         }
       }
     },

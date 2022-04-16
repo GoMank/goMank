@@ -5,10 +5,8 @@
         "paymentMethod": "Cash",
         "orderStatus": "Received",
         "paymentStatus": "Unpaid",
-        "clientId": 1,
-        "clientName": "Ujang Kujang",
-        "mamangId": 1,
-        "mamangName": "Mang Ganteng Maut",
+        "clientId": "62559dcfc9054d53a273fb14",
+        "mamangId": "62559ddfc9054d53a273fb15",
         "address": "Latitude -6.914744 Longitude 107.107.609811"
     }
 ]

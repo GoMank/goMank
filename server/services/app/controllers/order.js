@@ -37,7 +37,6 @@ class orderController {
         
         try {
             let order = await Order.create(req.body)
-            console.log(order);
             const data = {
                 orderId: order.id,
                 type: 'Created',
