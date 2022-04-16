@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import LogNavigator from "./src/navigators/LogNavigator";
 import { ApolloProvider } from "@apollo/client";
 import client from "./config/apollo";
-
+import HomePage from "./src/screens/HomePage";
 import Login from "./src/screens/Login";
 import Register from "./src/screens/Register";
 import Maps from "./src/screens/Maps";
@@ -27,6 +27,7 @@ export default function App() {
           headerShown: false,
         }}
       >
+        <Stack.Screen name="HomePage" component={HomePage} />
         <Stack.Screen name="Maps" component={Maps} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Login" component={Login} />
