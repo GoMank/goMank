@@ -6,6 +6,7 @@ import { ApolloProvider } from "@apollo/client";
 import client from "./config/apollo";
 
 import Login from "./src/screens/Login";
+import LoginBio from "./src/screens/Login-bio";
 import Register from "./src/screens/Register";
 import Maps from "./src/screens/Maps";
 
@@ -27,9 +28,10 @@ export default function App() {
           headerShown: false,
         }}
       >
+        <Stack.Screen name="LoginBio" component={LoginBio} />
+        <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Maps" component={Maps} />
         <Stack.Screen name="Register" component={Register} />
-        <Stack.Screen name="Login" component={Login} />
         {/* <Stack.Screen name="LogNavigator" component={LogNavigator} /> */}
 
       </Stack.Navigator>
