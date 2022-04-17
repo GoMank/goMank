@@ -1,12 +1,14 @@
 import { StyleSheet,FlatList, Text, ScrollView, View, TouchableOpacity, ImageBackground, Image } from "react-native";
+import { useNavigation } from '@react-navigation/native'
 
 export default function CardProduct(mamank) {
+  const navigation = useNavigation();
   return (
     <View style={styles.cardProduct} key={mamank.mamank.id}>
       <Image source={{ uri: mamank.mamank.image }} style={styles.imageProduct} />
       <Text style={styles.textProduct}>{mamank.mamank.name}</Text>
       <Text style={styles.textProductPrice}>Rp {mamank.mamank.price}</Text>
-      <TouchableOpacity style={styles.buttonProduct}>
+      <TouchableOpacity style={styles.buttonProduct} onPress={() => navigation.navigate("FormOrder",{mamank})}>
         <Text style={styles.textButtonProduct}>Book Now</Text>
       </TouchableOpacity>
     </View>

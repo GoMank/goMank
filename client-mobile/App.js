@@ -5,12 +5,15 @@ import LogNavigator from "./src/navigators/LogNavigator";
 import { ApolloProvider } from "@apollo/client";
 import client from "./config/apollo";
 import HomePage from "./src/screens/HomePage";
+import Maps from "./src/screens/Maps";
 import Login from "./src/screens/Login";
 import Register from "./src/screens/Register";
-import Maps from "./src/screens/Maps";
 import FormOrder from "./src/screens/FormOrder";
 import PaymentPage from "./src/screens/PaymentPage";
 import SandboxTest from "./src/screens/SandboxTest";
+
+
+import TabNav from "./src/navigators/TabNavigators";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -30,14 +33,15 @@ export default function App() {
             headerShown: false,
           }}
         >
+          <Stack.Screen name="SandboxTest" component={SandboxTest} />
+          <Stack.Screen name="TabNav" component={TabNav} />
           <Stack.Screen name="PaymentPage" component={PaymentPage} />
           <Stack.Screen name="FormOrder" component={FormOrder} />
-          <Stack.Screen name="SandboxTest" component={SandboxTest} />
-          <Stack.Screen name="HomePage" component={HomePage} />
-          <Stack.Screen name="Maps" component={Maps} />
+          {/* <Stack.Screen name="HomePage" component={HomePage} /> */}
+          {/* <Stack.Screen name="Maps" component={Maps} /> */}
           <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="Login" component={Login} />
-          {/* <Stack.Screen name="LogNavigator" component={LogNavigator} /> */}
+          <Stack.Screen name="LogNavigator" component={LogNavigator} />
         </Stack.Navigator>
       </NavigationContainer>
     </ApolloProvider>

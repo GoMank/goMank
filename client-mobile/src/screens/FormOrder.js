@@ -5,7 +5,9 @@ import * as Location from "expo-location";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-export default function FormOrder() {
+export default function FormOrder(mamank) {
+  const dataMamank = mamank.route.params.mamank.mamank
+  console.log(mamank.route.params.mamank.mamank,1111111111111111);
   // buat maps
   const [address, setAddress] = useState(null);
   const [location, setLocation] = useState(null);
@@ -95,7 +97,7 @@ export default function FormOrder() {
 
           <View>
 
-          <Image source={{ uri: 'https://i.ibb.co/vkGXsc9/CarWash.jpg' }} style={styles.imageProduct} />
+          <Image source={{ uri: dataMamank.image }} style={styles.imageProduct} />
           </View>
 
           <View style={{ flex: 5, alignItems: "center" }}>
@@ -176,7 +178,7 @@ export default function FormOrder() {
           </View>
           <View style={{ flex: 2.3, justifyContent:'space-evenly' }}>
             <View>
-              <Text style={styles.textPrice}>Rp 800.000</Text>
+              <Text style={styles.textPrice}>Rp {dataMamank.price}</Text>
             </View>
             <View style={{alignItems: "center"}}>
               <TouchableOpacity style={styles.buttonBook} onPress={getAddress}>
