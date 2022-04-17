@@ -21,3 +21,5 @@ connectMongoDb()
         })
     })
 
+module.exports = {app}
+
