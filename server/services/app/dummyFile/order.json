@@ -1,19 +1,15 @@
 [
     {
         "invoiceNumber": "INV-00-04-2022",
-        "price": 50000,
+        "service": "Mank Wash",
+        "price": 850000,
         "paymentMethod": "Cash",
         "orderStatus": "Received",
         "paymentStatus": "Unpaid",
-<<<<<<< HEAD
+        "date": "thu 04 2022",
+        "time": "00 : 33",
         "clientId": "62559dcfc9054d53a273fb14",
         "mamangId": "62559ddfc9054d53a273fb15",
-=======
-        "clientId": 1,
-        "clientName": "Ujang Kujang",
-        "mamangId": 1,
-        "mamangName": "Mang Ganteng Maut",
->>>>>>> a26c0e223773b9418c96674b01ace49ff6f4bcae
         "address": "Latitude -6.914744 Longitude 107.107.609811"
     }
 ]

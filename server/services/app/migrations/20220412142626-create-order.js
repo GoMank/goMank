@@ -12,6 +12,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      service: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
       price: {
         allowNull: false,
         type: Sequelize.INTEGER
@@ -30,24 +34,18 @@ module.exports = {
       },
       clientId: {
         allowNull: false,
-<<<<<<< HEAD
-=======
-        type: Sequelize.INTEGER
-      },
-      clientName: {
-        allowNull: false,
->>>>>>> a26c0e223773b9418c96674b01ace49ff6f4bcae
         type: Sequelize.STRING
       },
       mamangId: {
         allowNull: false,
-<<<<<<< HEAD
-=======
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
-      mamangName: {
+      date: {
         allowNull: false,
->>>>>>> a26c0e223773b9418c96674b01ace49ff6f4bcae
+        type: Sequelize.STRING
+      },
+      time: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       address: {
