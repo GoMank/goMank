@@ -1,26 +1,42 @@
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image, Platform } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+  Image,
+  Platform,
+  Alert,
+  Modal,
+  Pressable,
+} from "react-native";
 import { useState, useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import * as Location from "expo-location";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import ModalOrder from "../components/ModalOrder";
 
 export default function FormOrder(mamank) {
-  const dataMamank = mamank.route.params.mamank.mamank
-  console.log(mamank.route.params.mamank.mamank,1111111111111111);
+  const dataMamank = mamank.route.params.mamank.mamank;
+  console.log(mamank.route.params.mamank.mamank, 1111111111111111);
   // buat maps
   const [address, setAddress] = useState(null);
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-  const [formAddress, setFormAddress] = useState(`Your Address or you can Automatically fill with press 'My Location'`);
+  const [formAddress, setFormAddress] = useState(
+    `Your Address or you can Automatically fill with press 'My Location'`
+  );
   // buat dateTime picker
   const [isPickerShow, setIsPickerShow] = useState(false);
   const [isPickerShowTime, setIsPickerShowTime] = useState(false);
   const [date, setDate] = useState(new Date(Date.now()));
   const [time, setTime] = useState(new Date(Date.now()));
+  // buat modal
+  const [modalVisible, setModalVisible] = useState(false);
 
-  console.log(date);
-  console.log(time);
+  console.log("🚀 ~ file: FormOrder.js ~ line 21 ~ FormOrder ~ date", date);
+  // console.log(time);
   const datePlus = new Date(Date.now());
   datePlus.setDate(datePlus.getDate() + 7);
 
@@ -61,8 +77,6 @@ export default function FormOrder(mamank) {
     })();
   }, []);
 
-
-
   let text = "Waiting..";
   if (errorMsg) {
     text = errorMsg;
@@ -71,13 +85,17 @@ export default function FormOrder(mamank) {
   }
 
   function getAddress() {
-    return setFormAddress(`Jl. ${address[0].street},\n${address[0].city}, ${address[0].district}\n${address[0].subregion} ${address[0].postalCode},\n${address[0].region},${address[0].country}`);
+    return setFormAddress(
+      `Jl. ${address[0].street},\n${address[0].city}, ${address[0].district}\n${address[0].subregion} ${address[0].postalCode},\n${address[0].region},${address[0].country}`
+    );
   }
 
   if (text === "Waiting..") {
     return (
       <View style={styles.container}>
-        <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
+        <View
+          style={{ justifyContent: "center", alignItems: "center", flex: 1 }}
+        >
           <Text>tunggu</Text>
         </View>
       </View>
@@ -94,10 +112,11 @@ export default function FormOrder(mamank) {
     return (
       <View style={styles.container}>
         <View style={{ flex: 1 }}>
-
           <View>
-
-          <Image source={{ uri: dataMamank.image }} style={styles.imageProduct} />
+            <Image
+              source={{ uri: dataMamank.image }}
+              style={styles.imageProduct}
+            />
           </View>
 
           <View style={{ flex: 5, alignItems: "center" }}>
@@ -114,79 +133,135 @@ export default function FormOrder(mamank) {
               />
             </View>
 
-            <TouchableOpacity style={styles.buttonLocation} onPress={getAddress}>
+            <TouchableOpacity
+              style={styles.buttonLocation}
+              onPress={getAddress}
+            >
               <Text style={styles.textLocation}>My Location</Text>
             </TouchableOpacity>
 
-          <View style={{bottom:'7%'}}>
-            {/* select date */}
-            <View style={styles.cardDateTime}>
-              {!isPickerShow && (
-                <TouchableOpacity style={styles.buttonDate} onPress={showPicker}>
-                  <Text style={styles.textButtonBook}>Select Date</Text>
-                </TouchableOpacity>
-              )}
-              {/* The date picker */}
-              {isPickerShow &&
-                <DateTimePicker
-                value={date}
-                mode={"date"}
-                display={Platform.OS === "ios" ? "spinner" : "default"}
-                is24Hour={true}
-                onChange={onChange}
-                minimumDate={new Date(Date.now())}
-                maximumDate={new Date(datePlus)}
-                style={styles.datePicker}
-              />}
-              <View style={styles.textDate}>
-                <Text style={styles.textDateInner}>
-                  {date.toUTCString().split(" ").slice(1, 4).join(" ")}
-                </Text>
+            <View style={{ bottom: "7%" }}>
+              {/* select date */}
+              <View style={styles.cardDateTime}>
+                {!isPickerShow && (
+                  <TouchableOpacity
+                    style={styles.buttonDate}
+                    onPress={showPicker}
+                  >
+                    <Text style={styles.textButtonBook}>Select Date</Text>
+                  </TouchableOpacity>
+                )}
+                {/* The date picker */}
+                {isPickerShow && (
+                  <DateTimePicker
+                    value={date}
+                    mode={"date"}
+                    display={Platform.OS === "ios" ? "spinner" : "default"}
+                    is24Hour={true}
+                    onChange={onChange}
+                    minimumDate={new Date(Date.now())}
+                    maximumDate={new Date(datePlus)}
+                    style={styles.datePicker}
+                  />
+                )}
+                <View style={styles.textDate}>
+                  <Text style={styles.textDateInner}>
+                    {date.toUTCString().split(" ").slice(1, 4).join(" ")}
+                  </Text>
+                </View>
+              </View>
+              {/* Display the selected time */}
+              <View style={styles.cardDateTime}>
+                {!isPickerShowTime && (
+                  <TouchableOpacity
+                    style={styles.buttonTime}
+                    onPress={showPickerTime}
+                  >
+                    <Text style={styles.textButtonBook}>Select Time</Text>
+                  </TouchableOpacity>
+                )}
+                {/* The time picker */}
+                {isPickerShowTime && (
+                  <DateTimePicker
+                    value={time}
+                    mode={"time"}
+                    display={Platform.OS === "ios" ? "spinner" : "default"}
+                    is24Hour={true}
+                    onChange={onChangeTime}
+                    style={styles.datePicker}
+                  />
+                )}
+                <View style={styles.textTime}>
+                  <Text style={styles.textTimeInner}>
+                    {time
+                      .toLocaleTimeString("en-US", {
+                        hour12: false,
+                        hour: "numeric",
+                        minute: "numeric",
+                      })
+                      .slice(0, -3)}
+                  </Text>
+                </View>
               </View>
             </View>
-            {/* Display the selected time */}
-            <View style={styles.cardDateTime}>
-            {!isPickerShowTime && (
-              <TouchableOpacity style={styles.buttonTime} onPress={showPickerTime}>
-                <Text style={styles.textButtonBook}>Select Time</Text>
-              </TouchableOpacity>
-            )}
-            {/* The time picker */}
-            {isPickerShowTime && 
-              <DateTimePicker
-              value={time} 
-              mode={"time"} 
-              display={Platform.OS === "ios" ? "spinner" : "default"} 
-              is24Hour={true} 
-              onChange={onChangeTime} 
-              style={styles.datePicker} 
-            />}
-              <View style={styles.textTime}>
-                <Text style={styles.textTimeInner}>
-                  {time.toLocaleTimeString("en-US", { hour12: false, hour: "numeric", minute: "numeric" }).slice(0, -3)}
-                </Text>
-              </View>
-            </View>
-          </View>
-
           </View>
 
           <View style={{ flex: 2.2, alignItems: "center" }}>
             <View style={styles.maps}>
-              <MapView style={styles.maps2} showsUserLocation initialRegion={currentLocation} />
+              <MapView
+                style={styles.maps2}
+                showsUserLocation
+                initialRegion={currentLocation}
+              />
             </View>
           </View>
-          <View style={{ flex: 2.3, justifyContent:'space-evenly' }}>
+          <View style={{ flex: 2.3, justifyContent: "space-evenly" }}>
             <View>
               <Text style={styles.textPrice}>Rp {dataMamank.price}</Text>
             </View>
-            <View style={{alignItems: "center"}}>
-              <TouchableOpacity style={styles.buttonBook} onPress={getAddress}>
+            <View style={{ alignItems: "center" }}>
+              <TouchableOpacity
+                style={styles.buttonBook}
+                onPress={() => setModalVisible(true)}
+              >
                 <Text style={styles.textButtonBook}>Book Now</Text>
               </TouchableOpacity>
             </View>
           </View>
         </View>
+
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.centeredView2}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>
+                {date.toUTCString().split(" ").slice(1, 4).join(" ")}
+              </Text>
+              <Text style={styles.modalText}>
+                {time
+                  .toLocaleTimeString("en-US", {
+                    hour12: false,
+                    hour: "numeric",
+                    minute: "numeric",
+                  })
+                  .slice(0, -3)}
+              </Text>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <Text style={styles.textStyle}>Hide Modal</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
       </View>
     );
   }
@@ -200,7 +275,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "85%",
     elevation: 5,
-    padding:1,
+    padding: 1,
     // backgroundColor:'pink'
   },
   maps2: {
@@ -226,7 +301,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: "85%",
   },
-  
+
   cardDateTime: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -318,8 +393,8 @@ const styles = StyleSheet.create({
   },
 
   textLocation: {
-    color: 'white',
-    fontWeight:'bold',
+    color: "white",
+    fontWeight: "bold",
     fontSize: 12,
   },
   buttonLocation: {
@@ -331,15 +406,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFB300",
     borderRadius: 25,
     // position:'absolute',
-    left:'20%',
-    bottom:'10%'
+    left: "20%",
+    bottom: "10%",
   },
-  
-  textPrice:{
-    color:"#003B6A",
-    fontSize:36,
-    fontWeight:'bold',
-    marginLeft:'10%',
+
+  textPrice: {
+    color: "#003B6A",
+    fontSize: 36,
+    fontWeight: "bold",
+    marginLeft: "10%",
   },
 
   imageProduct: {
@@ -347,9 +422,8 @@ const styles = StyleSheet.create({
     height: 150,
     resizeMode: "cover",
     // borderRadius: 10,
-    backgroundColor:'pink'
+    backgroundColor: "pink",
   },
-  
 
   // pickedDateContainer: {
   //   padding: 15,
@@ -369,4 +443,53 @@ const styles = StyleSheet.create({
   //   justifyContent: "center",
   //   alignItems: "flex-start",
   // },
+
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+  },
+  centeredView2: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    // marginTop: 22,
+    backgroundColor: "rgba(0,0,0,0.8)",
+  },
 });

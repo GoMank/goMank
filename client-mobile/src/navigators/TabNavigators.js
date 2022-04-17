@@ -33,6 +33,7 @@ export default function TabNav() {
   return (
     // <NavigationContainer>
       <Tab.Navigator
+        initialRouteName="Home"
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             if (route.name === 'Home') {
@@ -89,6 +90,7 @@ export default function TabNav() {
           tabBarStyle: { height: 60,  },
           tabBarInactiveTintColor: 'gray',
           tabBarActiveTintColor: '#003B6A',
+          
         })}
       >
 
@@ -98,7 +100,7 @@ export default function TabNav() {
           options={{ tabBarBadge: 3 }}
         /> */}
 
-        <Tab.Screen name="Maps" component={Maps} options={{headerShown: false}} />
+        <Tab.Screen name="Maps" component={Maps} options={{headerShown: false,}} />
         <Tab.Screen name="Chat" component={Maps} options={{headerShown: false}} />
         <Tab.Screen name="Home" component={HomePage} options={{headerShown: false}}/>
         <Tab.Screen name="History" component={LogPage} options={{headerShown: false}}/>

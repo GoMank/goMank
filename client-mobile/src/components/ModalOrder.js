@@ -2,19 +2,20 @@ import React, { useState } from 'react';
 import { Alert, Modal, StyleSheet, Text, Pressable, View } from 'react-native';
 
 
-const App = () => {
+const ModalOrder = () => {
     const [modalVisible, setModalVisible] = useState(false);
     return (
       <View style={styles.centeredView}>
         <Modal
-          animationType="slide"
+        
+          animationType="fade"
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => {
             Alert.alert('Modal has been closed.');
             setModalVisible(!modalVisible);
           }}>
-          <View style={styles.centeredView}>
+          <View style={styles.centeredView2}>
             <View style={styles.modalView}>
               <Text style={styles.modalText}>Hello World!</Text>
               <Pressable
@@ -39,6 +40,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       marginTop: 22,
+      
     },
     modalView: {
       margin: 20,
@@ -75,4 +77,14 @@ const styles = StyleSheet.create({
       marginBottom: 15,
       textAlign: 'center',
     },
+    centeredView2: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: 22,
+      backgroundColor: 'rgba(0,0,0,0.8)',
+      
+    },
   });
+
+  export default ModalOrder;

@@ -117,7 +117,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { GiftedChat } from 'react-native-gifted-chat'
 
-export function Example() {
+export function SandboxTest() {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
