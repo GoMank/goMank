@@ -13,10 +13,6 @@ async function connectMongoDb() {
     db = client.db(dbName);
 }
 
-// async function closeClient(){
-//     await client.close()
-// }
-
 function getDataBase(){
     return db
 }
