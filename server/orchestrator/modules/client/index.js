@@ -1,7 +1,7 @@
 const { gql } = require('apollo-server');
 const axios = require('axios');
 const redis = require('../../config');
-const url = 'http://04d5-139-0-237-101.ngrok.io/';
+const url = 'https://curly-bear-7.loca.lt/';
 
 const typeDefs = gql`
     extend type Query {
@@ -9,10 +9,10 @@ const typeDefs = gql`
         client(id: ID!): Client
     }
 
-    type Address {
-        lng: String
-        lat: String
-    }
+    # type Address {
+    #     lng: String
+    #     lat: String
+    # }
 
     extend type Mutation {
         createClient(
@@ -40,7 +40,7 @@ const typeDefs = gql`
     }
 
     type Client {
-        id: ID!
+        _id: ID!
         name: String!
         email: String!
         password: String!
@@ -58,9 +58,11 @@ const resolvers = {
                 let clients = JSON.parse(clientsCache);
                 if (!clients) {
                     clients = await axios.get(url + 'clients');
+                    console.log(clients.data);
                     clients = clients.data;
                     redis.set('clients', JSON.stringify(clients));
                 }
+                console.log(clients);
                 return clients;
             } catch (err) {
                 console.log(`Error: ${err}`);
