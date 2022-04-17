@@ -1,7 +1,7 @@
 const { gql } = require('apollo-server');
 const axios = require('axios');
 const redis = require('../../config');
-const url = 'http://2dc8-139-0-237-101.ngrok.io/';
+const url = 'http://1e6b-139-0-237-101.ngrok.io/';
 
 const typeDefs = gql`
     extend type Query {
@@ -11,6 +11,11 @@ const typeDefs = gql`
 
     type responseMamang {
         message: String
+    }
+
+    type Address {
+        type: String
+        coordinates: [Float]
     }
 
     extend type Mutation {
@@ -45,7 +50,7 @@ const typeDefs = gql`
         name: String
         email: String
         password: String
-        address: String
+        address: Address
         phoneNumber: String
         gender: String
         image: String
@@ -62,6 +67,7 @@ const resolvers = {
                 let mamangs = JSON.parse(mamangsCache);
 
                 if (!mamangs) {
+                    console.log(mamangs);
                     mamangs = await axios.get(url + 'mamangs');
                     mamangs = mamangs.data;
                     redis.set('mamangs', JSON.stringify(mamangs));
