@@ -7,6 +7,7 @@ import client from "./config/apollo";
 import HomePage from "./src/screens/HomePage";
 import Maps from "./src/screens/Maps";
 import Login from "./src/screens/Login";
+import LoginBio from "./src/screens/Login-bio";
 import Register from "./src/screens/Register";
 import FormOrder from "./src/screens/FormOrder";
 import PaymentPage from "./src/screens/PaymentPage";
@@ -19,6 +20,31 @@ export default function App() {
   const Stack = createNativeStackNavigator();
   return (
     <ApolloProvider client={client}>
+<<<<<<< HEAD
+    <NavigationContainer>
+      <StatusBar barStyle="light-content" />
+      <Stack.Navigator
+        initialRouteName="SplashHome"
+        screenOptions={{
+          animation: "slide_from_right",
+          name: "My Homepage",
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen name="LoginBio" component={LoginBio} />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Maps" component={Maps} />
+        <Stack.Screen name="Register" component={Register} />
+        {/* <Stack.Screen name="LogNavigator" component={LogNavigator} /> */}
+
+      </Stack.Navigator>
+    </NavigationContainer>
+      </ApolloProvider>
+=======
       <NavigationContainer>
         <StatusBar barStyle="light-content" />
         <Stack.Navigator
@@ -45,6 +71,7 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </ApolloProvider>
+>>>>>>> a26c0e223773b9418c96674b01ace49ff6f4bcae
   );
 }
 

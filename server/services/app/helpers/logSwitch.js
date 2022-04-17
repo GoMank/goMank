@@ -12,8 +12,13 @@ const logSwitch = (id, type) => {
 
             return `Order with ID: ${id} has been cancelled`
     
+<<<<<<< HEAD
+        default:
+            return 'Type is undefined';
+=======
         // default:
         //     return 'Type is undefined';
+>>>>>>> a26c0e223773b9418c96674b01ace49ff6f4bcae
     }
 }
 
