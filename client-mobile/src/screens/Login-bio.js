@@ -56,7 +56,7 @@ export default function LoginBio({ navigation }) {
 
       if (results.success) {
         setResult(EResult.SUCCESS);
-        navigation.navigate("Login");
+        navigation.navigate("TabNav");
       } else if (results.error === 'unknown') {
         setResult(EResult.DISABLED);
       } else if (

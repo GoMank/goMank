@@ -16,8 +16,12 @@ import * as Location from "expo-location";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import ModalOrder from "../components/ModalOrder";
+// import { YellowBox } from 'react-native';
+// YellowBox.ignoreWarnings(['Remote debugger']);
+import { LogBox } from 'react-native'
 
 export default function FormOrder(mamank) {
+  LogBox.ignoreLogs(['Remote debugger']);
   const dataMamank = mamank.route.params.mamank.mamank;
   console.log(mamank.route.params.mamank.mamank, 1111111111111111);
   // buat maps
@@ -35,7 +39,10 @@ export default function FormOrder(mamank) {
   // buat modal
   const [modalVisible, setModalVisible] = useState(false);
 
-  console.log("🚀 ~ file: FormOrder.js ~ line 21 ~ FormOrder ~ date", date);
+  console.log(
+    "🚀 ~ file: FormOrder.js ~ line 21 ~ FormOrder ~ formAddress",
+    formAddress
+  );
   // console.log(time);
   const datePlus = new Date(Date.now());
   datePlus.setDate(datePlus.getDate() + 7);
@@ -241,10 +248,24 @@ export default function FormOrder(mamank) {
         >
           <View style={styles.centeredView2}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>
+              <Text style={styles.textModalName}>Nama User</Text>
+              <Text style={styles.textModalName}>085689651234</Text>
+              <Text style={styles.textModalJudul}>Price</Text>
+              <Text style={styles.textModalIsi}>Rp 250.000</Text>
+
+            <View style={{flexDirection:'row'}}>
+              
+           
+
+            <View style={{marginRight:"20%"}}>
+              <Text style={styles.textModalJudul}>Date</Text>
+              <Text style={styles.textModalIsi}>
                 {date.toUTCString().split(" ").slice(1, 4).join(" ")}
               </Text>
-              <Text style={styles.modalText}>
+            </View>
+            <View>
+              <Text style={styles.textModalJudul}>Time</Text>
+              <Text style={styles.textModalIsi}>
                 {time
                   .toLocaleTimeString("en-US", {
                     hour12: false,
@@ -253,12 +274,29 @@ export default function FormOrder(mamank) {
                   })
                   .slice(0, -3)}
               </Text>
+              </View>
+            </View>
+              <Text style={styles.textModalJudul}>Address</Text>
+              <Text style={styles.textModalIsi}>{ formAddress }</Text>
+
+
+              
+              <View style={{flexDirection:'row'}}>
+
+              <Pressable
+                style={[styles.buttonBack]}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <Text style={styles.textStyle}>Back</Text>
+              </Pressable>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => setModalVisible(!modalVisible)}
               >
-                <Text style={styles.textStyle}>Hide Modal</Text>
+                <Text style={styles.textStyle}>Checkout</Text>
               </Pressable>
+              </View>
+
             </View>
           </View>
         </Modal>
@@ -454,8 +492,8 @@ const styles = StyleSheet.create({
     margin: 20,
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
+    padding: 25,
+    // alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -483,7 +521,7 @@ const styles = StyleSheet.create({
   },
   modalText: {
     marginBottom: 15,
-    textAlign: "center",
+    // textAlign: "center",
   },
   centeredView2: {
     flex: 1,
@@ -492,4 +530,34 @@ const styles = StyleSheet.create({
     // marginTop: 22,
     backgroundColor: "rgba(0,0,0,0.8)",
   },
+
+
+  textModalName: {
+    fontSize: 22,
+    color: "#003B6A",
+    fontWeight: "bold",
+  },
+  textModalJudul: {
+    fontSize: 14,
+    color: "#FFB300",
+    fontWeight: "bold",
+    paddingTop: 20,
+  },
+  textModalIsi: {
+    fontSize: 18,
+    color: "#003B6A",
+    // fontWeight: "bold",
+  },
+  buttonBack: {
+    width: "50%",
+    backgroundColor:"white",
+    borderColor: "#FFB300",
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 2,
+    borderRadius: 5,
+  },
+  buttonCheckout: {
+    width: "50%",
+  }
 });
