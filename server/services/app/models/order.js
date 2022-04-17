@@ -17,59 +17,61 @@ module.exports = (sequelize, DataTypes) => {
     invoiceNumber: {
       type: DataTypes.STRING,
       defaultValue: "INV",
-      allowNull: false,
-      validate: {
-        notNull: {
-          args: true,
-          msg: 'Invoice Number is null'
-        },
-        notEmpty: {
-          args: true,
-          msg: 'Invoice Number cannot be empty'
-        }
-      }
+      // allowNull: false,
+      // validate: {
+      //   notNull: {
+      //     args: true,
+      //     msg: 'Invoice Number is null'
+      //   },
+      //   notEmpty: {
+      //     args: true,
+      //     msg: 'Invoice Number cannot be empty'
+      //   }
+      // }
     },
     price: {
       type: DataTypes.INTEGER,
       defaultValue: 50000,
-      allowNull: false,
-      validate: {
-        notNull: {
-          args: true,
-          msg: 'Price input is null'
-        },
-        notEmpty: {
-          args: true,
-          msg: 'Price cannot be empty'
-        }
-      }
+      // allowNull: false,
+      // validate: {
+      //   notNull: {
+      //     args: true,
+      //     msg: 'Price input is null'
+      //   },
+      //   notEmpty: {
+      //     args: true,
+      //     msg: 'Price cannot be empty'
+      //   }
+      // }
     },
     orderStatus: {
       type: DataTypes.STRING,
       defaultValue: 'Received',
-      allowNull: false,
-      validate: {
-        isIn: [['Received', 'Done', 'Cancelled']], 
-        notNull: {
-          args: true,
-          msg: 'Order Status is null'
-        },
-        notEmpty: {
-          args: true,
-          msg: 'Order Status cannot be empty'
-        }
-      }
+      // allowNull: false,
+      // validate: {
+      //   isIn: {
+      //     args:[['Received', 'Done', 'Cancelled']],
+      //     msg: 'Order Status must be either Received , Done or Cancelled'
+      //   }, 
+      //   notNull: {
+      //     args: true,
+      //     msg: 'Order Status is null'
+      //   },
+      //   notEmpty: {
+      //     args: true,
+      //     msg: 'Order Status cannot be empty'
+      //   }
+      // }
     },
     paymentMethod: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isIn: [['Cash', 'Cashless']], 
+        isIn: {
+          args:[['Cash', 'Cashless']],
+          msg:'Payment method must be either Cash or Cashless'
+        }, 
         notNull: {
-          args: true,
-          msg: 'Payment Method is null'
-        },
-        notEmpty: {
           args: true,
           msg: 'Payment Method cannot be empty'
         }
@@ -78,44 +80,56 @@ module.exports = (sequelize, DataTypes) => {
     paymentStatus: {
       type: DataTypes.STRING,
       defaultValue: "Unpaid",
-      allowNull: false,
-      validate: {
-        isIn: [['Paid', 'Unpaid']], 
-        notNull: {
-          args: true,
-          msg: 'Payment Status is null'
-        },
-        notEmpty: {
-          args: true,
-          msg: 'Payment Status cannot be empty'
-        }
-      }
+      // allowNull: false,
+      // validate: {
+      //   isIn: [['Paid', 'Unpaid']], 
+      //   notNull: {
+      //     args: true,
+      //     msg: 'Payment Status is null'
+      //   },
+      //   notEmpty: {
+      //     args: true,
+      //     msg: 'Payment Status cannot be empty'
+      //   }
+      // }
     },
     clientId: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         notNull: {
-          args: true,
-          msg: 'Client ID input is null'
-        },
-        notEmpty: {
           args: true,
           msg: 'Client ID cannot be empty'
         }
       }
     },
-    mamangId: {
+    clientName: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notNull: {
           args: true,
-          msg: 'Mamang ID input is null'
-        },
-        notEmpty: {
+          msg: 'Client Name cannot be empty'
+        }
+      }
+    },
+    mamangId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
           args: true,
           msg: 'Mamang ID cannot be empty'
+        }
+      }
+    },
+    mamangName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: 'Mamang Name cannot be empty'
         }
       }
     },
@@ -124,10 +138,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notNull: {
-          args: true,
-          msg: 'Address is null'
-        },
-        notEmpty: {
           args: true,
           msg: 'Address cannot be empty'
         }
