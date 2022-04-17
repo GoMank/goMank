@@ -1,7 +1,7 @@
 const { gql } = require('apollo-server');
 const axios = require('axios');
 const redis = require('../../config');
-const url = 'http://04d5-139-0-237-101.ngrok.io/';
+const url = 'https://fdb5-125-164-20-223.ngrok.io/';
 
 const typeDefs = gql`
     extend type Query {
@@ -11,7 +11,8 @@ const typeDefs = gql`
 
     type History {
         id: ID!
-        noInvoice: String
+        description: String
+        createdAt: String
         orderId: ID!
     }
 `;
@@ -20,13 +21,15 @@ const resolvers = {
     Query: {
         histories: async (parent, args, context, info) => {
             try {
-                const historiesCache = await redis.get('histories');
+                console.log(`masuk histories`);
+                const historiesCache = await redis.get('logs');
                 let histories = JSON.parse(historiesCache);
 
                 if (!histories) {
-                    histories = await axios.get(url + 'histories');
+                    console.log(`histories tidak ada`, histories);
+                    histories = await axios.get(url + 'logs');
                     histories = histories.data;
-                    redis.set('histories', JSON.stringify(histories));
+                    redis.set('logs', JSON.stringify(histories));
                 }
 
                 return histories;
@@ -37,12 +40,12 @@ const resolvers = {
 
         history: async (parent, args, context, info) => {
             try {
-                const historiesCache = await redis.get('histories');
+                const historiesCache = await redis.get('logs');
                 let histories = JSON.parse(historiesCache);
                 let history;
 
                 if (!histories) {
-                    history = await axios.get(url + 'histories' + args.id);
+                    history = await axios.get(url + 'logs' + args.id);
                     history = history.data;
                 }
 
