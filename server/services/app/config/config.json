@@ -7,16 +7,6 @@
     "dialect": "postgres"
   },
   "test": {
-<<<<<<< HEAD
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  },
-  "production": {
-    "use_env_variable":"DATABASE_URL",
-=======
     "username": "postgres",
     "password": "postgres",
     "database": "goMankDB-Test",
@@ -25,7 +15,6 @@
   },
   "production": {
     "use_env_variable": "DATABASE_URL",
->>>>>>> a26c0e223773b9418c96674b01ace49ff6f4bcae
     "ssl": true,
     "dialect": "postgres",
     "protocol": "postgres",
