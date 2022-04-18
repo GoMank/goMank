@@ -37,9 +37,8 @@ io.on('connection', (socket) => {
     socket.on('postMessage', (msg) => {
         messagesData.unshift({
             ...msg,
-            id: v4(),
+            _id: v4(),
             senderId: socket.id,
-            user: { _id: socket.id },
         });
 
         console.log(messagesData);

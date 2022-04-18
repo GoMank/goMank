@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 import tw from 'twrnc';
 import { GiftedChat } from 'react-native-gifted-chat';
 
-const socketUrl = 'https://mighty-lionfish-74.loca.lt';
+const socketUrl = 'https://7ec4-180-252-127-246.ngrok.io';
 // const socket = io(socketUrl);
 const Chat = () => {
     const [socket, setSocket] = useState(null);
@@ -32,7 +32,6 @@ const Chat = () => {
             socket.on('getMessages', (messagesData) => {
                 setMessages(messagesData.messagesData);
                 setUserId(messagesData.id);
-                console.log('messages', messagesData);
             });
         }
 
@@ -54,13 +53,13 @@ const Chat = () => {
             text: message,
             createdAt: new Date(),
             user: {
-                _id: 1,
+                _id: 'mamang',
             },
         });
         setMessage('');
     };
 
-    console.log(messages);
+    console.log(messages, userId, '<<<<<<<<<<<<<');
 
     return (
         <GiftedChat
@@ -72,7 +71,7 @@ const Chat = () => {
             placeholder='Type a message...'
             isTyping={true}
             user={{
-                _id: userId,
+                _id: 'mamang',
             }}
         />
     );
