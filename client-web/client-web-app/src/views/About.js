@@ -5,7 +5,7 @@ export default function About() {
 
             <div className="bg-white grid grid-cols-2 justify-items-center">
 
-                <div className="rounded-lg flex items-center px-7 py-7">
+                <div className="rounded-full flex items-center px-7 py-7">
                     <img className="rounded-full" src={require('../about-img.jpg')}></img>
                 </div>
                 <div className="px-2 py-9 min-w-md">
@@ -89,11 +89,7 @@ Selain menggunakan cairan pembersih premium, kami mengutamakan layanan cuci mobi
             </div>
 
 
-            <div className="bg-gomank-yellow h-6">
-
-
-            </div>
-
+           
         </div>
     )
 }

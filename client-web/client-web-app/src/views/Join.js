@@ -26,10 +26,7 @@ export default function Join() {
 
 
 
-            <div className="bg-gomank-yellow h-6">
-
-
-            </div>
+            
 
         </div>
     )
