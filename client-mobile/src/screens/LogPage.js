@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View, Image } from "react-native";
+import { useQuery } from "@apollo/client";
 
 export default function LogPage() {
+  
   return (
     <View style={styles.container}>
       <View style={{ marginTop: 20 }} />
