@@ -409,26 +409,25 @@ const SandboxTest = (urlData) => {
         }}
         onNavigationStateChange={(newNavState) => {
             
-            // if (newNavState.canGoBack) {
-            //     setTimeout(() => {
-            //         navigation.navigate('TabNav')
-            //       }, 100000)
-            // }
-            //  if (newNavState.title !== `Random`) {
-            //   navigation.navigate('TabNav')
-            // }
             if(newNavState.url.includes('#/success')){
               setTimeout(() => {
                         navigation.navigate('TabNav')
                       }, 3000)
             }
+            // else if (newNavState.canGoBack) {
+            //     setTimeout(() => {
+            //         navigation.navigate('TabNav')
+            //       }, 10000)
+            // }
+            //  if (newNavState.title !== `Random`) {
+            //   navigation.navigate('TabNav')
+            // }
             console.log(newNavState);
             }
         }
       />
     </View>
   )
-
 }
 
 export default SandboxTest

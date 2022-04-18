@@ -6,7 +6,7 @@ import MapViewDirections from 'react-native-maps-directions';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 // import Anchor from './Linking';
 
-const delay = 5;
+const delay = 20;
 let foregroundSubscription = null;
 export default function Maps() {
     const [address, setAddress] = useState([]);
@@ -54,6 +54,17 @@ export default function Maps() {
             clearInterval(t);
         };
     }, []);
+
+    useEffect(() => {
+        try {
+            axios('')
+        } catch (error) {
+            console.log(error);
+        }
+            
+    },[countRef.current])
+
+
 
     console.log(countRef.current);
 
