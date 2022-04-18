@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity, ImageBackground } from 'react-native';
 import React from 'react';
 import tw from 'twrnc';
+import PermissionsButton from '../components/PermissionsButton';
 
 const SplashScreen = ({ navigation }) => {
     return (
@@ -25,6 +26,7 @@ const SplashScreen = ({ navigation }) => {
                     title='Go to Home'
                     onPress={() => navigation.navigate('HomeMamang')}>
                     <Text style={tw`mx-auto text-black`}>Become A Partner</Text>
+                    <PermissionsButton />
                 </TouchableOpacity>
             </View>
         </View>
