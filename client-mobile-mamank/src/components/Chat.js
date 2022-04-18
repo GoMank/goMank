@@ -61,7 +61,6 @@ const Chat = () => {
 
     return (
         <GiftedChat
-            key={...messages.id}
             messages={messages}
             text={message}
             onInputTextChanged={(text) => setMessage(text)}

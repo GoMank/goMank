@@ -121,9 +121,17 @@ export default function Maps() {
     };
 
     return (
-        <View style={styles.container}>
-            <Anchor />
+        <View>
+            {/* <Anchor /> */}
             <MapView
+                tiltEnabled={true}
+                initialCamera={{
+                    center: currentLocation,
+                    pitch: 0,
+                    heading: 0,
+                    altitude: 0,
+                    zoom: 20,
+                }}
                 provider={PROVIDER_GOOGLE}
                 style={styles.map}
                 followsUserLocation={true}
