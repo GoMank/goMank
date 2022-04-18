@@ -17,16 +17,16 @@ export default function CardProduct(mamank) {
 
 const styles = StyleSheet.create({
     cardProduct: {
-        backgroundColor: "#fff",
-        // width: "85%",
+      // width: "85%",
+      // alignItems: "center",
+      // flexDirection: "row",
+      backgroundColor: "#fff",
         padding: 10,
-        // alignItems: "center",
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.8,
         shadowRadius: 5,
         elevation: 3,
         borderRadius: 10,
-        // flexDirection: "row",
         margin: 5,
       },
       imageProduct: {
