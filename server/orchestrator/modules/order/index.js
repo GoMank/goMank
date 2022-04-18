@@ -56,7 +56,10 @@ const typeDefs = gql`
         clientId: ID
         address: String
         paymentMethod: String
+        date: String
+        time: String
         mamangId: ID
+        service: Int
         createdAt: String
         updatedAt: String
         mamang: Mamang
