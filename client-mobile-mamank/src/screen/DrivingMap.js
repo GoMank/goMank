@@ -3,7 +3,7 @@ import Maps from '../components/Maps';
 import React from 'react';
 import tw from 'twrnc';
 
-const DrivingMap = () => {
+const DrivingMap = ({ navigation }) => {
     return (
         <View style={{ flex: 1 }}>
             <View
@@ -21,7 +21,7 @@ const DrivingMap = () => {
                 <TouchableOpacity
                     style={tw`bg-[#FFB300] w-[90%] p-5 rounded-lg mb-5 mx-auto`}
                     title='Go to Home'
-                    onPress={() => navigation.navigate('HomeMamang')}>
+                    onPress={() => navigation.navigate('ChatMamang')}>
                     <Text style={tw`mx-auto text-black`}>Chat Mamang</Text>
                 </TouchableOpacity>
             </View>

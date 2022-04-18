@@ -4,13 +4,14 @@ import io from 'socket.io-client';
 import tw from 'twrnc';
 import { GiftedChat } from 'react-native-gifted-chat';
 
-const socketUrl = 'https://eeef-180-252-127-246.ngrok.io';
+const socketUrl = 'https://mighty-lionfish-74.loca.lt';
 // const socket = io(socketUrl);
 const Chat = () => {
     const [socket, setSocket] = useState(null);
     const [connected, setConnected] = useState(false);
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([{}]);
+    const [userId, setUserId] = useState('');
     const [room, setRoom] = useState('');
 
     useEffect(() => {
@@ -29,7 +30,9 @@ const Chat = () => {
     useEffect(() => {
         if (connected) {
             socket.on('getMessages', (messagesData) => {
-                setMessages(messagesData);
+                setMessages(messagesData.messagesData);
+                setUserId(messagesData.id);
+                console.log('messages', messagesData);
             });
         }
 
@@ -69,7 +72,7 @@ const Chat = () => {
             placeholder='Type a message...'
             isTyping={true}
             user={{
-                _id: 1,
+                _id: userId,
             }}
         />
     );

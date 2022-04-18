@@ -133,7 +133,6 @@ export default function PermissionsButton() {
         }
     };
 
-    console.log('position', position);
     return (
         <View style={styles.container}>
             <Text>Longitude: {position?.longitude}</Text>

@@ -25,7 +25,14 @@ io.on('connection', (socket) => {
 
     updateClientList(socket.id);
 
-    io.emit('getMessages', messagesData);
+    io.emit('getMessages', {
+        messagesData,
+        id: socket.id,
+    });
+
+    // socket.on('joinRoom', (mamangId) => {
+    //     socket.join(mamangId);
+    // });
 
     socket.on('postMessage', (msg) => {
         messagesData.unshift({
@@ -36,7 +43,7 @@ io.on('connection', (socket) => {
         });
 
         console.log(messagesData);
-        io.emit('getMessages', messagesData);
+        io.emit('getMessages', { messagesData, id: socket.id });
     });
 });
 

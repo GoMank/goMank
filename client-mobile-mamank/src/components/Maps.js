@@ -13,6 +13,7 @@ export default function Maps() {
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
     const [distance, setDistance] = useState(Infinity);
+    const [clientLoc, setClientLoc] = useState(null);
     const countRef = useRef(null);
     countRef.current = distance;
     const GOOGLE_MAPS_APIKEY = 'AIzaSyAlqVN_Y9I6JGPrCIgA5LR0iytHX1hIRaY';
@@ -32,7 +33,7 @@ export default function Maps() {
                     latitude: location.coords.latitude,
                     longitude: location.coords.longitude,
                 });
-                if (countRef.current <= 5) {
+                if (countRef.current <= 1) {
                     clearInterval(t);
                     // navigator.navigate();
                 } else {
@@ -49,6 +50,9 @@ export default function Maps() {
                 }
             })();
         }, delay * 1000);
+
+        // fetch order disini => ambil map nya => ambil distance nya
+        // set ke clientLoc
 
         return () => {
             clearInterval(t);
@@ -88,22 +92,11 @@ export default function Maps() {
         return deg * (Math.PI / 180);
     };
 
+    // hasil client location
     const car = [
         {
             latitude: -6.26999,
             longitude: 107.01102,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01,
-        },
-        {
-            latitude: -6.271,
-            longitude: 107.0142,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01,
-        },
-        {
-            latitude: -6.266,
-            longitude: 107.0129,
             latitudeDelta: 0.01,
             longitudeDelta: 0.01,
         },
@@ -123,7 +116,7 @@ export default function Maps() {
             </View>
         );
     }
-
+    // console.log(text);
     const currentLocation = {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
@@ -136,16 +129,8 @@ export default function Maps() {
             {/* <Anchor /> */}
             <MapView
                 tiltEnabled={true}
-                initialCamera={{
-                    center: currentLocation,
-                    pitch: 0,
-                    heading: 0,
-                    altitude: 0,
-                    zoom: 20,
-                }}
                 provider={PROVIDER_GOOGLE}
                 style={styles.map}
-                followsUserLocation={true}
                 showsCompass={true}
                 showsUserLocation={true}
                 initialRegion={currentLocation} //your region data goes here.
