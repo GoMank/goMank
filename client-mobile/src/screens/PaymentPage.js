@@ -15,6 +15,11 @@ export default function PaymentPage(order) {
         return navigation.navigate('SandboxTest',{urlData: data.data})
     }
 
+    async function midTrans() {
+        const data =  await axios.post(`http://39ad-125-160-239-125.ngrok.io/orders/midTransPay`)
+        return navigation.navigate('SandboxTest',{urlData: data.data})
+    }
+
     return(
        <View style={styles.container}>
            <TouchableOpacity style={styles.containerImage} value={xendit} onPress={xendit}>
@@ -23,7 +28,7 @@ export default function PaymentPage(order) {
                 <Image source={require("../../assets/xendit.png")} style={styles.image} />
                {/* </View> */}
            </TouchableOpacity>
-           <TouchableOpacity style={styles.containerImage}>
+           <TouchableOpacity style={styles.containerImage} value={midTrans} onPress={midTrans}>
                 <Image source={require("../../assets/midtrans.png")} style={styles.image} />
            </TouchableOpacity>
            <TouchableOpacity style={styles.containerImage}>

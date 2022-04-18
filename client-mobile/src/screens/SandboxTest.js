@@ -398,7 +398,7 @@ const SandboxTest = (urlData) => {
   `
   setTimeout(() => {
     webViewRef.current.injectJavaScript(run)
-  }, 3000)
+  }, 10000)
   return (
     <View style={{ flex: 1 }}>
       <WebView
@@ -409,10 +409,18 @@ const SandboxTest = (urlData) => {
         }}
         onNavigationStateChange={(newNavState) => {
             
-            if (newNavState.canGoBack) {
-                setTimeout(() => {
-                    navigation.navigate('TabNav')
-                  }, 10000)
+            // if (newNavState.canGoBack) {
+            //     setTimeout(() => {
+            //         navigation.navigate('TabNav')
+            //       }, 100000)
+            // }
+            //  if (newNavState.title !== `Random`) {
+            //   navigation.navigate('TabNav')
+            // }
+            if(newNavState.url.includes('#/success')){
+              setTimeout(() => {
+                        navigation.navigate('TabNav')
+                      }, 3000)
             }
             console.log(newNavState);
             }
