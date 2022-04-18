@@ -10,7 +10,7 @@ import {
   Modal,
   Pressable,
 } from "react-native";
-import { useState, useEffect } from "react";
+import { useState, useEffect, } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import * as Location from "expo-location";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
@@ -19,8 +19,10 @@ import ModalOrder from "../components/ModalOrder";
 // import { YellowBox } from 'react-native';
 // YellowBox.ignoreWarnings(['Remote debugger']);
 import { LogBox } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 export default function FormOrder(mamank) {
+  const navigation = useNavigation();
   LogBox.ignoreLogs(['Remote debugger']);
   const dataMamank = mamank.route.params.mamank.mamank;
   console.log(mamank.route.params.mamank.mamank, 1111111111111111);
@@ -41,11 +43,11 @@ export default function FormOrder(mamank) {
 
   console.log(
     time.toLocaleTimeString("en-US", {
-      hour12: true,
+      hour12: false,
       hour: "numeric",
       minute: "numeric",
     })
-    .slice(0, -3), 222222222
+    // .slice(0, -4), 222222222
   );
   // console.log(time);
   const datePlus = new Date(Date.now());
@@ -206,11 +208,10 @@ export default function FormOrder(mamank) {
                   <Text style={styles.textTimeInner}>
                     {time
                       .toLocaleTimeString("en-US", {
-                        hour12: true,
+                        hour12: false,
                         hour: "numeric",
                         minute: "numeric",
-                      })
-                      .slice(0, -3)}
+                      })}
                   </Text>
                 </View>
               </View>
@@ -270,7 +271,7 @@ export default function FormOrder(mamank) {
             <View>
               <Text style={styles.textModalJudul}>Time</Text>
               <Text style={styles.textModalIsi}>
-                {time.toLocaleTimeString("en-US", {hour12: true, hour: "numeric", minute: "numeric",}).slice(0, -3)}
+                {time.toLocaleTimeString("en-US", {hour12: false, hour: "numeric", minute: "numeric",})}
               </Text>
               </View>
             </View>
@@ -289,7 +290,13 @@ export default function FormOrder(mamank) {
               </Pressable>
               <Pressable
                 style={styles.buttonCheckout}
-                onPress={() => setModalVisible(!modalVisible)}
+                onPress={() => navigation.navigate("PaymentPage",{
+                  clientId:1,
+                  mamangId:1,
+                  service:+dataMamank.id,
+                  date:date.toUTCString().split(" ").slice(1, 4).join(" "),
+                  time:time.toLocaleTimeString("en-US", {hour12: false, hour: "numeric", minute: "numeric",}),
+                })}
               >
                 <Text style={styles.textStyle}>Checkout</Text>
               </Pressable>

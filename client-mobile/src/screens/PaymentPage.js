@@ -1,9 +1,24 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-export default function PaymentPage() {
-    
+import { useState , useRef } from "react";
+import { useNavigation } from '@react-navigation/native'
+import { WebView } from 'react-native-webview';
+import SandboxTest from "./SandboxTest";
+import axios from 'axios';
+
+export default function PaymentPage(order) {
+    const dataOrder = order.route.params
+    console.log("🚀 ~ file: PaymentPage.js ~ line 7 ~ PaymentPage ~ dataOrder", dataOrder)
+    const navigation = useNavigation();
+
+    async function xendit() {
+        const data =  await axios.post('https://2be5-125-164-21-106.ngrok.io/xenditPay')
+        return navigation.navigate('SandboxTest',{urlData: data.data})
+    }
+
     return(
        <View style={styles.container}>
-           <TouchableOpacity style={styles.containerImage}>
+           <TouchableOpacity style={styles.containerImage} value={xendit} onPress={xendit}>
+           {/* <TouchableOpacity style={styles.containerImage} value={xendit} onPress={()=> navigation.navigate('SandboxTest')}> */}
                {/* <View style={styles.containerImage}> */}
                 <Image source={require("../../assets/xendit.png")} style={styles.image} />
                {/* </View> */}
