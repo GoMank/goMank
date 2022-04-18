@@ -1,7 +1,7 @@
 const { gql } = require('apollo-server');
 const axios = require('axios');
 const redis = require('../../config');
-const url = 'https://fdb5-125-164-20-223.ngrok.io/';
+const url = 'https://sweet-fly-73.loca.lt/';
 
 const typeDefs = gql`
     extend type Query {
@@ -14,6 +14,10 @@ const typeDefs = gql`
         description: String
         createdAt: String
         orderId: ID!
+    }
+
+    extend type Client {
+        histories: [History]
     }
 `;
 
@@ -41,16 +45,28 @@ const resolvers = {
         history: async (parent, args, context, info) => {
             try {
                 const historiesCache = await redis.get('logs');
+                return JSON.parse(historiesCache).find((history) => history.id == args.id);
+            } catch (err) {
+                throw new Error(err);
+            }
+        },
+    },
+
+    Client: {
+        histories: async (parent, args, context, info) => {
+            try {
+                console.log(`masuk histories`);
+                const historiesCache = await redis.get('logs');
                 let histories = JSON.parse(historiesCache);
-                let history;
 
                 if (!histories) {
-                    history = await axios.get(url + 'logs' + args.id);
-                    history = history.data;
+                    console.log(`histories tidak ada`, histories);
+                    histories = await axios.get(url + 'logs');
+                    histories = histories.data;
+                    redis.set('logs', JSON.stringify(histories));
                 }
 
-                history = histories.find((history) => history.id === args.id);
-                return history;
+                return histories;
             } catch (err) {
                 throw new Error(err);
             }

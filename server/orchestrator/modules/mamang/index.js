@@ -1,7 +1,7 @@
 const { gql } = require('apollo-server');
 const axios = require('axios');
 const redis = require('../../config');
-const url = 'http://1e6b-139-0-237-101.ngrok.io/';
+const url = 'https://average-husky-36.loca.lt/';
 
 const typeDefs = gql`
     extend type Query {
@@ -20,17 +20,17 @@ const typeDefs = gql`
 
     extend type Mutation {
         createMamang(
-            name: String!
-            email: String!
-            password: String!
-            address: String!
-            phoneNumber: String!
-            gender: String!
-            image: String!
-            rekNumber: String!
+            name: String
+            email: String
+            password: String
+            address: String
+            phoneNumber: String
+            gender: String
+            image: String
+            rekNumber: String
         ): Mamang
         updateMamang(
-            _id: ID!
+            _id: ID
             name: String
             email: String
             password: String
