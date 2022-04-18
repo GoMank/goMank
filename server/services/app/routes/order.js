@@ -8,5 +8,6 @@ routerOrder.get('/:id', orderController.getOrderById)
 routerOrder.patch('/edit/done/:id', orderController.updateStatusOrderDone)
 routerOrder.patch('/edit/cancel/:id', orderController.updateStatusOrderCancel)
 routerOrder.delete('/delete/:id', orderController.deleteOrder)
+routerOrder.post('/midTransPay', orderController.midTransPayment)
 
 module.exports = routerOrder
