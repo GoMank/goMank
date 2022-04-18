@@ -32,7 +32,6 @@ const Chat = () => {
             socket.on('getMessages', (messagesData) => {
                 setMessages(messagesData.messagesData);
                 setUserId(messagesData.id);
-                console.log('messages', messagesData);
             });
         }
 
@@ -60,7 +59,20 @@ const Chat = () => {
         setMessage('');
     };
 
-    console.log(messages);
+    // const onSend = useCallback((newMessages) => {
+    //     console.log('newMessages', newMessages);
+    //     // setMessages((previousMessages) => GiftedChat.append(previousMessages, newMessages));
+    //     // socket.emit('postMessage', {
+    //     //     text: message,
+    //     //     createdAt: new Date(),
+    //     //     user: {
+    //     //         _id: 1,
+    //     //     },
+    //     // });
+    //     // setMessage('');
+    // }, []);
+
+    console.log(messages, userId, '<<<<<<<<<<<<<');
 
     return (
         <GiftedChat
