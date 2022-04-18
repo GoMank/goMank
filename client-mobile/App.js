@@ -13,6 +13,7 @@ import FormOrder from "./src/screens/FormOrder";
 import PaymentPage from "./src/screens/PaymentPage";
 import SandboxTest from "./src/screens/SandboxTest";
 import { LogBox } from 'react-native'
+import MapsClient from "./src/screens/MapsClient";
 
 import TabNav from "./src/navigators/TabNavigators";
 LogBox.ignoreLogs(['Remote debugger']);
@@ -36,6 +37,7 @@ export default function App() {
           }}
         >
           <Stack.Screen name="TabNav" component={TabNav} />
+          <Stack.Screen name="mapsClient" component={MapsClient} />
           <Stack.Screen name="SandboxTest" component={SandboxTest} />
           {/* <Stack.Screen name="LoginBio" component={LoginBio} /> */}
           <Stack.Screen name="PaymentPage" component={PaymentPage} />
