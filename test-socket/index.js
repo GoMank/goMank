@@ -39,7 +39,6 @@ io.on('connection', (socket) => {
             ...msg,
             _id: v4(),
             senderId: socket.id,
-            user: { _id: socket.id },
         });
 
         console.log(messagesData);

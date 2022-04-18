@@ -89,6 +89,24 @@ export default function Maps() {
             latitudeDelta: 0.01,
             longitudeDelta: 0.01,
         },
+        {
+            latitude: -6.254782,
+            longitude: 106.86587,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
+        },
+        {
+            latitude: -6.254558,
+            longitude: 106.864834,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
+        },
+        {
+            latitude: -6.255126,
+            longitude: 106.865199,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
+        },
     ];
 
     let text = 'Waiting..';
@@ -152,5 +170,3 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').height,
     },
 });
-
-//  [lan,lat]
