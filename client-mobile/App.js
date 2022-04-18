@@ -36,7 +36,7 @@ export default function App() {
           }}
         >
           {/* <Stack.Screen name="SandboxTest" component={SandboxTest} /> */}
-          <Stack.Screen name="LoginBio" component={LoginBio} />
+          {/* <Stack.Screen name="LoginBio" component={LoginBio} /> */}
           <Stack.Screen name="TabNav" component={TabNav} />
           <Stack.Screen name="PaymentPage" component={PaymentPage} />
           <Stack.Screen name="FormOrder" component={FormOrder} />

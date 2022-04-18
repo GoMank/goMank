@@ -40,8 +40,12 @@ export default function FormOrder(mamank) {
   const [modalVisible, setModalVisible] = useState(false);
 
   console.log(
-    "🚀 ~ file: FormOrder.js ~ line 21 ~ FormOrder ~ formAddress",
-    formAddress
+    time.toLocaleTimeString("en-US", {
+      hour12: true,
+      hour: "numeric",
+      minute: "numeric",
+    })
+    .slice(0, -3), 222222222
   );
   // console.log(time);
   const datePlus = new Date(Date.now());
@@ -202,7 +206,7 @@ export default function FormOrder(mamank) {
                   <Text style={styles.textTimeInner}>
                     {time
                       .toLocaleTimeString("en-US", {
-                        hour12: false,
+                        hour12: true,
                         hour: "numeric",
                         minute: "numeric",
                       })
@@ -266,13 +270,7 @@ export default function FormOrder(mamank) {
             <View>
               <Text style={styles.textModalJudul}>Time</Text>
               <Text style={styles.textModalIsi}>
-                {time
-                  .toLocaleTimeString("en-US", {
-                    hour12: false,
-                    hour: "numeric",
-                    minute: "numeric",
-                  })
-                  .slice(0, -3)}
+                {time.toLocaleTimeString("en-US", {hour12: true, hour: "numeric", minute: "numeric",}).slice(0, -3)}
               </Text>
               </View>
             </View>
@@ -281,16 +279,16 @@ export default function FormOrder(mamank) {
 
 
               
-              <View style={{flexDirection:'row'}}>
+              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
 
               <Pressable
                 style={[styles.buttonBack]}
                 onPress={() => setModalVisible(!modalVisible)}
               >
-                <Text style={styles.textStyle}>Back</Text>
+                <Text style={styles.textModalIsi}>Back</Text>
               </Pressable>
               <Pressable
-                style={[styles.button, styles.buttonClose]}
+                style={styles.buttonCheckout}
                 onPress={() => setModalVisible(!modalVisible)}
               >
                 <Text style={styles.textStyle}>Checkout</Text>
@@ -549,15 +547,22 @@ const styles = StyleSheet.create({
     // fontWeight: "bold",
   },
   buttonBack: {
-    width: "50%",
+    width: "45%",
     backgroundColor:"white",
     borderColor: "#FFB300",
     justifyContent: "center",
     alignItems: "center",
     elevation: 2,
-    borderRadius: 5,
+    borderRadius: 10,
+    borderWidth: 3,
+    paddingVertical: 8,
   },
   buttonCheckout: {
-    width: "50%",
+    width: "45%",
+    backgroundColor:"#003B6A",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    elevation: 2,
   }
 });
