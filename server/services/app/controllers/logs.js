@@ -18,6 +18,7 @@ class logsController {
 
     }
 
+<<<<<<< HEAD
     // static async createLog(data) {
 
     //     try {
@@ -28,6 +29,8 @@ class logsController {
 
     // }
 
+=======
+>>>>>>> fd4df6dc497ecf730c470d8288eb005b0e2d5ae8
 }
 
 module.exports = logsController
