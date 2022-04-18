@@ -6,10 +6,11 @@ import MapViewDirections from 'react-native-maps-directions';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 // import Anchor from './Linking';
 import axios from 'axios';
+import PermissionsButton from '../components/PermissionButton';
 import { LogBox } from 'react-native'
 const delay = 20;
 let foregroundSubscription = null;
-export default function Maps() {
+export default function MapsClient() {
     LogBox.ignoreLogs(['Remote debugger']);
     const [address, setAddress] = useState([]);
     const [location, setLocation] = useState(null);
@@ -63,16 +64,17 @@ export default function Maps() {
 
     useEffect(() => {
         try {
-            // axios('')
+            // axios('') send loc to server
+            console.log(countRef.current,11111111111111111111111111111111111);
         } catch (error) {
             console.log(error);
         }
             
     },[countRef.current])
 
+    
 
-
-    console.log(countRef.current);
+    
 
     // hitung jarak
     const getDistance = (lat1 = 0, lon1 = 0, lat2 = 1000, lon2 = 1000) => {
@@ -94,7 +96,9 @@ export default function Maps() {
         return deg * (Math.PI / 180);
     };
 
+
     // hasil client location
+
     const car = [
         {
             latitude: -6.26999,
@@ -136,7 +140,7 @@ export default function Maps() {
                 showsCompass={true}
                 showsUserLocation={true}
                 initialRegion={currentLocation} //your region data goes here.
-            >
+                >
                 <MapViewDirections
                     origin={location.coords}
                     destination={car[0]}
@@ -147,8 +151,9 @@ export default function Maps() {
 
                 {car.map((item, index) => (
                     <MapView.Marker coordinate={item} key={index}></MapView.Marker>
-                ))}
+                    ))}
             </MapView>
+            <PermissionsButton/>
         </View>
     );
 }
