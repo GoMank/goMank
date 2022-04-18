@@ -14,6 +14,7 @@ import PaymentPage from "./src/screens/PaymentPage";
 import SandboxTest from "./src/screens/SandboxTest";
 import { LogBox } from 'react-native'
 import MapsClient from "./src/screens/MapsClient";
+import ChatClient from "./src/components/ChatClient";
 
 import TabNav from "./src/navigators/TabNavigators";
 LogBox.ignoreLogs(['Remote debugger']);
@@ -36,6 +37,7 @@ export default function App() {
             headerShown: false,
           }}
         >
+          <Stack.Screen name="ChatClient" component={ChatClient} />
           <Stack.Screen name="TabNav" component={TabNav} />
           <Stack.Screen name="mapsClient" component={MapsClient} />
           <Stack.Screen name="SandboxTest" component={SandboxTest} />
