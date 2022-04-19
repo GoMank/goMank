@@ -3,6 +3,8 @@ import * as Location from 'expo-location';
 import React, { useState, useEffect, useRef } from 'react';
 import MapViewDirections from 'react-native-maps-directions';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { GET_NEAREST_MAMANG, UPDATE_MAMANG_LOCATION } from '../../config/queries';
+import { gql, useMutation } from '@apollo/client';
 // import Anchor from './Linking';
 // import axios from 'axios';
 import { LogBox } from 'react-native';
@@ -10,6 +12,14 @@ const delay = 10;
 let foregroundSubscription = null;
 export default function Maps() {
     LogBox.ignoreLogs(['Remote debugger']);
+    const {
+        data: nearestMamang,
+        loading: nearestLoading,
+        error: nearestError,
+    } = useQuery(GET_NEAREST_MAMANG);
+    const [updateMamangLoc, { data: mamangLoc, loading: mamangLoading, error: mamangtError }] =
+        useMutation(UPDATE_MAMANG_LOCATION);
+
     const [address, setAddress] = useState([]);
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
@@ -20,6 +30,54 @@ export default function Maps() {
     const GOOGLE_MAPS_APIKEY = 'AIzaSyAlqVN_Y9I6JGPrCIgA5LR0iytHX1hIRaY';
 
     let t;
+    // useEffect(() => {
+    //     t = setInterval(() => {
+    //         (async () => {
+    //             let { status } = await Location.requestForegroundPermissionsAsync();
+    //             if (status !== 'granted') {
+    //                 setErrorMsg('Permission to access location was denied');
+    //                 return;
+    //             }
+    //             let location = await Location.getCurrentPositionAsync({});
+    //             let address = await Location.reverseGeocodeAsync({
+    //                 latitude: location.coords.latitude,
+    //                 longitude: location.coords.longitude,
+    //             });
+    //             if (countRef.current <= 1) {
+    //                 clearInterval(t);
+    //                 // navigator.navigate();
+    //             } else {
+    //                 setAddress(address);
+    //                 setLocation(location);
+    //                 setDistance(
+    //                     getDistance(
+    //                         location?.coords?.latitude,
+    //                         location?.coords?.longitude,
+    //                         -6.269459394758885,
+    //                         107.01111910348448
+    //                     ) * 1000
+    //                 );
+    //             }
+    //         })();
+    //     }, delay * 1000);
+
+    //     // return () => {
+    //     //     clearInterval(t);
+    //     // };
+    // }, []);
+
+    // useEffect(() => {
+    //     if (location) {
+    //         updateMamangLoc({
+    //             variables: {
+    //                 address: [location.coords.longitude, location.coords.latitude],
+    //                 id: '62559ddfc9054d53a273fb15',
+    //             },
+    //         });
+    //         console.log(`masuk`);
+    //     }
+    // }, [countRef.current]);
+
     useEffect(() => {
         t = setInterval(() => {
             (async () => {
@@ -28,43 +86,42 @@ export default function Maps() {
                     setErrorMsg('Permission to access location was denied');
                     return;
                 }
-                let location = await Location.getCurrentPositionAsync({});
-                let address = await Location.reverseGeocodeAsync({
-                    latitude: location.coords.latitude,
-                    longitude: location.coords.longitude,
-                });
-                if (countRef.current <= 10) {
-                    clearInterval(t);
-                    // navigator.navigate();
+                let currentLocation = await Location.getCurrentPositionAsync({});
+                // let currentAddress = await Location.reverseGeocodeAsync({
+                //     latitude: currentLocation.coords.latitude,
+                //     longitude: currentLocation.coords.longitude,
+                // });
+                // setAddress(address);
+                const _currentDistance =
+                    getDistance(
+                        currentLocation?.coords?.latitude,
+                        currentLocation?.coords?.longitude,
+                        -6.269459394758885,
+                        107.01111910348448
+                    ) * 1000;
+                if (currentLocation && _currentDistance >= 5) {
+                    setLocation(currentLocation);
+                    updateMamangLoc({
+                        variables: {
+                            address: [
+                                currentLocation.coords.longitude,
+                                currentLocation.coords.latitude,
+                            ],
+                            id: '62559ddfc9054d53a273fb15',
+                        },
+                    });
                 } else {
-                    setAddress(address);
-                    setLocation(location);
-                    setDistance(
-                        getDistance(
-                            location?.coords?.latitude,
-                            location?.coords?.longitude,
-                            -6.269459394758885,
-                            107.01111910348448
-                        ) * 1000
-                    );
+                    clearInterval(t);
                 }
             })();
-        }, delay * 1000);
+        }, 30000);
 
         return () => {
             clearInterval(t);
         };
     }, []);
 
-    useEffect(() => {
-        try {
-        } catch (error) {
-            console.log(error);
-        }
-    }, [countRef.current]);
-
-    console.log(countRef.current);
-
+    console.log(location, '<<<<<<<<');
     // hitung jarak
     const getDistance = (lat1 = 0, lon1 = 0, lat2 = 1000, lon2 = 1000) => {
         const R = 6371;
@@ -127,7 +184,8 @@ export default function Maps() {
             </View>
         );
     }
-    console.log(location.coords.latitude, location.coords.longitude);
+
+    // ini user location nih bisa hard code
     const currentLocation = {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,

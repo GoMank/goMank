@@ -1,7 +1,7 @@
 const { gql } = require('apollo-server');
 const axios = require('axios');
 const redis = require('../../config');
-const url = 'https://bitter-baboon-4.loca.lt/';
+const url = 'https://smooth-bobcat-32.loca.lt/';
 
 const typeDefs = gql`
     extend type Query {
@@ -34,6 +34,7 @@ const typeDefs = gql`
             image: String
             rekNumber: String
         ): Mamang
+        nearestMamang(location: [Float]): [Mamang]
         updateMamang(_id: ID, address: [Float]): Mamang
         deleteMamang(id: ID!): responseMamang
     }
@@ -103,17 +104,28 @@ const resolvers = {
             }
         },
 
+        nearestMamang: async (parent, args, context, info) => {
+            try {
+                console.log(args);
+                const mamangs = await axios.post(url + 'mamangs/nearest', {
+                    location: JSON.stringify(args.location),
+                });
+                console.log(mamangs);
+                return mamangs.data.mamangs;
+            } catch (err) {
+                throw new Error(err);
+            }
+        },
+
         updateMamang: async (parent, args, context, info) => {
             try {
-                console.log(url + 'mamangs/address/' + args._id);
-                console.log(`masuk`, args.address, args._id);
+                // console.log(url + 'mamangs/address/' + args._id);
+                // console.log(`masuk`, args.address, args._id);
 
-                const { data } = await axios.patch(
-                    'https://bitter-baboon-4.loca.lt/mamangs/address/62559ddfc9054d53a273fb15',
-                    {
-                        address: JSON.stringify(args.address),
-                    }
-                );
+                const { data } = await axios.patch(url + 'mamangs/address/' + args._id, {
+                    address: JSON.stringify(args.address),
+                });
+                console.log(data, '<<<<<<<<<<<<');
                 return data;
             } catch (err) {
                 throw new Error(err);
