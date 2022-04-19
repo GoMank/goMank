@@ -1,6 +1,66 @@
-import { StyleSheet, Text, View, Image } from "react-native";
-
+import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
+import { useQuery } from "@apollo/client";
+import {FETCH_HISTORY} from "../../config/queries"
 export default function LogPage() {
+  const {loading, error, data} = useQuery(FETCH_HISTORY)
+  
+ 
+  if(loading) {
+    return (
+      <View style={styles.container} >
+      
+
+      <View nestedScrollEnabled={true} >
+       
+        
+
+        <ScrollView >
+          <View >
+          <Text>Loading .....</Text>
+          </View>
+
+
+
+          
+
+
+
+        </ScrollView>
+
+
+      </View>
+
+    </View>
+    )
+    
+  }
+  if(error) {
+    return (
+      <View style={styles.container}>
+      
+
+      <View nestedScrollEnabled={true} >
+       
+        <ScrollView>
+          <View >
+          <Text >Error:  {error.message}</Text>
+          </View>
+
+
+
+          
+
+
+
+        </ScrollView>
+
+
+      </View>
+
+    </View>
+    )
+  } 
+  console.log(data.history, "INI HISTORY")
   return (
     <View style={styles.container}>
       <View style={{ marginTop: 20 }} />
