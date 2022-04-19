@@ -14,21 +14,24 @@ export const UPDATE_MAMANG_LOCATION = gql`
     }
 `;
 
-export const GET_NEAREST_MAMANG = gql`
-    mutation Mutation($location: [Float]) {
-        nearestMamang(location: $location) {
-            _id
-            name
-            email
-            password
-            address {
-                coordinates
+export const FETCH_ORDERS = gql`
+    query Orders {
+        orders {
+            id
+            invoiceNumber
+            price
+            orderStatus
+            paymentStatus
+            clientId
+            address
+            paymentMethod
+            date
+            time
+            mamangId
+            client {
+                name
+                _id
             }
-            phoneNumber
-            gender
-            image
-            rekNumber
-            saldo
         }
     }
 `;
