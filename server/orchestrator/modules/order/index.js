@@ -1,8 +1,9 @@
 const { gql } = require('apollo-server');
 const axios = require('axios');
 const redis = require('../../config');
-const urlPostgre = 'https://fdb5-125-164-20-223.ngrok.io/';
-const urlMongo = 'http://1e6b-139-0-237-101.ngrok.io/';
+const urlPostgre = 'https://sweet-fly-73.loca.lt/';
+const urlMamang = 'https://average-husky-36.loca.lt/';
+const urlClient = 'https://selfish-newt-17.loca.lt/';
 
 const typeDefs = gql`
     extend type Query {
@@ -18,27 +19,28 @@ const typeDefs = gql`
 
     extend type Mutation {
         createOrder(
-            service: String
+            service: Int
             noInvoice: String
             price: Int
             date: String
+            time: String
             statusOrder: String
             statusPayment: String
             address: String
             paymentMethod: String
             clientId: ID!
             mamangId: ID!
-        ): Order
+        ): responseOrder
         updateStatusOrder(id: ID!): responseOrder
         updateCancelOrder(id: ID!): responseOrder
         deleteOrder(id: ID!): responseOrder
     }
 
     extend type Mamang {
-        order: Order
+        order: [Order]
     }
     extend type Client {
-        order: Order
+        order: [Order]
     }
 
     extend type History {
@@ -46,15 +48,20 @@ const typeDefs = gql`
     }
 
     type Order {
-        id: ID!
+        id: ID
         invoiceNumber: String
         price: Int
         orderStatus: String
         paymentStatus: String
-        clientId: ID!
+        clientId: ID
         address: String
         paymentMethod: String
-        mamangId: ID!
+        date: String
+        time: String
+        mamangId: ID
+        service: Int
+        createdAt: String
+        updatedAt: String
         mamang: Mamang
         client: Client
     }
@@ -64,29 +71,36 @@ const resolvers = {
     Query: {
         orders: async () => {
             try {
-                const ordersCache = await redis.get('orders');
+                let ordersCache = await redis.get('orders');
                 let clientCache = await redis.get('clients');
                 let mamangCache = await redis.get('mamangs');
-                let orders = JSON.parse(ordersCache);
+                let orders;
                 if (!mamangCache) {
-                    mamangCache = await axios.get(urlMongo + 'mamangs');
+                    mamangCache = await axios.get(urlMamang + 'mamangs');
                     mamangCache = mamangCache.data;
                     redis.set('mamangs', JSON.stringify(mamangCache));
+                } else {
+                    mamangCache = JSON.parse(mamangCache);
                 }
                 if (!clientCache) {
-                    clientCache = await axios.get(urlPostgre + 'clients');
+                    clientCache = await axios.get(urlClient + 'clients');
                     clientCache = clientCache.data;
                     redis.set('clients', JSON.stringify(clientCache));
+                } else {
+                    clientCache = JSON.parse(clientCache);
                 }
-                if (!orders) {
+                if (!ordersCache) {
                     orders = await axios.get(urlPostgre + 'orders');
                     orders = orders.data;
                     redis.set('orders', JSON.stringify(orders));
+                } else {
+                    ordersCache = JSON.parse(ordersCache);
                 }
                 // return orders;
-                return orders.map((order) => {
-                    const mamang = mamangCache.find((mamang) => mamang._id === order.mamangId);
-                    const client = clientCache.find((client) => client._id === order.clientId);
+                return ordersCache.map((order) => {
+                    console.log(mamangCache);
+                    const mamang = mamangCache.find((mamang) => mamang._id == order.mamangId);
+                    const client = clientCache.find((client) => client._id == order.clientId);
                     return {
                         ...order,
                         mamang,
@@ -100,27 +114,35 @@ const resolvers = {
 
         order: async (parent, args, context, info) => {
             try {
-                console.log(`masuk`, args.id);
                 const orderCache = await redis.get('orders');
                 let clientCache = await redis.get('clients');
                 let mamangCache = await redis.get('mamangs');
-                let orders = JSON.parse(orderCache);
                 let order;
                 let mamang;
                 let client;
-                if (!orders) {
+
+                console.log(orderCache);
+                if (!orderCache) {
+                    console.log(`masuk`);
                     order = await axios.get(urlPostgre + 'orders/' + args.id);
+                    console.log(`masuk`, order);
                     order = order.data;
                 } else {
-                    order = orders.find((order) => order.id == args.id);
+                    console.log(
+                        `masuk`,
+                        JSON.parse(orderCache).find((order) => order.id == args.id)
+                    );
+                    order = JSON.parse(orderCache).find((order) => order.id == args.id);
                 }
                 if (!mamangCache) {
-                    mamangCache = await axios.get(urlMongo + 'mamangs');
+                    mamangCache = await axios.get(urlMamang + 'mamangs');
                     mamangCache = mamangCache.data;
                     redis.set('mamangs', JSON.stringify(mamangCache));
                 } else {
+                    console.log(`masuk sini`, order);
                     mamangCache = JSON.parse(mamangCache);
                     mamang = mamangCache.find((mamang) => mamang._id === order.mamangId);
+                    console.log(mamang, mamangCache);
                 }
                 if (!clientCache) {
                     clientCache = await axios.get(urlPostgre + 'clients');
@@ -143,15 +165,14 @@ const resolvers = {
     },
 
     Mutation: {
-        
         createOrder: async (parent, args, context, info) => {
             try {
                 console.log(`masuk`, args);
                 // let mamangCache = await redis.get('mamangs');
                 // let clientCache = await redis.get('clients');
                 // if (!mamangCache || !clientCache) {
-                //     const mamangs = await axios.get(urlMongo + 'mamangs');
-                //     const clients = await axios.get(urlPostgre + 'clients');
+                //     const mamangs = await axios.get(urlMamang + 'mamangs');
+                //     const clients = await axios.get(urlClient + 'clients');
                 //     mamangCache = mamangs.data;
                 //     clientCache = clients.data;
                 //     redis.set('mamangs', JSON.stringify(mamangCache));
@@ -171,6 +192,7 @@ const resolvers = {
                     clientName: 'dadang',
                 });
 
+                console.log(`masuk`, order.data);
                 await redis.del('orders');
                 return order.data;
             } catch (err) {
@@ -231,14 +253,17 @@ const resolvers = {
     Client: {
         order: async (parent, args, context, info) => {
             try {
-                const orderCache = await redis.get('orders');
-                let orders = JSON.parse(orderCache);
+                let orderCache = await redis.get('orders');
                 let order;
-                if (!orders) {
-                    order = await axios.get(urlPostgre + 'orders' + args.id);
+                if (!orderCache) {
+                    orderCache = await axios.get(urlPostgre + 'orders');
                     order = order.data;
                 }
-                order = orders.find((order) => order.id === args.id);
+                order = JSON.parse(orderCache).filter((order) => {
+                    console.log(order.clientId === parent._id);
+                    return order.clientId == parent._id;
+                });
+                console.log(order);
                 return order;
             } catch (err) {
                 throw new Error(err);
@@ -250,13 +275,12 @@ const resolvers = {
         order: async (parent, args, context, info) => {
             try {
                 const orderCache = await redis.get('orders');
-                let orders = JSON.parse(orderCache);
                 let order;
-                if (!orders) {
-                    order = await axios.get(urlPostgre + 'orders' + args.id);
+                if (!orderCache) {
+                    order = await axios.get(urlPostgre + 'orders/' + parent.id);
                     order = order.data;
                 }
-                order = orders.find((order) => order.id === args.id);
+                order = JSON.parse(orderCache).find((order) => order.id == parent.id);
                 return order;
             } catch (err) {
                 throw new Error(err);

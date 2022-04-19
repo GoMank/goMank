@@ -15,10 +15,46 @@ const typeDefs = gql`
         createdAt: String
         orderId: ID!
     }
+
+    extend type Client {
+        histories: [History]
+    }
 `;
 
 const resolvers = {
     Query: {
+        histories: async (parent, args, context, info) => {
+            try {
+                console.log(`masuk histories`);
+                const historiesCache = await redis.get('logs');
+                let histories;
+
+                if (!historiesCache) {
+                    console.log(`histories tidak ada`, histories);
+                    histories = await axios.get(url + 'logs');
+                    histories = histories.data;
+                    redis.set('logs', JSON.stringify(histories));
+                } else {
+                    histories = JSON.parse(historiesCache);
+                }
+
+                return histories;
+            } catch (err) {
+                throw new Error(err);
+            }
+        },
+
+        history: async (parent, args, context, info) => {
+            try {
+                const historiesCache = await redis.get('logs');
+                return JSON.parse(historiesCache).find((history) => history.id == args.id);
+            } catch (err) {
+                throw new Error(err);
+            }
+        },
+    },
+
+    Client: {
         histories: async (parent, args, context, info) => {
             try {
                 console.log(`masuk histories`);
@@ -33,24 +69,6 @@ const resolvers = {
                 }
 
                 return histories;
-            } catch (err) {
-                throw new Error(err);
-            }
-        },
-
-        history: async (parent, args, context, info) => {
-            try {
-                const historiesCache = await redis.get('logs');
-                let histories = JSON.parse(historiesCache);
-                let history;
-
-                if (!histories) {
-                    history = await axios.get(url + 'logs' + args.id);
-                    history = history.data;
-                }
-
-                history = histories.find((history) => history.id === args.id);
-                return history;
             } catch (err) {
                 throw new Error(err);
             }
