@@ -1,7 +1,7 @@
 const { gql } = require('apollo-server');
 const axios = require('axios');
 const redis = require('../../config');
-const url = 'https://average-husky-36.loca.lt/';
+const url = 'https://bitter-baboon-4.loca.lt/';
 
 const typeDefs = gql`
     extend type Query {
@@ -18,6 +18,11 @@ const typeDefs = gql`
         coordinates: [Float]
     }
 
+    # input AddressInput {
+    #     type: String
+    #     coordinates: [Float]
+    # }
+
     extend type Mutation {
         createMamang(
             name: String
@@ -29,19 +34,7 @@ const typeDefs = gql`
             image: String
             rekNumber: String
         ): Mamang
-        updateMamang(
-            _id: ID
-            name: String
-            email: String
-            password: String
-            address: String
-            phoneNumber: String
-            gender: String
-            image: String
-            rekNumber: String
-            saldo: Int
-        ): Mamang
-
+        updateMamang(_id: ID, address: [Float]): Mamang
         deleteMamang(id: ID!): responseMamang
     }
 
@@ -112,11 +105,15 @@ const resolvers = {
 
         updateMamang: async (parent, args, context, info) => {
             try {
-                console.log(`masuk ga`, args);
-                const { data } = await axios.patch(url + 'mamangs/address/' + args._id, {
-                    address: args.address,
-                });
-                redis.del('mamangs');
+                console.log(url + 'mamangs/address/' + args._id);
+                console.log(`masuk`, args.address, args._id);
+
+                const { data } = await axios.patch(
+                    'https://bitter-baboon-4.loca.lt/mamangs/address/62559ddfc9054d53a273fb15',
+                    {
+                        address: JSON.stringify(args.address),
+                    }
+                );
                 return data;
             } catch (err) {
                 throw new Error(err);
@@ -126,7 +123,7 @@ const resolvers = {
         deleteMamang: async (parent, args, context, info) => {
             try {
                 console.log(`masuk ga`, args);
-                const { data } = await axios.delete(url + 'mamangs/' + args.id);
+                const { data } = await axios.delete(url + 'mamangs/' + args._id);
                 redis.del('mamangs');
                 return data;
             } catch (err) {
