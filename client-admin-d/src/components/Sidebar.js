@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
 import styled from "styled-components";
 import { MdSpaceDashboard, MdEmojiPeople } from "react-icons/md";
-import { RiDashboard2Fill, RiCarWashingFill } from "react-icons/ri";
-import { FaAddressCard } from "react-icons/fa";
-import { GiTwirlCenter, GiHamburgerMenu } from "react-icons/gi";
-import { BsFillChatTextFill } from "react-icons/bs";
-import { IoSettings } from "react-icons/io5";
-import { FiLogOut } from "react-icons/fi";
+import { RiCarWashingFill } from "react-icons/ri";
+import { GiHamburgerMenu } from "react-icons/gi";
 import { VscChromeClose } from "react-icons/vsc";
 import scrollreveal from "scrollreveal";
+// import { RiDashboard2Fill } from "react-icons/ri";
+// import { FaAddressCard } from "react-icons/fa";
+// import { GiTwirlCenter } from "react-icons/gi";
+// import { BsFillChatTextFill } from "react-icons/bs";
+// import { IoSettings } from "react-icons/io5";
+// import { FiLogOut } from "react-icons/fi";
 
 export default function Sidebar() {
 
@@ -79,22 +81,22 @@ export default function Sidebar() {
                 className={currentLink === 2 ? "active" : "none"}
                 onClick={() => setCurrentLink(2)}
               >
-                <a href="#">
+                <Link to="/mamangs">
                   <MdEmojiPeople />
                   <span> Mamanks</span>
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
         </div>
-        <div className="logout">
+        {/* <div className="logout">
           <a href="/">
             <FiLogOut />
             <span className="logout">Logout</span>
           </a>
-        </div>
+        </div> */}
       </Section>
-      <ResponsiveNav state={navbarState} className={navbarState ? "show" : ""}>
+      {/* <ResponsiveNav state={navbarState} className={navbarState ? "show" : ""}>
         <div className="responsive__links">
           <ul>
             <li
@@ -153,7 +155,7 @@ export default function Sidebar() {
             </li>
           </ul>
         </div>
-      </ResponsiveNav>
+      </ResponsiveNav> */}
     </>
   );
 }
@@ -271,48 +273,48 @@ const Section = styled.section`
   }
 `;
 
-const ResponsiveNav = styled.div`
-  position: fixed;
-  right: -10vw;
-  top: 0;
-  z-index: 10;
-  background-color: black;
-  height: 100vh;
-  width: ${({ state }) => (state ? "60%" : "0%")};
-  transition: 0.4s ease-in-out;
-  display: flex;
-  opacity: 0;
-  visibility: hidden;
-  padding: 1rem;
-  .responsive__links {
-    ul {
-      list-style-type: none;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin-top: 3rem;
-      li {
-        padding: 0.6rem 1rem;
-        border-radius: 0.6rem;
-        &:hover {
-          background-color: #079cff;
-          a {
-            color: black;
-          }
-        }
-        a {
-          text-decoration: none;
-          display: flex;
-          gap: 1rem;
-          color: white;
-        }
-      }
-      .active {
-        background-color: #079cff;
-        a {
-          color: black;
-        }
-      }
-    }
-  }
-`;
+// const ResponsiveNav = styled.div`
+//   position: fixed;
+//   right: -10vw;
+//   top: 0;
+//   z-index: 10;
+//   background-color: black;
+//   height: 100vh;
+//   width: ${({ state }) => (state ? "60%" : "0%")};
+//   transition: 0.4s ease-in-out;
+//   display: flex;
+//   opacity: 0;
+//   visibility: hidden;
+//   padding: 1rem;
+//   .responsive__links {
+//     ul {
+//       list-style-type: none;
+//       display: flex;
+//       flex-direction: column;
+//       gap: 1rem;
+//       margin-top: 3rem;
+//       li {
+//         padding: 0.6rem 1rem;
+//         border-radius: 0.6rem;
+//         &:hover {
+//           background-color: #079cff;
+//           a {
+//             color: black;
+//           }
+//         }
+//         a {
+//           text-decoration: none;
+//           display: flex;
+//           gap: 1rem;
+//           color: white;
+//         }
+//       }
+//       .active {
+//         background-color: #079cff;
+//         a {
+//           color: black;
+//         }
+//       }
+//     }
+//   }
+// `;

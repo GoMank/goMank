@@ -26,3 +26,20 @@ query Orders {
   }
 }
 `;
+
+export const GET_MAMANGS = gql`
+query Mamangs {
+  mamangs {
+    name
+    email
+    address {
+      coordinates
+      type
+    }
+    phoneNumber
+    gender
+    image
+    rekNumber
+    saldo
+  }
+}`

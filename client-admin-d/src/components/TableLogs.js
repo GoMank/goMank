@@ -10,7 +10,7 @@ export default function TableLogs() {
         try {
             const logs = await axios({
                 method: "get",
-                url: "http://localhost:3000/logs",
+                url: "http://localhost:3005/logs",
             })
             setLogs(logs.data)
             setLoading(false)
@@ -30,9 +30,12 @@ export default function TableLogs() {
     logs.forEach(el => {
         const dateNumber = new Date(el.createdAt)
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
-        el.createdAt = dateNumber.toLocaleDateString('id-ID', options)
+        el.time = dateNumber.getTime()
+        el.createdFormated = dateNumber.toLocaleDateString('id-ID', options)
     });
-    
+
+    logs.sort(function(a, b){return b.time - a.time});
+    console.log(logs);
     return (
         <Table>
             <table>
@@ -45,10 +48,10 @@ export default function TableLogs() {
                 {logs.map((el, index) => {
                     return (
                         <tr key={el.id}>
-                            <td style={{textAlign: 'center'}}>{index}</td>
+                            <td style={{textAlign: 'center'}}>{index + 1}</td>
                             <td style={{textAlign: 'center'}}>{el.description}</td>
                             <td style={{textAlign: 'center'}}>{el.type}</td>
-                            <td style={{textAlign: 'center'}}>{el.createdAt}</td>
+                            <td style={{textAlign: 'center'}}>{el.createdFormated}</td>
                         </tr>
                     )
                 })}

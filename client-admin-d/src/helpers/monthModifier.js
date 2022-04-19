@@ -24,6 +24,8 @@ const monthModifier = (monthInteger) => {
             return 'November'
         case 12:
             return 'December'
+        default:
+            return 'Invalid month integer'
     }
 }
 

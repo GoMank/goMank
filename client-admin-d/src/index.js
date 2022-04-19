@@ -5,6 +5,7 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import client from './config/apollo';
 import {ApolloProvider} from '@apollo/client'
+import 'flowbite';
 
 ReactDOM.render(
   <ApolloProvider client={client}>

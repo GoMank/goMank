@@ -6,6 +6,12 @@ import { cardStyles } from "./ReusableStyles";
 export default function Profile() {
   return (
     <Section>
+      <div className="title">
+        <h2>Most Valuable Mamang</h2>
+        <h5>
+          April 2022
+        </h5>
+      </div>
       <div className="image">
         <img src={image} alt="" />
       </div>

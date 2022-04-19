@@ -7,7 +7,7 @@ import {
 } from "@apollo/client";
 
 const client = new ApolloClient({
-    uri: 'http://localhost:3000/orders',
+    uri: 'https://135b-180-252-113-132.ngrok.io',
     cache: new InMemoryCache()
 });
 

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import styled from "styled-components";
 import axios from "axios";
 import { HiArrowNarrowRight } from "react-icons/hi";
-import avatarImage from "../assets/avatarImage.png";
 import { cardStyles } from "./ReusableStyles";
 
 export default function Transfers() {
@@ -14,7 +13,7 @@ export default function Transfers() {
     try {
       const logs = await axios({
         method: "get",
-        url: "http://localhost:3000/logs",
+        url: "http://localhost:3005/logs",
       })
       setLogs(logs.data)
       setLoading(false)
@@ -26,28 +25,6 @@ export default function Transfers() {
   useEffect(() => {
     fetchLogs()
   }, [])
-
-  const transactions = [
-    { id: 1,
-      image: avatarImage,
-      name: "From Kishan Sheth",
-      time: "Today, 16:36",
-      amount: "+$50",
-    },
-    { id: 2,
-      image: avatarImage,
-      name: "To Lauras Santos",
-      time: "Today, 08:49",
-      amount: "-$25",
-    },
-    { id: 3,
-      image: avatarImage,
-      name: "From Jadon S.",
-      time: "Yesterday, 14:36",
-      amount: "+$150",
-    },
-  ];
-
   
   if(loading){
     return <div>Loading...</div>
@@ -62,8 +39,7 @@ export default function Transfers() {
 
   logs.sort(function(a, b){return b.time - a.time});
   const displayLogs = [logs[0], logs[1], logs[2]];
-
-  console.log(displayLogs);
+  
   return (
     <Section>
       <div className="title">

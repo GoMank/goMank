@@ -23,9 +23,11 @@ export default function FAQ(props) {
   }, [])
 
   const dataFiltered = dataOrder.filter((el) => {
+    let arr
     if(el.dateFormated.month === date.month && el.dateFormated.year === date.year){
-      return el
+      arr = el
     }
+    return arr
   })
 
   dataFiltered.forEach(element => {

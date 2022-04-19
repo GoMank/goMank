@@ -17,7 +17,7 @@ export default function Dashboard() {
     try {
       const orders = await axios({
         method: "get",
-        url: "http://localhost:3000/orders",
+        url: "http://localhost:3005/orders",
       })
       setDataOrder(orders.data)
       setLoading(false)
