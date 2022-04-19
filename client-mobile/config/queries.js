@@ -34,18 +34,25 @@ query Orders {
     address
     paymentMethod
     mamangId
-    mamang {
-      name
-      phoneNumber
-    }
     client {
       name
-      phoneNumber
+      _id
     }
+    
 
   }
 }
 `
+
+export const CREATE_ORDER = gql`
+mutation Mutation($clientId: ID!, $mamangId: ID!, $service: Int, $date: String, $time: String, $address: String, $paymentMethod: String) {
+  createOrder(clientId: $clientId, mamangId: $mamangId, service: $service, date: $date, time: $time, address: $address, paymentMethod: $paymentMethod) {
+    message
+  }
+}
+
+`
+
 export const FETCH_ORDER_BY_ID = gql`
  query Order($orderId: ID!) {
   order(id: $orderId) {
@@ -69,13 +76,21 @@ export const FETCH_ORDER_BY_ID = gql`
   }
 }
 `
-export const FETCH_HISTORY  = gql`
+export const FETCH_HISTORY = gql`
 query History {
 histories {
   id
   orderId
   description
   createdAt
+  order {
+      invoiceNumber
+      id
+      orderStatus
+    }
+
+
+
   
 
   }

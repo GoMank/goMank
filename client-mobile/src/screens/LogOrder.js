@@ -63,7 +63,7 @@ export default function LogOrder() {
     </View>
     )
   } 
-  console.log(data.orders, "INI ORDERS")
+  console.log(data.orders)
   return (
     <ScrollView contentContainerStyle={ {alignItems: "center"}} style={{flex: 1,
       backgroundColor: "#E5E5E5",
@@ -114,7 +114,7 @@ export default function LogOrder() {
             <Text style={styles.description}>07.00</Text>
 
             <Text style={styles.liteTitle}>Customer</Text>
-            <Text style={styles.description}>{order.client.name}</Text>
+            <Text style={styles.description}>{order.clientId}</Text>
           </View>
           <View style={{ marginLeft: "20%" }}>
             <Text style={styles.price}> {order.price}</Text>

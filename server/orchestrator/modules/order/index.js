@@ -1,9 +1,9 @@
 const { gql } = require('apollo-server');
 const axios = require('axios');
 const redis = require('../../config');
-const urlPostgre = 'https://sweet-fly-73.loca.lt/';
-const urlMamang = 'https://average-husky-36.loca.lt/';
-const urlClient = 'https://selfish-newt-17.loca.lt/';
+const urlPostgre = 'https://short-wasp-34.loca.lt/';
+const urlMamang = 'https://big-sheep-18.loca.lt/';
+const urlClient = 'https://https://sharp-bird-66.loca.lt/';
 
 const typeDefs = gql`
     extend type Query {

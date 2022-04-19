@@ -60,9 +60,11 @@ export default function LogPage() {
     </View>
     )
   } 
-  console.log(data.history, "INI HISTORY")
+  console.log(data.histories, "INI HISTORY")
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={ {alignItems: "center"}} style={{flex: 1,
+      backgroundColor: "#E5E5E5",
+     }}>
       <View style={{ marginTop: 20 }} />
       <View style={styles.card}>
         <View style={{ justifyContent: "center" }}>
@@ -74,7 +76,22 @@ export default function LogPage() {
           <Text style={styles.description}>Your booking status no. 2019100007 has been canceled</Text>
         </View>
       </View>
-    </View>
+      {data.histories.map(history => {
+          return (
+            <View style={styles.card}>
+        <View style={{ justifyContent: "center" }}>
+          <Image source={require("../../assets/LogoGomank.png")} style={styles.Image} />
+        </View>
+        <View style={{ justifyContent: "center" }}>
+          <Text style={styles.title}>Booking Status { history.order  ? history.order.orderStatus.toUpperCase() : "_" }</Text>
+          <Text style={styles.subTitle}>No: { history.order  ? history.order.invoiceNumber : "" }</Text>
+          <Text style={styles.description}>{history.description}</Text>
+        </View>
+      </View>
+          )
+        })}
+      
+    </ScrollView>
   );
 }
 

@@ -43,7 +43,7 @@ const Chat = () => {
     if (!connected) {
         return (
             <View>
-                <Text>Connecting...</Text>
+                <Text>Connecting...?</Text>
             </View>
         );
     }
