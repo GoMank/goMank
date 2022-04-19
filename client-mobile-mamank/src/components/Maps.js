@@ -16,7 +16,7 @@ export default function Maps() {
         data: nearestMamang,
         loading: nearestLoading,
         error: nearestError,
-    } = useQuery(GET_NEAREST_MAMANG);
+    } = useMutation(GET_NEAREST_MAMANG);
     const [updateMamangLoc, { data: mamangLoc, loading: mamangLoading, error: mamangtError }] =
         useMutation(UPDATE_MAMANG_LOCATION);
 
@@ -92,6 +92,7 @@ export default function Maps() {
                 //     longitude: currentLocation.coords.longitude,
                 // });
                 // setAddress(address);
+
                 const _currentDistance =
                     getDistance(
                         currentLocation?.coords?.latitude,
@@ -121,7 +122,6 @@ export default function Maps() {
         };
     }, []);
 
-    console.log(location, '<<<<<<<<');
     // hitung jarak
     const getDistance = (lat1 = 0, lon1 = 0, lat2 = 1000, lon2 = 1000) => {
         const R = 6371;

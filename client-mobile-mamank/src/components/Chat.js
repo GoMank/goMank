@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import io from 'socket.io-client';
 import { GiftedChat } from 'react-native-gifted-chat';
 
-const socketUrl = 'https://824b-180-252-113-132.ngrok.io';
+const socketUrl = 'https://d3f7-180-252-113-132.ngrok.io';
 
 const Chat = () => {
     const [socket, setSocket] = useState(null);
