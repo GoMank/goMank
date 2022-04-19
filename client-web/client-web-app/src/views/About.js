@@ -6,7 +6,7 @@ export default function About() {
             <div className="bg-white grid grid-cols-2 justify-items-center">
 
                 <div className="rounded-full flex items-center px-7 py-7">
-                    <img className="rounded-full" src={require('../about-img.jpg')}></img>
+                    <img className="rounded-full  overflow" src={require('../about-img.jpg')}></img>
                 </div>
                 <div className="px-2 py-9 min-w-md">
                     <h1 className="text-3xl pb-3 mx-4 text-left font-bold text-gray-600">Tentang GoMank</h1>

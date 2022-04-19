@@ -69,6 +69,19 @@ export const FETCH_ORDER_BY_ID = gql`
   }
 }
 `
+export const FETCH_HISTORY  = gql`
+query History {
+histories {
+  id
+  orderId
+  description
+  createdAt
+  
+
+  }
+}
+`
+
 
 export const FETCH_MAMANGS = gql`
 query Mamangs {

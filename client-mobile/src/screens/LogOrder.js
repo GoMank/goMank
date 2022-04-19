@@ -10,7 +10,7 @@ export default function LogOrder() {
  
   if(loading) {
     return (
-      <View >
+      <View style={styles.container} >
       
 
       <View nestedScrollEnabled={true} >
@@ -39,13 +39,11 @@ export default function LogOrder() {
   }
   if(error) {
     return (
-      <View >
+      <View style={styles.container}>
       
 
       <View nestedScrollEnabled={true} >
        
-        
-
         <ScrollView>
           <View >
           <Text >Error:  {error.message}</Text>

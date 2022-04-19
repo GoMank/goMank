@@ -1,7 +1,7 @@
 const { gql } = require('apollo-server');
 const axios = require('axios');
 const redis = require('../../config');
-const url = 'https://fdb5-125-164-20-223.ngrok.io/';
+const url = 'https://popular-squid-31.loca.lt/';
 
 const typeDefs = gql`
     extend type Query {
