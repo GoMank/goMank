@@ -1,7 +1,7 @@
 const { gql } = require('apollo-server');
 const axios = require('axios');
 const redis = require('../../config');
-const url = 'https://curly-bear-7.loca.lt/';
+const url = 'https://selfish-newt-17.loca.lt/';
 
 const typeDefs = gql`
     extend type Query {
@@ -52,7 +52,6 @@ const typeDefs = gql`
 const resolvers = {
     Query: {
         clients: async () => {
-            console.log(`masuk clients`);
             try {
                 const clientsCache = await redis.get('clients');
                 let clients = JSON.parse(clientsCache);
@@ -62,7 +61,6 @@ const resolvers = {
                     clients = clients.data;
                     redis.set('clients', JSON.stringify(clients));
                 }
-                console.log(clients);
                 return clients;
             } catch (err) {
                 console.log(`Error: ${err}`);

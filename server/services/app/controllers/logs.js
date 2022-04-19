@@ -18,6 +18,16 @@ class logsController {
 
     }
 
+    // static async createLog(data) {
+
+    //     try {
+    //         await Log.create(data)
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+
+    // }
+
 }
 
 module.exports = logsController

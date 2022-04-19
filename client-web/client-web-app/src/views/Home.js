@@ -123,10 +123,7 @@ export default function Home() {
 
             </div>
 
-            <div className="bg-gomank-yellow h-6">
-                
-
-            </div>
+            
 
         </div>
     )
