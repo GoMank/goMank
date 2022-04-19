@@ -1,14 +1,19 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import { useState , useRef } from "react";
+import { useState, useRef } from "react";
 import { useNavigation } from '@react-navigation/native'
 import { WebView } from 'react-native-webview';
 import SandboxTest from "./SandboxTest";
 import axios from 'axios';
 
+
 export default function PaymentPage(order) {
     const dataOrder = order.route.params
     console.log("🚀 ~ file: PaymentPage.js ~ line 7 ~ PaymentPage ~ dataOrder", dataOrder)
     const navigation = useNavigation();
+
+    const [paymentInput, setPayment] = useState('');
+    console.log(paymentInput, "INI PAYMENT INPUT")
+    
 
     async function xendit() {
         console.log('masuk');
@@ -33,11 +38,11 @@ export default function PaymentPage(order) {
            </TouchableOpacity>
            <TouchableOpacity style={styles.containerImage} value={midTrans} onPress={midTrans}>
                 <Image source={require("../../assets/midtrans.png")} style={styles.image} />
-           </TouchableOpacity>
-           <TouchableOpacity style={styles.containerImage}>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.containerImage}>
                 <Image source={require("../../assets/paymank.png")} style={styles.image} />
-           </TouchableOpacity>
-       </View>
+            </TouchableOpacity>
+        </View>
     )
 }
 
@@ -47,9 +52,9 @@ const styles = StyleSheet.create({
         // backgroundColor:'blue',
         // alignItems:'center',
     },
-    containerImage:{
-        alignItems:'center',
-        marginVertical:10
+    containerImage: {
+        alignItems: 'center',
+        marginVertical: 10
     },
     image: {
         width: "85%",
