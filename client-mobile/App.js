@@ -37,8 +37,8 @@ export default function App() {
             headerShown: false,
           }}
         >
-          <Stack.Screen name="ChatClient" component={ChatClient} />
           <Stack.Screen name="TabNav" component={TabNav} />
+          <Stack.Screen name="ChatClient" component={ChatClient} />
           <Stack.Screen name="mapsClient" component={MapsClient} />
           <Stack.Screen name="SandboxTest" component={SandboxTest} />
           {/* <Stack.Screen name="LoginBio" component={LoginBio} /> */}

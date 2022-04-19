@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 import tw from 'twrnc';
 import { GiftedChat } from 'react-native-gifted-chat';
 
-const socketUrl = 'https://7ec4-180-252-127-246.ngrok.io';
+const socketUrl = 'https://d3f7-180-252-113-132.ngrok.io';
 // const socket = io(socketUrl);
 const Chat = () => {
     const [socket, setSocket] = useState(null);
