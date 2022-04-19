@@ -15,7 +15,7 @@ export default function CardPaymank() {
             <Text style={{ color: "#FFB300", fontSize: 12 }}>See Details</Text>
           </View>
         </View>
-
+      
         <View style={{ flexDirection: "row", justifyContent: "space-evenly", width: "55%" }}>
           <View style={{ alignItems: "center" }}>
             <View style={styles.iconBoxGomank}>

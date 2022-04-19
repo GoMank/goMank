@@ -10,6 +10,7 @@ import Maps from '../screens/Maps';
 import HomePage from '../screens/HomePage';
 import LogPage from '../screens/LogPage';
 import LogOrder from '../screens/LogOrder';
+import ChatClient from '../components/ChatClient';
 
 function HomeScreen() {
   return (
@@ -101,7 +102,7 @@ export default function TabNav() {
         /> */}
 
         <Tab.Screen name="Maps" component={Maps} options={{headerShown: false,}} />
-        <Tab.Screen name="Chat" component={Maps} options={{headerShown: false}} />
+        <Tab.Screen name="Chat" component={ChatClient} options={{headerShown: false}} />
         <Tab.Screen name="Home" component={HomePage} options={{headerShown: false}}/>
         <Tab.Screen name="History" component={LogPage} options={{headerShown: false}}/>
         <Tab.Screen name="Orders" component={LogOrder} options={{headerShown: false}}/>

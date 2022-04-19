@@ -253,15 +253,21 @@ export default function FormOrder(mamank) {
         >
           <View style={styles.centeredView2}>
             <View style={styles.modalView}>
-              <Text style={styles.textModalName}>Nama User</Text>
-              <Text style={styles.textModalName}>085689651234</Text>
+              <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                <View >
+                  <Text style={styles.textModalName}>Nama User</Text>
+                  <Text style={styles.textModalName}>085689651234</Text>
+                </View>
+                <View >
+                  <Image style={styles.image} source={require('../../assets/LogoGomank.png')} />
+                </View>
+              </View>
+
               <Text style={styles.textModalJudul}>Price</Text>
-              <Text style={styles.textModalIsi}>Rp 250.000</Text>
+              <Text style={styles.textModalIsi}>Rp {dataMamank.price}</Text>
 
             <View style={{flexDirection:'row'}}>
               
-           
-
             <View style={{marginRight:"20%"}}>
               <Text style={styles.textModalJudul}>Date</Text>
               <Text style={styles.textModalIsi}>
@@ -277,16 +283,14 @@ export default function FormOrder(mamank) {
             </View>
               <Text style={styles.textModalJudul}>Address</Text>
               <Text style={styles.textModalIsi}>{ formAddress }</Text>
-
-
               
-              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+              <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:50}}>
 
               <Pressable
                 style={[styles.buttonBack]}
                 onPress={() => setModalVisible(!modalVisible)}
               >
-                <Text style={styles.textModalIsi}>Back</Text>
+                <Text style={styles.textStyle2}>Back</Text>
               </Pressable>
               <Pressable
                 style={styles.buttonCheckout}
@@ -294,6 +298,8 @@ export default function FormOrder(mamank) {
                   clientId:1,
                   mamangId:1,
                   service:+dataMamank.id,
+                  price:+dataMamank.price,
+                  email:"test@gmail.com",
                   date:date.toUTCString().split(" ").slice(1, 4).join(" "),
                   time:time.toLocaleTimeString("en-US", {hour12: false, hour: "numeric", minute: "numeric",}),
                 })}
@@ -513,14 +519,14 @@ const styles = StyleSheet.create({
     padding: 10,
     elevation: 2,
   },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-  },
+
   textStyle: {
     color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  textStyle2: {
+    color: "#003B6A",
     fontWeight: "bold",
     textAlign: "center",
   },
@@ -546,15 +552,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#FFB300",
     fontWeight: "bold",
-    paddingTop: 20,
+    paddingTop: 15,
   },
   textModalIsi: {
-    fontSize: 18,
+    fontSize: 16,
     color: "#003B6A",
     // fontWeight: "bold",
   },
   buttonBack: {
-    width: "45%",
+    width: "47%",
     backgroundColor:"white",
     borderColor: "#FFB300",
     justifyContent: "center",
@@ -565,11 +571,18 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   buttonCheckout: {
-    width: "45%",
+    width: "47%",
     backgroundColor:"#003B6A",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
     elevation: 2,
-  }
+  },
+  image: {
+    // backgroundColor: "pink",
+    paddingTop: 5,
+    width: 53,
+    height: 53,
+    resizeMode: 'contain',
+  },
 });
