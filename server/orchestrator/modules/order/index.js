@@ -110,7 +110,6 @@ const resolvers = {
                 throw new Error(err);
             }
         },
-
         order: async (parent, args, context, info) => {
             try {
                 const orderCache = await redis.get('orders');
@@ -180,7 +179,6 @@ const resolvers = {
                 throw new Error(err);
             }
         },
-
         updateStatusOrder: async (parent, args, context, info) => {
             try {
                 const order = await axios.patch(urlPostgre + 'orders/edit/done/' + args.id);
@@ -219,15 +217,14 @@ const resolvers = {
     Mamang: {
         order: async (parent, args, context, info) => {
             try {
-                const orderCache = await redis.get('orders');
-                let orders = JSON.parse(orderCache);
-                let order;
-                if (!orders) {
-                    order = await axios.get(urlPostgre + 'orders' + args.id);
-                    order = order.data;
+                let orderCache = await redis.get('orders');
+                if (!orderCache) {
+                    orderCache = await axios.get(urlPostgre + 'orders');
+                    orderCache = orderCache.data;
+                } else {
+                    orderCache = JSON.parse(orderCache);
                 }
-                order = orders.find((order) => order.id === args.id);
-                return order;
+                return orderCache.filter((order) => order.mamangId == parent._id);
             } catch (err) {
                 throw new Error(err);
             }
@@ -238,17 +235,13 @@ const resolvers = {
         order: async (parent, args, context, info) => {
             try {
                 let orderCache = await redis.get('orders');
-                let order;
                 if (!orderCache) {
                     orderCache = await axios.get(urlPostgre + 'orders');
-                    order = order.data;
+                    orderCache = orderCache.data;
+                } else {
+                    orderCache = JSON.parse(orderCache);
                 }
-                order = JSON.parse(orderCache).filter((order) => {
-                    console.log(order.clientId === parent._id);
-                    return order.clientId == parent._id;
-                });
-                console.log(order);
-                return order;
+                return orderCache.filter((order) => order.clientId == parent._id);
             } catch (err) {
                 throw new Error(err);
             }
@@ -265,8 +258,7 @@ const resolvers = {
                 } else {
                     orderCache = JSON.parse(orderCache);
                 }
-                orderCache = orderCache.find((order) => order.id == parent.orderId);
-                return orderCache;
+                return orderCache.find((order) => order.id == parent.orderId);
             } catch (err) {
                 throw new Error(err);
             }
