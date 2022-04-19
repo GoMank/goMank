@@ -1,7 +1,7 @@
 const { gql } = require('apollo-server');
 const axios = require('axios');
 const redis = require('../../config');
-const urlPostgre = 'https://short-wasp-34.loca.lt/';
+const urlPostgre = 'http://c4e6-139-0-237-101.ngrok.io/';
 const urlMamang = 'https://big-sheep-18.loca.lt/';
 const urlClient = 'https://sharp-bird-66.loca.lt/';
 
@@ -167,24 +167,6 @@ const resolvers = {
         createOrder: async (parent, args, context, info) => {
             try {
                 console.log(`masuk`, args);
-                // let mamangCache = await redis.get('mamangs');
-                // let clientCache = await redis.get('clients');
-                // if (!mamangCache || !clientCache) {
-                //     const mamangs = await axios.get(urlMamang + 'mamangs');
-                //     const clients = await axios.get(urlClient + 'clients');
-                //     mamangCache = mamangs.data;
-                //     clientCache = clients.data;
-                //     redis.set('mamangs', JSON.stringify(mamangCache));
-                //     redis.set('clients', JSON.stringify(clientCache));
-                // }
-                // const mamang = JSON.parse(mamangCache).find(
-                //     (mamang) => mamang._id === args.mamangId
-                // );
-                // const client = JSON.parse(clientCache).find(
-                //     (client) => client._id === args.clientId
-                // );
-                // console.log(`masuk`, mamang, client);
-
                 const order = await axios.post(urlPostgre + 'orders', {
                     ...args,
                     mamangName: 'ujang',
@@ -203,6 +185,7 @@ const resolvers = {
             try {
                 const order = await axios.patch(urlPostgre + 'orders/edit/done/' + args.id);
                 await redis.del('orders');
+                await redis.del('logs');
                 console.log(order.data);
                 return order.data;
             } catch (err) {
@@ -213,6 +196,7 @@ const resolvers = {
             try {
                 const order = await axios.patch(urlPostgre + 'orders/edit/cancel/' + args.id);
                 await redis.del('orders');
+                await redis.del('logs');
                 console.log(order.data);
                 return order.data;
             } catch (err) {
@@ -223,6 +207,7 @@ const resolvers = {
             try {
                 const order = await axios.delete(urlPostgre + 'orders/delete/' + args.id);
                 await redis.del('orders');
+                await redis.del('logs');
                 console.log(order.data);
                 return order.data;
             } catch (err) {
@@ -273,14 +258,15 @@ const resolvers = {
     History: {
         order: async (parent, args, context, info) => {
             try {
-                const orderCache = await redis.get('orders');
-                let order;
+                let orderCache = await redis.get('orders');
                 if (!orderCache) {
-                    order = await axios.get(urlPostgre + 'orders/' + parent.id);
-                    order = order.data;
+                    orderCache = await axios.get(urlPostgre + 'orders/');
+                    orderCache = orderCache.data;
+                } else {
+                    orderCache = JSON.parse(orderCache);
                 }
-                order = JSON.parse(orderCache).find((order) => order.id == parent.id);
-                return order;
+                orderCache = orderCache.find((order) => order.id == parent.orderId);
+                return orderCache;
             } catch (err) {
                 throw new Error(err);
             }
