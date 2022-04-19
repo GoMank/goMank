@@ -8,6 +8,7 @@ router.use('/orders', routerOrder)
 router.use('/logs', routerLogs)
 
 router.post("/xenditPay",orderController.xendintPayment)
+router.post("/", orderController.homeCallback)
 
 router.get('/', (req, res) => {
     res.send('ini home')

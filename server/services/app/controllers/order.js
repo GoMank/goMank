@@ -1,5 +1,6 @@
 const { Order, Log } = require('../models')
 const { sequelize, Sequelize: { op } } = require('../models')
+const axios = require('axios')
 // const logsController = require('./logs')
 const logSwitch = require('../helpers/logSwitch')
 const typeSwitch = require('../helpers/typeSwitch')
@@ -167,14 +168,15 @@ class orderController {
 
     static async xendintPayment(req, res, next) {
         try {
-          // console.log(req.requestAccess,"ini reqbody");
-          console.log(req.body.price,"ini reqbody");
+        // console.log(req.requestAccess,"ini reqbody");
+        // console.log(req.body.price,"ini reqbody");
+        console.log('masuk xendit');
           const timestamp = Date.now()
           const noInvoice = Math.floor(Math.random(999) * 999)
           const data = {
             external_id: `invoice-${timestamp}`,
-            amount: req.body.price,
-            payer_email: req.requestAccess.email,
+            amount: 15000000,
+            payer_email: 'gantengmaut@maung.kiw',
             description: "Invoice #"+ noInvoice
           };
           let response = await axios.post("https://api.xendit.co/v2/invoices",data,{
@@ -201,9 +203,20 @@ class orderController {
           let responseUrl = response.data.invoice_url;
           res.status(200).json(responseUrl);
         } catch (err) {
-          next(error);
+          next(err);
         }
       }
+
+      static async homeCallback(req, res, next) {
+        try {
+          console.log(req.body);
+          res.status(200).json({ message: "callback dari xendit masuk" });
+          
+        } catch (err) {
+          next(err);
+        }
+      }
+    
 
 }
 
