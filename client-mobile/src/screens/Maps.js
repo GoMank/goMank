@@ -46,8 +46,8 @@ export default function Maps() {
   const tokyoRegion = {
     latitude: -6.254782,
     longitude: 106.86587,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
+    latitudeDelta: 0.005,
+    longitudeDelta: 0.005,
   };
 
 
@@ -62,8 +62,8 @@ export default function Maps() {
   const currentLocation = {
     latitude: text.coords.latitude,
     longitude: text.coords.longitude,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+    latitudeDelta: 0.005,
+    longitudeDelta: 0.005,
   };
     return (
       <View style={styles.container}>

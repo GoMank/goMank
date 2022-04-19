@@ -11,22 +11,25 @@ export default function PaymentPage(order) {
     const navigation = useNavigation();
 
     async function xendit() {
-        const data =  await axios.post('https://2be5-125-164-21-106.ngrok.io/xenditPay')
+        console.log('masuk');
+        const data =  await axios.post('https://kind-shrimp-44.loca.lt/payments/xendit',{
+            email:dataOrder.email,
+            price:dataOrder.price,
+        })
         return navigation.navigate('SandboxTest',{urlData: data.data})
     }
 
     async function midTrans() {
-        const data =  await axios.post(`http://39ad-125-160-239-125.ngrok.io/orders/midTransPay`)
-        return navigation.navigate('SandboxTest',{urlData: data.data})
+        const data =  await axios.post(`https://nasty-snake-42.loca.lt/payments/midtrans`,{
+            price:dataOrder.price,
+        })
+        return navigation.navigate('MidtransPayment',{urlData: data.data})
     }
 
     return(
        <View style={styles.container}>
            <TouchableOpacity style={styles.containerImage} value={xendit} onPress={xendit}>
-           {/* <TouchableOpacity style={styles.containerImage} value={xendit} onPress={()=> navigation.navigate('SandboxTest')}> */}
-               {/* <View style={styles.containerImage}> */}
                 <Image source={require("../../assets/xendit.png")} style={styles.image} />
-               {/* </View> */}
            </TouchableOpacity>
            <TouchableOpacity style={styles.containerImage} value={midTrans} onPress={midTrans}>
                 <Image source={require("../../assets/midtrans.png")} style={styles.image} />
