@@ -1,9 +1,9 @@
 const { gql } = require('apollo-server');
 const axios = require('axios');
 const redis = require('../../config');
-const urlPostgre = 'https://sweet-fly-73.loca.lt/';
-const urlMamang = 'https://average-husky-36.loca.lt/';
-const urlClient = 'https://selfish-newt-17.loca.lt/';
+const urlPostgre = 'https://short-wasp-34.loca.lt/';
+const urlMamang = 'https://big-sheep-18.loca.lt/';
+const urlClient = 'https://sharp-bird-66.loca.lt/';
 
 const typeDefs = gql`
     extend type Query {
@@ -75,6 +75,7 @@ const resolvers = {
                 let clientCache = await redis.get('clients');
                 let mamangCache = await redis.get('mamangs');
                 let orders;
+
                 if (!mamangCache) {
                     mamangCache = await axios.get(urlMamang + 'mamangs');
                     mamangCache = mamangCache.data;
@@ -90,15 +91,13 @@ const resolvers = {
                     clientCache = JSON.parse(clientCache);
                 }
                 if (!ordersCache) {
-                    orders = await axios.get(urlPostgre + 'orders');
-                    orders = orders.data;
-                    redis.set('orders', JSON.stringify(orders));
+                    ordersCache = await axios.get(urlPostgre + 'orders');
+                    ordersCache = ordersCache.data;
+                    redis.set('orders', JSON.stringify(ordersCache));
                 } else {
                     ordersCache = JSON.parse(ordersCache);
                 }
-                // return orders;
                 return ordersCache.map((order) => {
-                    console.log(mamangCache);
                     const mamang = mamangCache.find((mamang) => mamang._id == order.mamangId);
                     const client = clientCache.find((client) => client._id == order.clientId);
                     return {
