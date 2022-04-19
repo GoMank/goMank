@@ -206,7 +206,6 @@ const resolvers = {
                 const order = await axios.delete(urlPostgre + 'orders/delete/' + args.id);
                 await redis.del('orders');
                 await redis.del('logs');
-                console.log(order.data);
                 return order.data;
             } catch (err) {
                 throw new Error(err);
