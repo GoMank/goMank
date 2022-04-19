@@ -1,9 +1,75 @@
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { StyleSheet, Text, View, Pressable, FlatList, ScrollView, SafeAreaView } from "react-native";
+import { useQuery } from "@apollo/client";
+import { FETCH_ORDERS } from "../../config/queries";
+
+
 
 export default function LogOrder() {
+  const {loading, error, data} = useQuery(FETCH_ORDERS)
+  
+ 
+  if(loading) {
+    return (
+      <View style={styles.container} >
+      
+
+      <View nestedScrollEnabled={true} >
+       
+        
+
+        <ScrollView >
+          <View >
+          <Text>Loading .....</Text>
+          </View>
+
+
+
+          
+
+
+
+        </ScrollView>
+
+
+      </View>
+
+    </View>
+    )
+    
+  }
+  if(error) {
+    return (
+      <View style={styles.container}>
+      
+
+      <View nestedScrollEnabled={true} >
+       
+        <ScrollView>
+          <View >
+          <Text >Error:  {error.message}</Text>
+          </View>
+
+
+
+          
+
+
+
+        </ScrollView>
+
+
+      </View>
+
+    </View>
+    )
+  } 
+  console.log(data.orders)
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={ {alignItems: "center"}} style={{flex: 1,
+      backgroundColor: "#E5E5E5",
+     }}>
       <View style={{ marginTop: 20 }} />
+   
       <View style={styles.card}>
         <View style={{ flexDirection: "row" }}>
           <View>
@@ -35,7 +101,45 @@ export default function LogOrder() {
           <Text style={styles.textButton}>Details</Text>
         </Pressable>
       </View>
-    </View>
+      {data.orders.map(order => {
+          return (
+            <View style={styles.card}>
+        <View style={{ flexDirection: "row" }}>
+          <View>
+            <Text style={styles.title}>CANCEL</Text>
+            <Text style={styles.subTitle}>No: {order.invoiceNumber}</Text>
+
+            <Text style={styles.liteTitle}>Time</Text>
+            <Text style={styles.description}>16 Oct 2019</Text>
+            <Text style={styles.description}>07.00</Text>
+
+            <Text style={styles.liteTitle}>Customer</Text>
+            <Text style={styles.description}>{order.clientId}</Text>
+          </View>
+          <View style={{ marginLeft: "20%" }}>
+            <Text style={styles.price}> {order.price}</Text>
+            <Text style={styles.description}>{order.paymentMethod.toUpperCase()}</Text>
+
+            <Text style={styles.liteTitle}>Payment</Text>
+            <Text style={styles.description}>{order.paymentStatus.toUpperCase()}</Text>
+          </View>
+        </View>
+
+        <View>
+          <Text style={styles.liteTitle}>Address</Text>
+          <Text style={styles.description}>{order.address}</Text>
+        </View>
+
+        <Pressable style={styles.button}>
+          <Text style={styles.textButton}>Details</Text>
+        </Pressable>
+      </View>
+          )
+        })}
+  
+      
+      
+    </ScrollView>
   );
 }
 

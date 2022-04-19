@@ -1,8 +1,63 @@
-import { StyleSheet, Text, View, Image } from "react-native";
-
+import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
+import { useQuery } from "@apollo/client";
+import {FETCH_HISTORY} from "../../config/queries"
 export default function LogPage() {
+  const {loading, error, data} = useQuery(FETCH_HISTORY)
+  
+ 
+  if(loading) {
+    return (
+      <View style={styles.container} >
+      
+
+      <View nestedScrollEnabled={true} >
+       
+        
+
+        <ScrollView >
+          <View >
+          <Text>Loading .....</Text>
+          </View>
+
+
+
+          
+
+
+
+        </ScrollView>
+
+
+      </View>
+
+    </View>
+    )
+    
+  }
+  if(error) {
+    return (
+      <View style={styles.container}>
+      
+      <View nestedScrollEnabled={true} >
+       
+        <ScrollView>
+          <View >
+          <Text >Error:  {error.message}</Text>
+          </View>
+
+        </ScrollView>
+
+
+      </View>
+
+    </View>
+    )
+  } 
+  console.log(data.histories, "INI HISTORY")
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={ {alignItems: "center"}} style={{flex: 1,
+      backgroundColor: "#E5E5E5",
+     }}>
       <View style={{ marginTop: 20 }} />
       <View style={styles.card}>
         <View style={{ justifyContent: "center" }}>
@@ -14,7 +69,22 @@ export default function LogPage() {
           <Text style={styles.description}>Your booking status no. 2019100007 has been canceled</Text>
         </View>
       </View>
-    </View>
+      {data.histories.map(history => {
+          return (
+            <View style={styles.card}>
+        <View style={{ justifyContent: "center" }}>
+          <Image source={require("../../assets/LogoGomank.png")} style={styles.Image} />
+        </View>
+        <View style={{ justifyContent: "center" }}>
+          <Text style={styles.title}>Booking Status { history.order  ? history.order.orderStatus.toUpperCase() : "_" }</Text>
+          <Text style={styles.subTitle}>No: { history.order  ? history.order.invoiceNumber : "" }</Text>
+          <Text style={styles.description}>{history.description}</Text>
+        </View>
+      </View>
+          )
+        })}
+      
+    </ScrollView>
   );
 }
 

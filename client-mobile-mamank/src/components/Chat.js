@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import io from 'socket.io-client';
 import { GiftedChat } from 'react-native-gifted-chat';
 
-const socketUrl = 'https://d3f7-180-252-113-132.ngrok.io';
+const socketUrl = 'https://a566-180-252-113-132.ngrok.io/';
 
 const Chat = () => {
     const [socket, setSocket] = useState(null);
@@ -48,7 +48,7 @@ const Chat = () => {
     if (!connected) {
         return (
             <View>
-                <Text>Connecting...</Text>
+                <Text>Connecting...!</Text>
             </View>
         );
     }
@@ -69,18 +69,22 @@ const Chat = () => {
     };
 
     return (
-        <GiftedChat
-            messages={messages}
-            text={message}
-            onInputTextChanged={(text) => setMessage(text)}
-            onSend={sendChat}
-            scrollToBottom={true}
-            placeholder='Type a message...'
-            isTyping={true}
-            user={{
-                _id: 'mamang',
-            }}
-        />
+        // <View style={{width:200, bottom:2}}>
+            <GiftedChat
+            // style={{ flex: 1, alignItems: "center", width:"100%" }}
+                messages={messages}
+                text={message}
+                onInputTextChanged={(text) => setMessage(text)}
+                onSend={sendChat}
+                scrollToBottom={true}
+                placeholder='Type a message...'
+                isTyping={true}
+                user={{
+                    _id: 'mamang',
+                }}
+            />
+//                 <View style={{ flex: 1, alignItems: "center", width:"100%" }}>
+// </View>
     );
 };
 
