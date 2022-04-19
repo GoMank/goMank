@@ -37,6 +37,7 @@ export default function App() {
             headerShown: false,
           }}
         >
+          <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="TabNav" component={TabNav} />
           <Stack.Screen name="ChatClient" component={ChatClient} />
           <Stack.Screen name="mapsClient" component={MapsClient} />
@@ -47,7 +48,6 @@ export default function App() {
           {/* <Stack.Screen name="HomePage" component={HomePage} /> */}
           {/* <Stack.Screen name="Maps" component={Maps} /> */}
           <Stack.Screen name="Register" component={Register} />
-          <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="LogNavigator" component={LogNavigator} />
         </Stack.Navigator>
       </NavigationContainer>

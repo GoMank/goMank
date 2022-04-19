@@ -23,7 +23,7 @@ export default function Login({ navigation }) {
 
   const submitLogin2 = () => {
     console.log('ini gabungan',loginInput.email,loginInput.password );
-    return navigation.navigate("Register")
+    return navigation.navigate("TabNav")
   }
   return (
     <View style={styles.container}>

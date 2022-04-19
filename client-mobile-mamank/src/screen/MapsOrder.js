@@ -19,7 +19,7 @@ import {
   import { useNavigation } from '@react-navigation/native'
   
   export default function MapsOrder() {
-  //   LogBox.ignoreLogs(["Remote debugger"]);
+    LogBox.ignoreLogs(["Remote debugger"]);
     const navigation = useNavigation();
     const [address, setAddress] = useState([]);
     const [location, setLocation] = useState(null);
@@ -54,6 +54,7 @@ import {
     }
   
     console.log(address);
+    
   
     const car = [
       {
@@ -93,8 +94,8 @@ import {
       const currentLocation = {
         latitude: text.coords.latitude,
         longitude: text.coords.longitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
+        latitudeDelta: 0.005,
+        longitudeDelta: 0.005,
       };
       return (
         <View style={styles.container}>

@@ -18,8 +18,10 @@ import { LogBox } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import Chat from "../components/Chat";
 import { Entypo } from "@expo/vector-icons";
+import { useNavigation } from '@react-navigation/native'
 
 export default function Maps() {
+    const navigation = useNavigation();
   LogBox.ignoreLogs(["Remote debugger"]);
   const [address, setAddress] = useState([]);
   const [location, setLocation] = useState(null);
@@ -92,8 +94,8 @@ export default function Maps() {
     const currentLocation = {
       latitude: text.coords.latitude,
       longitude: text.coords.longitude,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
+      latitudeDelta: 0.005,
+      longitudeDelta: 0.005,
     };
     return (
       <View style={styles.container}>
@@ -121,7 +123,8 @@ export default function Maps() {
               }}
             >
               <TouchableOpacity
-                onPress={() => refRBSheet.current.open()}
+                // onPress={() => refRBSheet.current.open()}
+                onPress={()=>navigation.navigate('Chat')}
                 style={{
                   paddingVertical: 10,
                   paddingHorizontal: 15,
@@ -159,7 +162,7 @@ export default function Maps() {
             }}
           >
             <View style={{ flex: 1, alignItems: "center", width:"100%" }}>
-              <Chat />
+              <Chat  />
             </View>
           </RBSheet>
         </View>

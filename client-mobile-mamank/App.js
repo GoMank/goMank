@@ -15,6 +15,7 @@ import ChatScreen from "./src/screen/ChatScreen";
 import MapsOrder from "./src/screen/MapsOrder";
 import SandboxMamank from "./src/screen/SandboxMamank";
 import { LogBox } from 'react-native'
+// import Chat from "./src/components/Chat";
 
 import { ApolloProvider } from '@apollo/client';
 import client from './config/apollo';
@@ -27,7 +28,18 @@ export default function App() {
     return (
         <ApolloProvider client={client}>
             <NavigationContainer>
+            <StatusBar barStyle="light-content" />
                 <Stack.Navigator initialRouteName='SplashScreen'>
+                    <Stack.Screen
+                        options={{ headerShown: false }}
+                        name='MapsOrder'
+                        component={MapsOrder}
+                    />
+                    <Stack.Screen
+                        options={{ headerShown: false }}
+                        name='SandboxMamank'
+                        component={SandboxMamank}
+                    />
                     <Stack.Screen
                         options={{ headerShown: false }}
                         name='SplashScreen'
@@ -35,22 +47,7 @@ export default function App() {
                     />
                     <Stack.Screen
                         options={{ headerShown: false }}
-                        name='HomeMamang'
-                        component={HomeMamang}
-                    />
-                    <Stack.Screen
-                        options={{ headerShown: false }}
-                        name='DrivingMap'
-                        component={DrivingMap}
-                    />
-                    <Stack.Screen
-                        options={{ headerShown: false }}
-                        name='ChatScreen'
-                        component={ChatScreen}
-                    />
-                    <Stack.Screen
-                        options={{ headerShown: false }}
-                        name='ChatMamang'
+                        name='Chat'
                         component={Chat}
                     />
                 </Stack.Navigator>
