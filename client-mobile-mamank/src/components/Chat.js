@@ -1,21 +1,26 @@
 import { ScrollView, View, Text, TextInput, Button } from 'react-native';
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import io from 'socket.io-client';
-import tw from 'twrnc';
 import { GiftedChat } from 'react-native-gifted-chat';
 
-const socketUrl = 'https://7ec4-180-252-127-246.ngrok.io';
-// const socket = io(socketUrl);
+const socketUrl = 'https://d3f7-180-252-113-132.ngrok.io';
+
 const Chat = () => {
     const [socket, setSocket] = useState(null);
     const [connected, setConnected] = useState(false);
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([{}]);
     const [userId, setUserId] = useState('');
-    const [room, setRoom] = useState('');
+
+    const connectionOptions = {
+        'force new connection': true,
+        reconnectionAttempts: 'Infinity', //avoid having user reconnect manually in order to prevent dead clients after a server restart
+        timeout: 10000, //before connect_error and connect_timeout are emitted.
+        transports: ['websocket'],
+    };
 
     useEffect(() => {
-        const socket = io(socketUrl);
+        const socket = io(socketUrl, connectionOptions);
         setSocket(socket);
         socket.on('connect', () => {
             setConnected(true);
@@ -30,8 +35,8 @@ const Chat = () => {
     useEffect(() => {
         if (connected) {
             socket.on('getMessages', (messagesData) => {
-                setMessages(messagesData.messagesData);
-                setUserId(messagesData.id);
+                console.log(messagesData, '<<<<<<<<<<<<<<<<<<');
+                setMessages(messagesData);
             });
         }
 
@@ -56,10 +61,12 @@ const Chat = () => {
                 _id: 'mamang',
             },
         });
+        socket.on('getMessages', (messagesData) => {
+            console.log(messagesData, '<<<<<<<<<<<<<<<<<<');
+            setMessages(messagesData);
+        });
         setMessage('');
     };
-
-    console.log(messages, userId, '<<<<<<<<<<<<<');
 
     return (
         <GiftedChat

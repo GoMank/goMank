@@ -1,7 +1,7 @@
 const { gql } = require('apollo-server');
 const axios = require('axios');
 const redis = require('../../config');
-const url = 'https://sweet-fly-73.loca.lt/';
+const url = 'https://popular-squid-31.loca.lt/';
 
 const typeDefs = gql`
     extend type Query {
@@ -27,13 +27,15 @@ const resolvers = {
             try {
                 console.log(`masuk histories`);
                 const historiesCache = await redis.get('logs');
-                let histories = JSON.parse(historiesCache);
+                let histories;
 
-                if (!histories) {
+                if (!historiesCache) {
                     console.log(`histories tidak ada`, histories);
                     histories = await axios.get(url + 'logs');
                     histories = histories.data;
                     redis.set('logs', JSON.stringify(histories));
+                } else {
+                    histories = JSON.parse(historiesCache);
                 }
 
                 return histories;
