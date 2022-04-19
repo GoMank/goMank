@@ -1,48 +1,86 @@
 const express = require('express');
 const app = express();
 const Redis = require('ioredis');
-const redis = new Redis();
+const mongoose = require('mongoose');
+const Msg = require('./models/messages');
 const { v4 } = require('uuid');
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, {
     cors: {
-        origin: [],
+        origin: '*',
     },
 });
+
 const PORT = process.env.PORT || 3000;
-
-let messagesData = [];
-const clients = [];
-
-const updateClientList = (params) => {};
+const mongodb = 'mongodb://localhost:27017/chat';
+mongoose
+    .connect(mongodb, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => {
+        console.log('connected to mongodb');
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 
 io.on('connection', (socket) => {
-    console.log(`${socket.id} socket connected`);
-    socket.on('disconnect', () => {
-        console.log('user disconnected');
-        messagesData = [];
-    });
+    // updateClientList(socket.id);
 
-    updateClientList(socket.id);
-
-    io.emit('getMessages', {
-        messagesData,
-        id: socket.id,
-    });
-
-    // socket.on('joinRoom', (mamangId) => {
-    //     socket.join(mamangId);
-    // });
-
-    socket.on('postMessage', (msg) => {
-        messagesData.unshift({
-            ...msg,
-            _id: v4(),
-            senderId: socket.id,
+    Msg.find()
+        .sort({ createdAt: -1 })
+        .then((messagesData) => {
+            if (messagesData.length > 0) {
+                io.emit(
+                    'getMessages',
+                    messagesData.map((e) => {
+                        e._doc._id = e._doc._id.valueOf();
+                        return {
+                            ...e._doc,
+                        };
+                    })
+                );
+            } else {
+                console.log('no messages');
+            }
+        })
+        .catch((err) => {
+            console.log(err);
         });
 
-        console.log(messagesData);
-        io.emit('getMessages', { messagesData, id: socket.id });
+    socket.on('postMessage', (msg) => {
+        const message = new Msg({ ...msg });
+        message.save().then(() => {
+            Msg.find()
+                .sort({ createdAt: -1 })
+                .then((messagesData) => {
+                    if (messagesData.length > 0) {
+                        io.emit(
+                            'getMessages',
+                            messagesData.map((e) => {
+                                e._doc._id = e._doc._id.valueOf();
+                                console.log(e._doc, '<<<<<<<<');
+                                return {
+                                    ...e._doc,
+                                };
+                            })
+                        );
+                    } else {
+                        console.log('no messages');
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        });
+    });
+
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+        Msg.deleteMany().then(() => {
+            console.log('deleted');
+        });
     });
 });
 

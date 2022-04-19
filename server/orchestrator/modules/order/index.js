@@ -74,14 +74,6 @@ const resolvers = {
                 let ordersCache = await redis.get('orders');
                 let clientCache = await redis.get('clients');
                 let mamangCache = await redis.get('mamangs');
-                // console.log(
-                //     `masuk orders`,
-                //     JSON.parse(ordersCache),
-                //     // 'masuk clients',
-                //     // JSON.parse(clientCache),
-                //     'masuk mamangs',
-                //     JSON.parse(mamangCache)
-                // );
                 let orders;
                 if (!mamangCache) {
                     mamangCache = await axios.get(urlMamang + 'mamangs');
@@ -100,7 +92,6 @@ const resolvers = {
                 if (!ordersCache) {
                     orders = await axios.get(urlPostgre + 'orders');
                     orders = orders.data;
-                    // console.log(orders);
                     redis.set('orders', JSON.stringify(orders));
                 } else {
                     ordersCache = JSON.parse(ordersCache);

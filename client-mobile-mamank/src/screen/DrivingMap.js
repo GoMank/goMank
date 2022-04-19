@@ -17,7 +17,7 @@ const DrivingMap = ({ navigation }) => {
                 ]}>
                 <Maps />
             </View>
-            <View style={tw`absolute bottom-20 w-full`}>
+            <View style={tw`absolute bottom-0 w-full`}>
                 <TouchableOpacity
                     style={tw`bg-[#FFB300] w-[90%] p-5 rounded-lg mb-5 mx-auto`}
                     title='Go to Home'
