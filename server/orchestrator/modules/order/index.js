@@ -1,9 +1,9 @@
 const { gql } = require('apollo-server');
 const axios = require('axios');
 const redis = require('../../config');
-const urlPostgre = 'http://c4e6-139-0-237-101.ngrok.io/';
-const urlMamang = 'https://big-sheep-18.loca.lt/';
-const urlClient = 'https://sharp-bird-66.loca.lt/';
+const urlPostgre = 'http://a2d1-139-0-237-101.ngrok.io/';
+const urlMamang = 'https://big-penguin-91.loca.lt/';
+const urlClient = 'https://splendid-wombat-11.loca.lt/';
 
 const typeDefs = gql`
     extend type Query {
@@ -49,6 +49,7 @@ const typeDefs = gql`
 
     type Order {
         id: ID
+        service: String
         invoiceNumber: String
         price: Int
         orderStatus: String
@@ -59,7 +60,6 @@ const typeDefs = gql`
         date: String
         time: String
         mamangId: ID
-        service: Int
         createdAt: String
         updatedAt: String
         mamang: Mamang

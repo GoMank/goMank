@@ -1,7 +1,7 @@
 const { gql } = require('apollo-server');
 const axios = require('axios');
 const redis = require('../../config');
-const url = 'http://c4e6-139-0-237-101.ngrok.io/';
+const url = 'http://a2d1-139-0-237-101.ngrok.io/';
 
 const typeDefs = gql`
     extend type Query {
@@ -43,6 +43,7 @@ const resolvers = {
 
         history: async (parent, args, context, info) => {
             try {
+                console.log(args.id);
                 const historiesCache = await redis.get('logs');
                 return JSON.parse(historiesCache).find((history) => history.id == args.id);
             } catch (err) {
