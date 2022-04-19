@@ -38,19 +38,12 @@ export default function LogPage() {
     return (
       <View style={styles.container}>
       
-
       <View nestedScrollEnabled={true} >
        
         <ScrollView>
           <View >
           <Text >Error:  {error.message}</Text>
           </View>
-
-
-
-          
-
-
 
         </ScrollView>
 
