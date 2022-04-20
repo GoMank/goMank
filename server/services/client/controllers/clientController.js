@@ -1,5 +1,4 @@
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
 const { Client } = require('../models/client')
 
 class ClientController {
@@ -35,7 +34,7 @@ class ClientController {
             data.password = bcrypt.hashSync(data.password,10)
             let client = await Client.registerClient(data)
             client = await Client.findOneClient(client.insertedId)
-            res.status(200).json(client)
+            res.status(201).json(client)
         } catch (error) {
             console.log(error);
             if(error.code === 400){
@@ -56,6 +55,7 @@ class ClientController {
             }
             const data = req.body
             const client = await Client.loginClient(data)
+            console.log(client);
             if(!client){
                 throw({
                     code:400,
@@ -75,7 +75,7 @@ class ClientController {
             if(error.code === 400){
                 res.status(400).json({message:error.message})
             }else{
-                res.status(500).json({message:'something error in register client'})
+                res.status(500).json({message:'something error in login client'})
             }
         }
     }    

@@ -17,4 +17,4 @@ function getDataBase(){
     return db
 }
 
-module.exports = {connectMongoDb,getDataBase}
+module.exports = {connectMongoDb,getDataBase,client}

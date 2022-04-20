@@ -11,10 +11,15 @@ async function connectMongoDb() {
     await client.connect();
     console.log('Connected successfully to server');
     db = client.db(dbName);
+    // await client.close()
 }
 
-function getDataBase(){
+// async function closeClient(){
+//     await client.close()
+// }
+
+function getDataBase() {
     return db
 }
 
-module.exports = {connectMongoDb,getDataBase}
+module.exports = { connectMongoDb, getDataBase, client }

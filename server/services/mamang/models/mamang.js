@@ -32,6 +32,11 @@ class Mamang {
 
     static async registerMamang(data) {
         try {
+            const loc = {
+                type: 'Point',
+                coordinates: JSON.parse(data.address)
+            }
+            data.address = loc
             const db = getDataBase()
             const mamang = await db
                 .collection('mamangs')
@@ -66,22 +71,26 @@ class Mamang {
         }
     }
 
-    // static async updateOneMamang(id, address) {
-    //     try {
-    //         const db = getDataBase()
-    //         await db
-    //             .collection('mamangs')
-    //             .updateOne({ _id: ObjectId(id) },
-    //                 {
-    //                     $set: {
-    //                         address: address
-    //                     },
-    //                 })
-    //         return 'success updating'
-    //     } catch (error) {
-    //         throw (error)
-    //     }
-    // }
+    static async updateAddressMamang(id, address) {
+        try {
+            const loc = {
+                type: 'Point',
+                coordinates: JSON.parse(address)
+            }
+            const db = getDataBase()
+            await db
+                .collection('mamangs')
+                .updateOne({ _id: ObjectId(id) },
+                    {
+                        $set: {
+                            address: loc
+                        },
+                    })
+            return 'success updating address'
+        } catch (error) {
+            throw (error)
+        }
+    }
 
     static async updateSaldoMamang(id, saldo) {
         try {
@@ -99,6 +108,51 @@ class Mamang {
             throw (error)
         }
     }
+
+    static async findNearestMamang(location) {
+        try {
+            const db = getDataBase()
+            await db
+                .collection('mamangs')
+                .createIndex({ address: "2dsphere" })
+            const mamangs = await db
+                .collection('mamangs')
+                .find({
+                    address: {
+                        $near: {
+                            $geometry: {
+                                type: "Point",
+                                coordinates: JSON.parse(location)
+                            },
+                        }
+                    }
+                })
+                .limit(2)
+                .toArray()
+            const distances = await db
+                .collection('mamangs')
+                .aggregate([
+                    {
+                        "$geoNear": {
+                            "near": {
+                                "type": "Point",
+                                "coordinates": JSON.parse(location)
+                            },
+                            // "maxDistance": 500 * 1609,
+                            "spherical": true,
+                            "distanceField": "distance",
+                            "distanceMultiplier": 0.000621371
+                        }
+                    }
+                ])
+                .limit(2)
+                .toArray()
+            return {mamangs,distances}
+        } catch (error) {
+            throw (error)
+        }
+    }
+
 }
 
 module.exports = { Mamang }

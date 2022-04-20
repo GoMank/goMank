@@ -1,6 +1,6 @@
-if(process.env.NODE_ENV !== 'production'){
+if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
-  }
+}
 const express = require('express')
 const app = express()
 const port = process.env.PORT || 4000
@@ -20,4 +20,6 @@ connectMongoDb()
             console.log(`Listening on port ${port}`)
         })
     })
+
+module.exports = { app }
 
