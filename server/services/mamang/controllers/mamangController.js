@@ -8,6 +8,7 @@ class MamangController {
             const mamangs = await Mamang.findAllMamang()
             res.status(200).json(mamangs)
         } catch (error) {
+            console.log(error);
             res.status(500).json({ message: 'something error in find all mamang' })
         }
     }
