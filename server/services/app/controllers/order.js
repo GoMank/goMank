@@ -166,7 +166,43 @@ class orderController {
         }
 
     }
-
+    static async  midTransPayment(req, res, next) {
+        try {
+            
+           const timestamp = Date.now()
+           const noInvoice = Math.floor(Math.random(999) * 999)
+            const body = {
+                "transaction_details": {
+                  "order_id": `invoice-${timestamp}`,
+                  "gross_amount":50000
+                },
+                "credit_card": {
+                  "secure": true
+                },
+                "item_details": [{
+                  "id": `invoice-${timestamp}`,
+                  "price": 50000,
+                  "quantity": 1,
+                  "name": `invoice # ${noInvoice}`
+                }],
+                "customer_details": {
+                  "first_name": `Customer`,
+                  "last_name": `Name`,
+                  "email": `anemone@mail.com`,
+                  "phone": ""
+                  
+                }
+              }
+          
+          
+          const {data} = await midTrans.post(`/v1/transactions`, body)
+          console.log(data, "INI MIDTRANS TRANSACTION TOKEN")
+          res.status(200).json(data.redirect_url)
+        } catch (err) {
+          console.log(err)
+          next(err)
+        }
+      }
       
 
       static async xendintPayment(req, res, next) {
