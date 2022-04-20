@@ -34,7 +34,7 @@ module.exports = {
       },
       clientId: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       mamangId: {
         allowNull: false,
