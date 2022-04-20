@@ -13,6 +13,16 @@ const MidtransPayment = (urlData) => {
     console.log(urlData.route.params.order, "ini order")
     // const url = urlData;
     const order = urlData.route.params.order
+    const variables = {
+      clientId: order.clientId, 
+      mamangId: order.mamangId, 
+      service: order.service, 
+      date: order.date, 
+      time: order.time, 
+      address: "Jl. Pasar Rebo", 
+      paymentMethod: order.payment
+  }
+  console.log(variables, "INI VARIABLES")
     const [addOrder] = useMutation(CREATE_ORDER);
     const submitOrder = () => {
         addOrder({
@@ -34,9 +44,9 @@ const MidtransPayment = (urlData) => {
     document.body.style.backgroundColor = 'blue';
     true;
   `
-  setTimeout(() => {
-    webViewRef.current.injectJavaScript(run)
-  }, 10000)
+  // setTimeout(() => {
+  //   webViewRef.current.injectJavaScript(run)
+  // }, 10000)
   return (
     <View style={{ flex: 1 }}>
       <WebView
@@ -48,8 +58,9 @@ const MidtransPayment = (urlData) => {
         onNavigationStateChange={(newNavState) => {
             
             if(newNavState.url.includes('#/success')){
-              submitOrder()
+              
               setTimeout(() => {
+                submitOrder()
                         navigation.navigate('TabNav')
                       }, 3000)
             }

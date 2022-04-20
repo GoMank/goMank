@@ -1,14 +1,32 @@
 import { StyleSheet, Text, View, Pressable, FlatList, ScrollView, SafeAreaView } from "react-native";
 import { useQuery } from "@apollo/client";
 import { FETCH_ORDERS } from "../../config/queries";
-
-
+import { useEffect, useState } from "react";
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from "react";
 
 export default function LogOrder() {
-  const {loading, error, data} = useQuery(FETCH_ORDERS)
-  
+  const [data2, setData2] = useState([])
+  const {loading, error, data, refetch} = useQuery(FETCH_ORDERS)
+  // useEffect( () => {
+  //   const {loading, error, data} = useQuery(FETCH_ORDERS)
+    
+  // }, [])
+  useFocusEffect(
+    useCallback(() => {
+      console.log("Terpanggil, USEFOCUS")
+      // Do something when the screen is focused
+      refetch()
+      return () => {
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+      };
+    }, [])
+  );
+
  
-  if(loading) {
+  if(loading ) {
+    
     return (
       <View style={styles.container} >
       
@@ -63,7 +81,7 @@ export default function LogOrder() {
     </View>
     )
   } 
-  console.log(data.orders)
+  console.log(data.orders, "INI DATA")
   return (
     <ScrollView contentContainerStyle={ {alignItems: "center"}} style={{flex: 1,
       backgroundColor: "#E5E5E5",
@@ -110,11 +128,11 @@ export default function LogOrder() {
             <Text style={styles.subTitle}>No: {order.invoiceNumber}</Text>
 
             <Text style={styles.liteTitle}>Time</Text>
-            <Text style={styles.description}>16 Oct 2019</Text>
+            <Text style={styles.description}>{order.date}</Text>
             <Text style={styles.description}>07.00</Text>
 
             <Text style={styles.liteTitle}>Customer</Text>
-            <Text style={styles.description}>{order.clientId}</Text>
+            <Text style={styles.description}>{order.client.name}</Text>
           </View>
           <View style={{ marginLeft: "20%" }}>
             <Text style={styles.price}> {order.price}</Text>

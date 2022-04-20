@@ -9,6 +9,22 @@ const XendinPayment = (urlData) => {
 
     console.log(urlData.route.params.urlData, "ini url");
     // const url = urlData;
+    const order = urlData.route.params.order
+    const [addOrder] = useMutation(CREATE_ORDER);
+    const submitOrder = () => {
+        addOrder({
+            variables: {
+                clientId: order.clientId, 
+                mamangId: order.mamangId, 
+                service: order.service, 
+                date: order.date, 
+                time: order.time, 
+                address: "Address", 
+                paymentMethod: order.payment
+            },
+        });
+        
+    };
 
     console.log("masuk222");
   const webViewRef = useRef(null);
@@ -36,6 +52,7 @@ const XendinPayment = (urlData) => {
             // }
             if (newNavState.canGoBack) {
                 setTimeout(() => {
+                  submitOrder()
                     navigation.navigate('TabNav')
                   }, 10000)
             }
