@@ -52,7 +52,11 @@ export default function Transfers() {
       return <div><h1>No Logs</h1></div>
     } else {
       data.sort(function(a, b){return b.time - a.time});
-      return (data.map((el) => {
+      let displayLogs = []
+      for (let i = 0 ; i < 3 ; i++){
+        displayLogs.push(data[i])
+      }
+      return (displayLogs.map((el) => {
         return (
           <div key={el.id} className="transaction">
             <div className="transaction__title">

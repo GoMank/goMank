@@ -66,15 +66,15 @@ export default function Login({ navigation }) {
 
     if (data) {
         console.log('ini data', data);
-        (async () => {
-            await AsyncStorage.setItem('user_info', {
+       
+            AsyncStorage.setItem('user_info', JSON.stringify({
                 name: data.loginClient.name,
                 email: data.loginClient.email,
                 _id: data.loginClient._id,
                 phoneNumber: data.loginClient.phoneNumber,
-            });
-        })();
-        navigation.navigate('TabNav');
+            })).then(() => {
+                navigation.navigate('TabNav');
+            }).catch((err) => {console.log(err);})
     }
     return (
         <View style={styles.container}>
@@ -109,7 +109,7 @@ export default function Login({ navigation }) {
                     />
 
                     <TextInput
-                        secureTextEntry={true}
+                        secureTextEntry={false}
                         style={styles.button}
                         value={loginInput.password}
                         onChangeText={(password) => setLoginInput({ ...loginInput, password })}
