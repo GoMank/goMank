@@ -385,10 +385,11 @@ import { useNavigation } from '@react-navigation/native'
 import axios from 'axios';
 import { CREATE_ORDER } from "../../config/queries";
 
-const SandboxTest = (urlData) => {
+const SandboxTest = (urlData, order) => {
     const navigation = useNavigation();
-
-    console.log(urlData.route.params.urlData, "ini url");
+    
+    console.log(urlData.route.params.urlData, "ini url edited");
+    console.log(urlData.route.params, "INI ORDER")
     // const url = urlData;
     const [addOrder] = useMutation(CREATE_ORDER);
     const submitOrder = () => {
@@ -400,12 +401,12 @@ const SandboxTest = (urlData) => {
                 date: new Date(), 
                 time: new Date(), 
                 address: "Adress", 
-                paymentMethod: paymentInput
+                paymentMethod: "midtrans"
             },
         });
         
     };
-    console.log("masuk222");
+    console.log(urlData.route.params, "masuk222");
   const webViewRef = useRef(null);
   const run = `
     document.body.style.backgroundColor = 'blue';
@@ -431,6 +432,7 @@ const SandboxTest = (urlData) => {
             // }
             if (newNavState.canGoBack) {
                 setTimeout(() => {
+                  submitOrder()
                     navigation.navigate('TabNav')
                   }, 10000)
             }

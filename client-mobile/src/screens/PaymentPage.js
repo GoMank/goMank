@@ -12,23 +12,24 @@ export default function PaymentPage(order) {
     const navigation = useNavigation();
 
     const [paymentInput, setPayment] = useState('');
-    console.log(paymentInput, "INI PAYMENT INPUT")
+    //console.log(paymentInput, "INI PAYMENT INPUT")
     
 
     async function xendit() {
         console.log('masuk');
-        const data =  await axios.post('https://kind-shrimp-44.loca.lt/payments/xendit',{
+        const data =  await axios.post('http://d839-139-0-237-101.ngrok.io/payments/xendit',{
             email:dataOrder.email,
             price:dataOrder.price,
         })
-        return navigation.navigate('SandboxTest',{urlData: data.data})
+        return navigation.navigate('SandboxTest',{urlData: data.data, order: dataOrder})
     }
 
     async function midTrans() {
-        const data =  await axios.post(`https://nasty-snake-42.loca.lt/payments/midtrans`,{
+        const data =  await axios.post(`http://d839-139-0-237-101.ngrok.io/payments/midtrans`,{
             price:dataOrder.price,
         })
-        return navigation.navigate('MidtransPayment',{urlData: data.data})
+        dataOrder.payment = "midtrans"
+        return navigation.navigate('MidtransPayment',{urlData: data.data, order: dataOrder})
     }
 
     return(

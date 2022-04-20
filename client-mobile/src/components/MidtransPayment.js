@@ -3,13 +3,31 @@ import { View } from 'react-native'
 import { WebView } from 'react-native-webview'
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios';
+import { CREATE_ORDER } from "../../config/queries";
+import { useMutation } from "@apollo/client";
 
 const MidtransPayment = (urlData) => {
     const navigation = useNavigation();
 
     console.log(urlData.route.params.urlData, "ini url");
+    console.log(urlData.route.params.order, "ini order")
     // const url = urlData;
-
+    const order = urlData.route.params.order
+    const [addOrder] = useMutation(CREATE_ORDER);
+    const submitOrder = () => {
+        addOrder({
+            variables: {
+                clientId: order.clientId, 
+                mamangId: order.mamangId, 
+                service: order.service, 
+                date: order.date, 
+                time: order.time, 
+                address: "Adress", 
+                paymentMethod: order.payment
+            },
+        });
+        
+    };
     console.log("masuk222");
   const webViewRef = useRef(null);
   const run = `
@@ -30,6 +48,7 @@ const MidtransPayment = (urlData) => {
         onNavigationStateChange={(newNavState) => {
             
             if(newNavState.url.includes('#/success')){
+              submitOrder()
               setTimeout(() => {
                         navigation.navigate('TabNav')
                       }, 3000)
