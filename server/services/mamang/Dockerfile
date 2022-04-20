@@ -6,7 +6,7 @@ ENV PORT=4005
 
 ENV URI_MONGO="mongodb+srv://gomank:tukangculik@gomank.0mu6i.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
-COPY package.json package-lock.json /goMank/server/services/mamangs
+COPY package.json package-lock.json /goMank/server/services/mamangs/
 
 RUN npm install && npm cache clean --force
 
