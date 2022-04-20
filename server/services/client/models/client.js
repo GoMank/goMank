@@ -1,11 +1,11 @@
 const { ObjectId } = require("mongodb");
-const { getDataBase } = require("../config/mongoDb");
+const { getData } = require("../config/mongoDb");
 
 
 class Client {
     static async findAllClient() {
         try {
-            const db = getDataBase()
+            const db = getData()
             const clients = await db
                 .collection('clients')
                 .find()
@@ -19,7 +19,7 @@ class Client {
 
     static async findOneClient(id) {
         try {
-            const db = getDataBase()
+            const db = getData()
             const client = await db
                 .collection('clients')
                 .findOne({ _id: ObjectId(id) })
@@ -32,7 +32,7 @@ class Client {
 
     static async registerClient(data) {
         try {
-            const db = getDataBase()
+            const db = getData()
             const client = await db
                 .collection('clients')
                 .insertOne(data)
@@ -44,7 +44,7 @@ class Client {
 
     static async loginClient(data) {
         try {
-            const db = getDataBase()
+            const db = getData()
             const client = await db
                 .collection('clients')
                 .findOne({email:data.email})

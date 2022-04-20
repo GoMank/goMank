@@ -1,11 +1,11 @@
 const request = require('supertest')
 const { app } = require('../app')
-const { connectMongoDb, getDataBase } = require('../config/mongoDb')
+const { connection, getData } = require('../config/mongoDb')
 const { MongoClient } = require('mongodb');
 const { Mamang } = require('../models/mamang');
-const url = process.env.MONGOURL;
+const url = process.env.URI_MONGO;
 const client = new MongoClient(url);
-const db = getDataBase()
+const db = getData()
 require('dotenv').config()
 
 beforeAll(async () => { })
@@ -94,7 +94,7 @@ describe(`PATCH /mamangs/address/:id --failed without connecting to mongoDB`, ()
 
 describe(`GET /mamangs --success`, () => {
     it('should return 200 ', async () => {
-        await connectMongoDb()
+        await connection()
         const res = await request(app).get('/mamangs')
         expect(res.status).toBe(200)
         expect(res.body[0]).toHaveProperty('_id', expect.any(String))
@@ -113,7 +113,7 @@ describe(`GET /mamangs --success`, () => {
 
 describe(`GET /mamangs/:id--success`, () => {
     it('should return 200 ', async () => {
-        await connectMongoDb()
+        await connection()
         const res = await request(app).get('/mamangs/62559dcfc9054d53a273fb14')
         expect(res.status).toBe(200)
         expect(res.body).toHaveProperty('_id', '62559dcfc9054d53a273fb14')
@@ -132,7 +132,7 @@ describe(`GET /mamangs/:id--success`, () => {
 
 describe(`GET /mamangs/nearest --success`, () => {
     it('should return 200 ', async () => {
-        await connectMongoDb()
+        await connection()
         const res = await request(app).get('/mamangs/nearest').send({ location: "[106.864,-6.254]" })
         expect(res.status).toBe(200)
         expect(res.body.mamangs[0]).toHaveProperty('_id', expect.any(String))
@@ -151,7 +151,7 @@ describe(`GET /mamangs/nearest --success`, () => {
 
 describe(`GET /mamangs/nearest --failed empty location`, () => {
     it('should return 400 ', async () => {
-        await connectMongoDb()
+        await connection()
         const res = await request(app).get('/mamangs/nearest').send({ location: "" })
         expect(res.status).toBe(400)
         expect(res.body).toHaveProperty('message', "Invalid location")
@@ -161,7 +161,7 @@ describe(`GET /mamangs/nearest --failed empty location`, () => {
 
 describe(`GET /mamangs/login --success`, () => {
     it('should return 200 ', async () => {
-        await connectMongoDb()
+        await connection()
         const body = { email: "mamang123@mail.com", password: "12345" }
         const res = await request(app).post('/mamangs/login').send(body)
         expect(res.status).toBe(200)
@@ -181,7 +181,7 @@ describe(`GET /mamangs/login --success`, () => {
 
 describe(`GET /mamangs/login --failed invalid password`, () => {
     it('should return 400 ', async () => {
-        await connectMongoDb()
+        await connection()
         const body = { email: "mamang123@mail.com", password: "1234" }
         const res = await request(app).post('/mamangs/login').send(body)
         expect(res.status).toBe(400)
@@ -191,7 +191,7 @@ describe(`GET /mamangs/login --failed invalid password`, () => {
 
 describe(`GET /mamangs/login --failed invalid email`, () => {
     it('should return 400 ', async () => {
-        await connectMongoDb()
+        await connection()
         const body = { email: "mamang122223@mail.com", password: "12345" }
         const res = await request(app).post('/mamangs/login').send(body)
         expect(res.status).toBe(400)
@@ -201,7 +201,7 @@ describe(`GET /mamangs/login --failed invalid email`, () => {
 //empty email and passord
 describe(`GET /mamangs/login --failed empty password`, () => {
     it('should return 400 ', async () => {
-        await connectMongoDb()
+        await connection()
         const body = { email: "mamang122223@mail.com", password: "" }
         const res = await request(app).post('/mamangs/login').send(body)
         expect(res.status).toBe(400)
@@ -211,7 +211,7 @@ describe(`GET /mamangs/login --failed empty password`, () => {
 
 describe(`GET /mamangs/login --failed empty email`, () => {
     it('should return 400 ', async () => {
-        await connectMongoDb()
+        await connection()
         const body = { email: "", password: "12345" }
         const res = await request(app).post('/mamangs/login').send(body)
         expect(res.status).toBe(400)
@@ -221,7 +221,7 @@ describe(`GET /mamangs/login --failed empty email`, () => {
 
 describe(`GET /mamangs/register --success`, () => {
     it('should return 201 ', async () => {
-        await connectMongoDb()
+        await connection()
         const body = {
             email: 'testMamang@mail.com',
             password: "12345",
@@ -250,7 +250,7 @@ describe(`GET /mamangs/register --success`, () => {
 
 describe(`GET /mamangs/register --failed email empty`, () => {
     it('should return 400 ', async () => {
-        await connectMongoDb()
+        await connection()
         const body = {
             email: '',
             password: "12345",
@@ -269,7 +269,7 @@ describe(`GET /mamangs/register --failed email empty`, () => {
 
 describe(`GET /mamangs/register --failed password empty`, () => {
     it('should return 400 ', async () => {
-        await connectMongoDb()
+        await connection()
         const body = {
             email: 'testMamang@mail.com',
             password: "",
@@ -288,7 +288,7 @@ describe(`GET /mamangs/register --failed password empty`, () => {
 
 describe(`GET /mamangs/register --failed phoneNumber empty`, () => {
     it('should return 400 ', async () => {
-        await connectMongoDb()
+        await connection()
         const body = {
             email: 'testMamang@mail.com',
             password: "12345",
@@ -307,7 +307,7 @@ describe(`GET /mamangs/register --failed phoneNumber empty`, () => {
 
 describe(`GET /mamangs/register --failed name empty`, () => {
     it('should return 400 ', async () => {
-        await connectMongoDb()
+        await connection()
         const body = {
             email: 'testMamang@mail.com',
             password: "12345",
@@ -326,7 +326,7 @@ describe(`GET /mamangs/register --failed name empty`, () => {
 
 describe(`GET /mamangs/register --failed gender empty`, () => {
     it('should return 400 ', async () => {
-        await connectMongoDb()
+        await connection()
         const body = {
             email: 'testMamang@mail.com',
             password: "12345",
@@ -345,7 +345,7 @@ describe(`GET /mamangs/register --failed gender empty`, () => {
 
 describe(`GET /mamangs/register --failed address empty`, () => {
     it('should return 400 ', async () => {
-        await connectMongoDb()
+        await connection()
         const body = {
             email: 'testMamang@mail.com',
             password: "12345",
@@ -364,7 +364,7 @@ describe(`GET /mamangs/register --failed address empty`, () => {
 
 describe(`GET /mamangs/register --failed image empty`, () => {
     it('should return 400 ', async () => {
-        await connectMongoDb()
+        await connection()
         const body = {
             email: 'testMamang@mail.com',
             password: "12345",
@@ -383,7 +383,7 @@ describe(`GET /mamangs/register --failed image empty`, () => {
 
 describe(`GET /mamangs/register --failed rekNumber empty`, () => {
     it('should return 400 ', async () => {
-        await connectMongoDb()
+        await connection()
         const body = {
             email: 'testMamang@mail.com',
             password: "12345",

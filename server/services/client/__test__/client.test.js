@@ -1,11 +1,11 @@
 const request = require('supertest')
 const { app } = require('../app')
-const { connectMongoDb, getDataBase } = require('../config/mongoDb')
+const {connection, getData} = require('../config/mongoDb')
 const { Client } = require('../models/client')
 const { MongoClient } = require('mongodb');
-const url = process.env.MONGOURL;
+const url = process.env.URI_MONGO;
 const client = new MongoClient(url);
-const db = getDataBase()
+const db = getData()
 require('dotenv').config()
 
 beforeAll(async () => { })
@@ -52,7 +52,7 @@ describe(`POST /clients/register --failed without connecting to mongoDB`, () => 
 
 describe(`GET /clients --success`, () => {
     it('should return 200 ', async () => {
-        await connectMongoDb()
+        await connection()
         const res = await request(app).get('/clients')
         expect(res.status).toBe(200)
         expect(res.body[0]).toHaveProperty('_id', expect.any(String))
@@ -64,7 +64,7 @@ describe(`GET /clients --success`, () => {
 
 describe(`GET /clients/:id--success`, () => {
     it('should return 200 ', async () => {
-        await connectMongoDb()
+        await connection()
         //625584887e8eeed032147b55
         const res = await request(app).get('/clients/625584887e8eeed032147b55')
         expect(res.status).toBe(200)
@@ -80,7 +80,7 @@ describe(`GET /clients/:id--success`, () => {
 
 describe(`GET /clients/login --success`, () => {
     it('should return 200 ', async () => {
-        await connectMongoDb()
+        await connection()
         const body = { email: "test1@mail.com", password: "12345" }
         const res = await request(app).post('/clients/login').send(body)
         expect(res.status).toBe(200)
@@ -93,7 +93,7 @@ describe(`GET /clients/login --success`, () => {
 
 describe(`GET /clients/login --failed invalid password`, () => {
     it('should return 400 ', async () => {
-        await connectMongoDb()
+        await connection()
         const body = { email: "test1@mail.com", password: "1234" }
         const res = await request(app).post('/clients/login').send(body)
         expect(res.status).toBe(400)
@@ -103,7 +103,7 @@ describe(`GET /clients/login --failed invalid password`, () => {
 
 describe(`GET /clients/login --failed invalid email`, () => {
     it('should return 400 ', async () => {
-        await connectMongoDb()
+        await connection()
         const body = { email: "test1@mail11.com", password: "12345" }
         const res = await request(app).post('/clients/login').send(body)
         expect(res.status).toBe(400)
@@ -113,7 +113,7 @@ describe(`GET /clients/login --failed invalid email`, () => {
 //empty email and passord
 describe(`GET /clients/login --failed empty password`, () => {
     it('should return 400 ', async () => {
-        await connectMongoDb()
+        await connection()
         const body = { email: "test1@mail.com", password: "" }
         const res = await request(app).post('/clients/login').send(body)
         expect(res.status).toBe(400)
@@ -123,7 +123,7 @@ describe(`GET /clients/login --failed empty password`, () => {
 
 describe(`GET /clients/login --failed empty email`, () => {
     it('should return 400 ', async () => {
-        await connectMongoDb()
+        await connection()
         const body = { email: "", password: "12345" }
         const res = await request(app).post('/clients/login').send(body)
         expect(res.status).toBe(400)
@@ -133,7 +133,7 @@ describe(`GET /clients/login --failed empty email`, () => {
 
 describe(`GET /clients/register --success`, () => {
     it('should return 400 ', async () => {
-        await connectMongoDb()
+        await connection()
         const body = { email: 'testing99@mail.com', password: "12345", phoneNumber: '01883822', name: 'testing' }
         const res = await request(app).post('/clients/register').send(body)
         expect(res.status).toBe(201)
@@ -146,7 +146,7 @@ describe(`GET /clients/register --success`, () => {
 
 describe(`GET /clients/register --failed email empty`, () => {
     it('should return 200 ', async () => {
-        await connectMongoDb()
+        await connection()
         const body = { email: '', password: "12345", phoneNumber: '01883822', name: 'testing' }
         const res = await request(app).post('/clients/register').send(body)
         expect(res.status).toBe(400)
@@ -156,7 +156,7 @@ describe(`GET /clients/register --failed email empty`, () => {
 
 describe(`GET /clients/register --failed password empty`, () => {
     it('should return 200 ', async () => {
-        await connectMongoDb()
+        await connection()
         const body = { email: 'testing99@mail.com', password: "", phoneNumber: '01883822', name: 'testing' }
         const res = await request(app).post('/clients/register').send(body)
         expect(res.status).toBe(400)
@@ -166,7 +166,7 @@ describe(`GET /clients/register --failed password empty`, () => {
 
 describe(`GET /clients/register --failed phoneNumber empty`, () => {
     it('should return 200 ', async () => {
-        await connectMongoDb()
+        await connection()
         const body = { email: 'testing99@mail.com', password: "12345", phoneNumber: '', name: 'testing' }
         const res = await request(app).post('/clients/register').send(body)
         expect(res.status).toBe(400)
@@ -176,7 +176,7 @@ describe(`GET /clients/register --failed phoneNumber empty`, () => {
 
 describe(`GET /clients/register --failed name empty`, () => {
     it('should return 200 ', async () => {
-        await connectMongoDb()
+        await connection()
         const body = { email: 'testing99@mail.com', password: "12345", phoneNumber: '01883822', name: '' }
         const res = await request(app).post('/clients/register').send(body)
         expect(res.status).toBe(400)
