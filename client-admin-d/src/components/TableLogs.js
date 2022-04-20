@@ -10,7 +10,7 @@ export default function TableLogs() {
         try {
             const logs = await axios({
                 method: "get",
-                url: "http://localhost:3005/logs",
+                url: "https://gomank-server-app.herokuapp.com/logs",
             })
             setLogs(logs.data)
             setLoading(false)
