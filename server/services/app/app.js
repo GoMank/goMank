@@ -17,3 +17,5 @@ app.use('/', router)
 app.listen(port, () => {
     console.log(`Gas keun ${port}`)
 })
+
+module.exports = { app }

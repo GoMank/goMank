@@ -22,7 +22,7 @@ class Client {
             const db = getData()
             const client = await db
                 .collection('clients')
-                .findOne({ _id: ObjectId(id) })
+                .findOne({ _id: id })
             delete client.password
             return client
         } catch (error) {
