@@ -48,14 +48,6 @@ export default function Maps() {
             });
             setAddress(currentAddress);
             setLocation(currentLocation);
-            await nearestMamang({
-                variables: {
-                    location: [
-                        currentLocation.coords.longitude,
-                        currentLocation.coords.latitude,
-                    ],
-                },
-            });
         })();
     }, []);
 
