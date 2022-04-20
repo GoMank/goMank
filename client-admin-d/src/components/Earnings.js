@@ -4,12 +4,14 @@ import { AreaChart, Area, Tooltip, ResponsiveContainer } from "recharts";
 import { cardStyles } from "./ReusableStyles";
 import { useEffect, useState } from "react";
 import formatDMY from "../helpers/timeStamp";
+
 // import { GET_ORDERS } from "../config/queries";
 export default function Earnings(props) {
   // const {loading, error, dataOrder} = useQuery(GET_ORDERS);
   const [dataOrder, setDataOrder] = useState([]);
   const [loading, setLoading] = useState(true);
   const [date, setDate] = useState({});
+  const reduceDate = {}
 
   useEffect(() => {
     const newData = props.dataOrders;
@@ -34,12 +36,29 @@ export default function Earnings(props) {
     return arr
   })
 
+  dataFiltered.forEach(element => {
+    if(element.orderStatus === "Done"){
+      if(!reduceDate[element.dateFormated.date]){
+        reduceDate[element.dateFormated.date] = element.price
+      } else {
+        reduceDate[element.dateFormated.date] += element.price
+      }
+    }
+  });
+
+  let incomePerDate = []
+  for (const key in reduceDate) {
+    incomePerDate.push({'date' :key, 'price': reduceDate[key]});
+  }
+
   let totalRupiah = 0
   dataFiltered.forEach(order => {
     if(order.orderStatus === "Done"){
       totalRupiah += order.price
     }
   });
+
+  console.log(incomePerDate, '<<<<< incomer per date');
 
   return (
     <Section>
@@ -57,7 +76,7 @@ export default function Earnings(props) {
           <AreaChart
             width={500}
             height={300}
-            data={dataOrder}
+            data={incomePerDate}
             margin={{ top: 0, left: 0, right: 0, bottom: 0 }}
           >
             <Tooltip cursor={false} />

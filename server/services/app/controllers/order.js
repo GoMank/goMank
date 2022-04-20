@@ -73,7 +73,8 @@ class orderController {
     }
 
     static async updateStatusOrderDone(req, res, next) {
-        const { id } = req.params
+        const id = +req.params.id
+        // console.log('masuk ',id);
         const orderStatus = "Done"
         // const paymentStatus = "Paid"
         // const t = await sequelize.transaction();
@@ -92,6 +93,7 @@ class orderController {
                     // transaction: t
                 }
             })
+            console.log('masuk ',updated);
             const data = {
                 orderId: id,
                 type: 'Done',
@@ -103,14 +105,14 @@ class orderController {
             // res.status(500).json({
             //     message: err.errors
             // })
-            // console.log(err);
+            console.log(err);
             next(err)
         }
 
     }
 
     static async updateStatusOrderCancel(req, res, next) {
-        const { id } = req.params
+        const id = +req.params.id
         const orderStatus = "Cancelled"
         const paymentStatus = "Returned"
         

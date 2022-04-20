@@ -1,9 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from 'react'
 import styled from "styled-components";
 import image from "../assets/profile.jpg";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { cardStyles } from "./ReusableStyles";
+import axios from 'axios'
+
 export default function Profile() {
+    const [mamangs, setMamangs] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    async function fetchMamangs() {
+        try {
+          const mamang = await axios({
+            method: "get",
+            url: "https://gomank-server-mamang.herokuapp.com/mamangs",
+          })
+          console.log(mamang.data)
+          setMamangs(mamang.data)
+          setLoading(false)
+        } catch (err) {
+          console.log(err)
+        }
+      }
+    useEffect(() => {
+        fetchMamangs()
+    }, [])
+
+    if(loading) return <p>Loading...</p>
+
   return (
     <Section>
       <div className="title">

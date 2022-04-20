@@ -72,7 +72,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isIn: {
           args:[['Xendit', 'Midtrans']],
-          msg:'Payment method must be either Cash or Cashless'
+          msg:'Payment method must be either Xendit or Midtrans'
         }, 
         notNull: {
           args: true,

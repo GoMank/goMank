@@ -62,7 +62,7 @@ export default function Dashboard() {
         <div className="row__two">
           <Earnings dataOrders = {dataOrder}/>
           <Transfers />
-          <Profile />
+          <Profile dataOrders = {dataOrder}/>
         </div>
       </div>
     </Section>
