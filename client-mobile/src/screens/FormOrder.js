@@ -105,12 +105,12 @@ export default function FormOrder(mamank) {
 
   if (text === "Waiting..") {
     return (
-      <View style={styles.container}>
-        <View
-          style={{ justifyContent: "center", alignItems: "center", flex: 1 }}
-        >
-          <Text>tunggu</Text>
-        </View>
+      <View style={{  flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor:"white"}}>
+        <Text>tunggu</Text>
+        <Image source={require("../../assets/loadingLogo.gif")} style={styles.logo} />
       </View>
     );
   } else {
@@ -593,4 +593,10 @@ const styles = StyleSheet.create({
     height: 53,
     resizeMode: 'contain',
   },
-});
+
+  logo: {
+    width: 230,
+    resizeMode: "contain",
+    marginBottom: "20%",
+  },
+})

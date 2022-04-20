@@ -1,10 +1,10 @@
-import { ScrollView, View, Text, TextInput, Button } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, Button, Image } from 'react-native';
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import io from 'socket.io-client';
 // import tw from 'twrnc';
 import { GiftedChat } from 'react-native-gifted-chat';
 
-const socketUrl = 'https://a566-180-252-113-132.ngrok.io';
+const socketUrl = 'https://9b86-180-252-115-233.ngrok.io';
 // const socket = io(socketUrl);
 const Chat = () => {
     const [socket, setSocket] = useState(null);
@@ -47,9 +47,13 @@ const Chat = () => {
 
     if (!connected) {
         return (
-            <View>
-                <Text>Connecting...</Text>
-            </View>
+            <View style={{  flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor:"white"}}>
+                <Text>tunggu</Text>
+                <Image source={require("../../assets/loadingLogo.gif")} style={styles.logo} />
+              </View>
         );
     }
 
@@ -83,5 +87,14 @@ const Chat = () => {
         />
     );
 };
+
+
+const styles = StyleSheet.create({
+    logo: {
+      width: 230,
+      resizeMode: "contain",
+      marginBottom: "20%",
+    }, 
+  });
 
 export default Chat;

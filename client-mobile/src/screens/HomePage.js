@@ -59,11 +59,15 @@ const assetMamank = [
   },
 ];
 
+
 export default function Homepage() {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <View style={styles.header} />
+        {/* <View style={styles.header} /> */}
+        <View style={{marginTop:20}}>
+          <Text></Text>
+           </View>
         <CardPaymank />
 
         <View

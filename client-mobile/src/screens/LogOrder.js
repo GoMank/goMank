@@ -6,13 +6,14 @@ import {
   FlatList,
   ScrollView,
   SafeAreaView,
-  TouchableOpacity
+  TouchableOpacity,
+  Image
 } from "react-native";
 import { useQuery } from "@apollo/client";
 import { FETCH_ORDERS } from "../../config/queries";
 
-export default function LogOrder() {
-  const { loading, error, data } = useQuery(FETCH_ORDERS);
+// export default function LogOrder() {
+  // const { loading, error, data } = useQuery(FETCH_ORDERS);
 
 import { useEffect, useState } from "react";
 import { useFocusEffect } from '@react-navigation/native';
@@ -52,14 +53,21 @@ export default function LogOrder() {
 
   if (loading) {
     return (
-      <View style={styles.container}>
-        <View nestedScrollEnabled={true}>
-          <ScrollView>
-            <View>
-              <Text>Loading .....</Text>
-            </View>
-          </ScrollView>
-        </View>
+      // <View style={styles.container}>
+      //   <View nestedScrollEnabled={true}>
+      //     <ScrollView>
+      //       <View>
+      //         <Text>Loading .....</Text>
+      //       </View>
+      //     </ScrollView>
+      //   </View>
+      // </View>
+      <View style={{  flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor:"white"}}>
+        <Text>tunggu</Text>
+        <Image source={require("../../assets/loadingLogo.gif")} style={styles.logo} />
       </View>
     );
   }
@@ -222,7 +230,7 @@ const styles = StyleSheet.create({
     color: "#929292",
   },
   description: {
-    fontSize: 16,
+    fontSize: 18,
     color: "#606060",
   },
   Image: {
@@ -249,5 +257,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "white",
+  },
+
+  logo: {
+    width: 230,
+    resizeMode: "contain",
+    marginBottom: "20%",
   },
 });

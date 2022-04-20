@@ -21,14 +21,21 @@ export default function LogPage() {
  
   if(loading) {
     return (
-    <View style={styles.container} >
-      <View nestedScrollEnabled={true} >
-        <ScrollView >
-          <View >
-          <Text>Loading .....</Text>
-          </View>
-        </ScrollView>
-      </View>
+    // <View style={styles.container} >
+    //   <View nestedScrollEnabled={true} >
+    //     <ScrollView >
+    //       <View >
+    //       <Text>Loading .....</Text>
+    //       </View>
+    //     </ScrollView>
+    //   </View>
+    // </View>
+    <View style={{  flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor:"white"}}>
+      <Text>tunggu</Text>
+      <Image source={require("../../assets/loadingLogo.gif")} style={styles.logo} />
     </View>
     )}
   if(error) {
@@ -117,5 +124,11 @@ const styles = StyleSheet.create({
     width: 55,
     marginRight: 20,
     resizeMode: "contain",
+  },
+  
+  logo: {
+    width: 230,
+    resizeMode: "contain",
+    marginBottom: "20%",
   },
 });

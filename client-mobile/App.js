@@ -17,6 +17,7 @@ import MapsClient from "./src/screens/MapsClient";
 import ChatClient from "./src/components/ChatClient";
 import MidtransPayment from "./src/components/MidtransPayment";
 import XendinPayment from "./src/components/XenditPayment";
+import ScanBarcode from "./src/components/ScanBarcode";
 
 import TabNav from "./src/navigators/TabNavigators";
 LogBox.ignoreLogs(['Remote debugger']);
@@ -39,10 +40,10 @@ export default function App() {
             headerShown: false,
           }}
         >
-          <Stack.Screen name="SandboxTest" component={SandboxTest} />
+          {/* <Stack.Screen name="SandboxTest" component={SandboxTest} /> */}
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="TabNav" component={TabNav} />
-          
+          <Stack.Screen name="ScanBarcode" component={ScanBarcode} />
           <Stack.Screen name="ChatClient" component={ChatClient} />
           <Stack.Screen name="mapsClient" component={MapsClient} />
           {/* <Stack.Screen name="LoginBio" component={LoginBio} /> */}

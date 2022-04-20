@@ -44,9 +44,7 @@ const MidtransPayment = (urlData) => {
     document.body.style.backgroundColor = 'blue';
     true;
   `
-  // setTimeout(() => {
-  //   webViewRef.current.injectJavaScript(run)
-  // }, 10000)
+  
   return (
     <View style={{ flex: 1 }}>
       <WebView
