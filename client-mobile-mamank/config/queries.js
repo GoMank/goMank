@@ -15,7 +15,7 @@ export const UPDATE_MAMANG_LOCATION = gql`
 `;
 
 export const GET_NEAREST_MAMANG = gql`
-    mutation Mutation($location: [Float]) {
+    mutation nearestMamang($location: [Float]) {
         nearestMamang(location: $location) {
             _id
             name
@@ -29,6 +29,28 @@ export const GET_NEAREST_MAMANG = gql`
             image
             rekNumber
             saldo
+        }
+    }
+`;
+
+export const FETCH_ORDERS = gql`
+    query Orders {
+        orders {
+            id
+            invoiceNumber
+            price
+            orderStatus
+            paymentStatus
+            clientId
+            address
+            paymentMethod
+            date
+            time
+            mamangId
+            client {
+                name
+                _id
+            }
         }
     }
 `;
