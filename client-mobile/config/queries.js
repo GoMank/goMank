@@ -160,3 +160,10 @@ mutation Mutation($location: [Float]) {
   }
 }
 `;
+
+export const UPDATE_CANCEL_ORDER = gql`
+mutation UpdateCancelOrder($updateCancelOrderId: ID!) {
+  updateCancelOrder(id: $updateCancelOrderId) {
+    message
+  }
+}`

@@ -82,7 +82,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     paymentStatus: {
       type: DataTypes.STRING,
-      defaultValue: "Unpaid",
+      defaultValue: "Paid",
       // allowNull: false,
       // validate: {
       //   isIn: [['Paid', 'Unpaid']], 
