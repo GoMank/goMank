@@ -3,6 +3,7 @@ const { getData } = require("../config/mongoDb");
 
 
 class Mamang {
+
     static async findAllMamang() {
         try {
             const db = getData()
@@ -22,7 +23,7 @@ class Mamang {
             const db = getData()
             const mamang = await db
                 .collection('mamangs')
-                .findOne({ _id: ObjectId(id) })
+                .findOne({ _id: id })
             delete mamang.password
             return mamang
         } catch (error) {
@@ -64,7 +65,7 @@ class Mamang {
             const db = getData()
             await db
                 .collection('mamangs')
-                .deleteOne({ _id: ObjectId(id) })
+                .deleteOne({ _id: id })
             return "success deleting"
         } catch (error) {
             throw (error)
@@ -80,7 +81,7 @@ class Mamang {
             const db = getData()
             await db
                 .collection('mamangs')
-                .updateOne({ _id: ObjectId(id) },
+                .updateOne({ _id: id },
                     {
                         $set: {
                             address: loc
@@ -97,7 +98,7 @@ class Mamang {
             const db = getData()
             await db
                 .collection('mamangs')
-                .updateOne({ _id: ObjectId(id) },
+                .updateOne({ _id: id },
                     {
                         $set: {
                             saldo: saldo

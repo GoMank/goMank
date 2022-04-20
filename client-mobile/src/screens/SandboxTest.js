@@ -375,76 +375,129 @@
 //     width: "100%",
 //     height: "100%",
 //   },
-// });
+// // });
 
 
-import React, { useRef } from 'react'
-import { View } from 'react-native'
-import { WebView } from 'react-native-webview'
-import { useNavigation } from '@react-navigation/native'
-import axios from 'axios';
-import { CREATE_ORDER } from "../../config/queries";
+// import React, { useRef } from 'react'
+// import { View } from 'react-native'
+// import { WebView } from 'react-native-webview'
+// import { useNavigation } from '@react-navigation/native'
+// import axios from 'axios';
+// import { CREATE_ORDER } from "../../config/queries";
 
-const SandboxTest = (urlData, order) => {
-    const navigation = useNavigation();
+// const SandboxTest = (urlData, order) => {
+//     const navigation = useNavigation();
     
-    console.log(urlData.route.params.urlData, "ini url edited");
-    console.log(urlData.route.params, "INI ORDER")
-    // const url = urlData;
-    const [addOrder] = useMutation(CREATE_ORDER);
-    const submitOrder = () => {
-        addOrder({
-            variables: {
-                clientId: 30, 
-                mamangId: 33, 
-                service: 'Wash', 
-                date: new Date(), 
-                time: new Date(), 
-                address: "Adress", 
-                paymentMethod: "midtrans"
-            },
-        });
+//     console.log(urlData.route.params.urlData, "ini url edited");
+//     console.log(urlData.route.params, "INI ORDER")
+//     // const url = urlData;
+//     const [addOrder] = useMutation(CREATE_ORDER);
+//     const submitOrder = () => {
+//         addOrder({
+//             variables: {
+//                 clientId: 30, 
+//                 mamangId: 33, 
+//                 service: 'Wash', 
+//                 date: new Date(), 
+//                 time: new Date(), 
+//                 address: "Adress", 
+//                 paymentMethod: "midtrans"
+//             },
+//         });
         
-    };
-    console.log(urlData.route.params, "masuk222");
-  const webViewRef = useRef(null);
-  const run = `
-    document.body.style.backgroundColor = 'blue';
-    true;
-  `
-  setTimeout(() => {
-    webViewRef.current.injectJavaScript(run)
-  }, 3000)
-  return (
-    <View style={{ flex: 1 }}>
-      <WebView
-        ref={webViewRef}
-        source={{
-          uri:
-          `${urlData.route.params.urlData}`,
-        }}
-        onNavigationStateChange={(newNavState) => {
+//     };
+//     console.log(urlData.route.params, "masuk222");
+//   const webViewRef = useRef(null);
+//   const run = `
+//     document.body.style.backgroundColor = 'blue';
+//     true;
+//   `
+//   setTimeout(() => {
+//     webViewRef.current.injectJavaScript(run)
+//   }, 3000)
+//   return (
+//     <View style={{ flex: 1 }}>
+//       <WebView
+//         ref={webViewRef}
+//         source={{
+//           uri:
+//           `${urlData.route.params.urlData}`,
+//         }}
+//         onNavigationStateChange={(newNavState) => {
             
-            // if(newNavState.url.includes('#/success')){
-            //   setTimeout(() => {
-            //             navigation.navigate('TabNav')
-            //           }, 3000)
-            // }
-            if (newNavState.canGoBack) {
-                setTimeout(() => {
-                  submitOrder()
-                    navigation.navigate('TabNav')
-                  }, 10000)
-            }
-            //  if (newNavState.title !== `Random`) {
-            //   navigation.navigate('TabNav')
-            // }
-            console.log(newNavState);
-            }
-        }
-      />
-    </View>
-  )
-}
+//             // if(newNavState.url.includes('#/success')){
+//             //   setTimeout(() => {
+//             //             navigation.navigate('TabNav')
+//             //           }, 3000)
+//             // }
+//             if (newNavState.canGoBack) {
+//                 setTimeout(() => {
+//                   submitOrder()
+//                     navigation.navigate('TabNav')
+//                   }, 10000)
+//             }
+//             //  if (newNavState.title !== `Random`) {
+//             //   navigation.navigate('TabNav')
+//             // }
+//             console.log(newNavState);
+//             }
+//         }
+//       />
+//     </View>
+//   )
+// }
 
-export default SandboxTest
+// export default SandboxTest
+
+
+import * as React from 'react';
+import { View, StyleSheet, Text, TouchableHighlight } from 'react-native';
+import Constants from 'expo-constants';
+import { Card } from 'react-native-paper';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  btnNormal: {
+    borderColor: 'blue',
+    borderWidth: 1,
+    borderRadius: 10,
+    height: 30,
+    width: 100,
+  },
+  btnPress: {
+    borderColor: 'blue',
+    borderWidth: 1,
+    height: 30,
+    width: 100,
+  },
+  btn: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex'
+  }
+});
+export default function App() {
+  const [isPress, setIsPress] = React.useState(false);
+
+  const touchProps = {
+    activeOpacity: 1,
+    underlayColor: 'blue',
+    style: isPress ? styles.btnPress : styles.btnNormal,
+    onHideUnderlay: () => setIsPress(false),
+    onShowUnderlay: () => setIsPress(true),
+    onPress: () => console.log('hello'),
+  };
+
+  return (
+    <View style={styles.container}>
+      <TouchableHighlight {...touchProps}>
+        <Text style={styles.btn}>Click here</Text>
+      </TouchableHighlight>
+    </View>
+  );
+}

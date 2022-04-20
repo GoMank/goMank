@@ -6,9 +6,15 @@ import {
     FlatList,
     ScrollView,
     SafeAreaView,
+    TouchableOpacity,
+    Image,
 } from 'react-native';
 import { useQuery } from '@apollo/client';
 import { FETCH_ORDERS } from '../../config/queries';
+
+// export default function LogOrder() {
+// const { loading, error, data } = useQuery(FETCH_ORDERS);
+
 import { useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
@@ -19,30 +25,39 @@ export default function LogOrder() {
     // useEffect( () => {
     //   const {loading, error, data, refetch} = useQuery(FETCH_ORDERS)
 
-    // }, [])
-    useFocusEffect(
-        useCallback(() => {
-            console.log('Terpanggil, USEFOCUS');
-            // Do something when the screen is focused
-            refetch();
+    // if(loading ) {
 
-            return () => {
-                // Do something when the screen is unfocused
-                // Useful for cleanup functions
-            };
-        }, [])
-    );
+    // return (
+    //   <View style={styles.container} >
+
+    {
+        /* // const { data, loading, error } = useQuery(FETCH_ORDER_BY_ID, {
+  //   variables: {
+  //     id: 1,
+  //   },
+  // }); */
+    }
 
     if (loading) {
         return (
-            <View style={styles.container}>
-                <View nestedScrollEnabled={true}>
-                    <ScrollView>
-                        <View>
-                            <Text>Loading .....</Text>
-                        </View>
-                    </ScrollView>
-                </View>
+            // <View style={styles.container}>
+            //   <View nestedScrollEnabled={true}>
+            //     <ScrollView>
+            //       <View>
+            //         <Text>Loading .....</Text>
+            //       </View>
+            //     </ScrollView>
+            //   </View>
+            // </View>
+            <View
+                style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: 'white',
+                }}>
+                <Text>tunggu</Text>
+                <Image source={require('../../assets/loadingLogo.gif')} style={styles.logo} />
             </View>
         );
     }
@@ -59,67 +74,75 @@ export default function LogOrder() {
             </View>
         );
     }
+    console.log(data.orders, '<<<<<<<<');
 
-    console.log(data.orders, 'INI HISTORY');
     return (
         <ScrollView
             contentContainerStyle={{ alignItems: 'center' }}
             style={{ flex: 1, backgroundColor: '#E5E5E5' }}>
             <View style={{ marginTop: 20 }} />
 
-            <View style={styles.card}>
-                <View style={{ flexDirection: 'row' }}>
-                    <View>
-                        <Text style={styles.title}>CANCEL</Text>
-                        <Text style={styles.subTitle}>No: 2019100007</Text>
+            {/* <View style={styles.card}>
+        <View style={{ flexDirection: "row" }}>
+          <View>
+            <Text style={styles.title}>CANCEL</Text>
+            <Text style={styles.subTitle}>No: 2019100007</Text>
 
-                        <Text style={styles.liteTitle}>Time</Text>
-                        <Text style={styles.description}>16 Oct 2019</Text>
-                        <Text style={styles.description}>07.00</Text>
+            <Text style={styles.liteTitle}>Time</Text>
+            <Text style={styles.description}>16 Oct 2019</Text>
+            <Text style={styles.description}>07.00</Text>
 
-                        <Text style={styles.liteTitle}>Customer</Text>
-                        <Text style={styles.description}>MAMANG BUDI</Text>
-                    </View>
-                    <View style={{ marginLeft: '20%' }}>
-                        <Text style={styles.price}>Rp.50.000</Text>
-                        <Text style={styles.description}>CASH</Text>
+            <Text style={styles.liteTitle}>Customer</Text>
+            <Text style={styles.description}>MAMANG BUDI</Text>
+          </View>
+          <View style={{ marginLeft: "20%" }}>
+            <Text style={styles.price}>Rp.50.000</Text>
+            <Text style={styles.description}>CASH</Text>
 
-                        <Text style={styles.liteTitle}>Payment</Text>
-                        <Text style={styles.description}>PENDING</Text>
-                    </View>
-                </View>
+            <Text style={styles.liteTitle}>Payment</Text>
+            <Text style={styles.description}>PENDING</Text>
+          </View>
+        </View>
 
-                <View>
-                    <Text style={styles.liteTitle}>Address</Text>
-                    <Text style={styles.description}>
-                        Jalan kenangan mantan, yang masih membekas
-                    </Text>
-                </View>
+        <View>
+          <Text style={styles.liteTitle}>Address</Text>
+          <Text style={styles.description}>Jalan kenangan mantan, yang masih membekas</Text>
+        </View>
 
-                <Pressable style={styles.button}>
-                    <Text style={styles.textButton}>Details</Text>
-                </Pressable>
-            </View>
-            {data.orders.map((order) => {
+        <Pressable style={styles.button}>
+          <Text style={styles.textButton}>Details</Text>
+        </Pressable>
+      </View> */}
+
+            {data.orders.map((order, index) => {
                 return (
-                    <View style={styles.card}>
+                    // <></>
+
+                    <View style={styles.card} key={index}>
+                        <Text style={styles.title}>INVOICE</Text>
+                        <Text style={styles.subTitle}>No: {order.invoiceNumber}</Text>
                         <View style={{ flexDirection: 'row' }}>
-                            <View>
-                                <Text style={styles.title}>CANCEL</Text>
-                                <Text style={styles.subTitle}>No: {order.invoiceNumber}</Text>
-
-                                <Text style={styles.liteTitle}>Time</Text>
-                                <Text style={styles.description}>{order.date}</Text>
-                                <Text style={styles.description}>07.00</Text>
-
+                            <View style={{ flex: 1.5 }}>
                                 <Text style={styles.liteTitle}>Customer</Text>
                                 <Text style={styles.description}>{order.client.name}</Text>
-                            </View>
-                            <View style={{ marginLeft: '20%' }}>
-                                <Text style={styles.price}> {order.price}</Text>
+
+                                <Text style={styles.liteTitle}>Date & Time</Text>
+                                <Text style={styles.description}>{order.date}</Text>
+                                <Text style={styles.description}>{order.time}</Text>
+
+                                <Text style={styles.liteTitle}>Payment Method</Text>
                                 <Text style={styles.description}>
                                     {order.paymentMethod.toUpperCase()}
                                 </Text>
+                            </View>
+
+                            <View style={{ flex: 1 }}>
+                                {/* <Text style={styles.price}> {order.price}</Text> */}
+                                <Text style={styles.liteTitle}>Service</Text>
+                                <Text style={styles.description}>{order.service}</Text>
+
+                                <Text style={styles.liteTitle}>Price</Text>
+                                <Text style={styles.description}>Rp {order.price}</Text>
 
                                 <Text style={styles.liteTitle}>Payment</Text>
                                 <Text style={styles.description}>
@@ -133,9 +156,14 @@ export default function LogOrder() {
                             <Text style={styles.description}>{order.address}</Text>
                         </View>
 
-                        <Pressable style={styles.button}>
-                            <Text style={styles.textButton}>Details</Text>
-                        </Pressable>
+                        <View style={{ flexDirection: 'row', flex: 1 }}>
+                            <TouchableOpacity style={styles.button}>
+                                <Text style={styles.textButton}>Cancel</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.button}>
+                                <Text style={styles.textButton}>Done</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 );
             })}
@@ -182,7 +210,7 @@ const styles = StyleSheet.create({
         color: '#929292',
     },
     description: {
-        fontSize: 16,
+        fontSize: 18,
         color: '#606060',
     },
     Image: {
@@ -192,6 +220,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     button: {
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         paddingVertical: 12,
@@ -200,6 +229,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FEC900',
         borderRadius: 8,
         marginTop: 25,
+        marginHorizontal: 5,
     },
     textButton: {
         fontSize: 16,
@@ -207,5 +237,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         letterSpacing: 0.25,
         color: 'white',
+    },
+
+    logo: {
+        width: 230,
+        resizeMode: 'contain',
+        marginBottom: '20%',
     },
 });

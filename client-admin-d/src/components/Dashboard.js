@@ -17,7 +17,7 @@ export default function Dashboard() {
     try {
       const orders = await axios({
         method: "get",
-        url: "http://localhost:3005/orders",
+        url: "https://gomank-server-app.herokuapp.com/orders",
       })
       setDataOrder(orders.data)
       setLoading(false)
