@@ -1,9 +1,23 @@
 import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
 import { useQuery } from "@apollo/client";
 import {FETCH_HISTORY} from "../../config/queries"
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from "react";
+
 export default function LogPage() {
-  const {loading, error, data} = useQuery(FETCH_HISTORY)
   
+  const {loading, error, data, refetch} = useQuery(FETCH_HISTORY)
+  useFocusEffect(
+    useCallback(() => {
+      console.log("Terpanggil, LOG/HISTORIES USEFOCUS")
+      // Do something when the screen is focused
+      refetch()
+      return () => {
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+      };
+    }, [])
+  );
  
   if(loading) {
     return (

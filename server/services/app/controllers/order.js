@@ -166,8 +166,7 @@ class orderController {
         }
 
     }
-
-      static async  midTransPayment(req, res, next) {
+    static async  midTransPayment(req, res, next) {
         try {
             
            const timestamp = Date.now()
@@ -204,6 +203,7 @@ class orderController {
           next(err)
         }
       }
+      
 
       static async xendintPayment(req, res, next) {
         try {
