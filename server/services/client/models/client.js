@@ -18,11 +18,12 @@ class Client {
     }
 
     static async findOneClient(id) {
+        console.log(id);
         try {
             const db = getData()
             const client = await db
                 .collection('clients')
-                .findOne({ _id: id })
+                .findOne({ _id: ObjectId(id) })
             delete client.password
             return client
         } catch (error) {

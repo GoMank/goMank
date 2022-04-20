@@ -65,7 +65,7 @@ class Mamang {
             const db = getData()
             await db
                 .collection('mamangs')
-                .deleteOne({ _id: id })
+                .deleteOne({ _id: ObjectId(id) })
             return "success deleting"
         } catch (error) {
             throw (error)
@@ -81,7 +81,7 @@ class Mamang {
             const db = getData()
             await db
                 .collection('mamangs')
-                .updateOne({ _id: id },
+                .updateOne({ _id: ObjectId(id) },
                     {
                         $set: {
                             address: loc
@@ -98,7 +98,7 @@ class Mamang {
             const db = getData()
             await db
                 .collection('mamangs')
-                .updateOne({ _id: id },
+                .updateOne({ _id: ObjectId(id) },
                     {
                         $set: {
                             saldo: saldo

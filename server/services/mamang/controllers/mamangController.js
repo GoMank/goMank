@@ -120,6 +120,7 @@ class MamangController {
     }
 
     static async updateAddressMamang(req, res, next) {
+        console.log(req.body);
         try {
             if (!req.body.address) {
                 throw ({
@@ -129,10 +130,12 @@ class MamangController {
             }
             const { id } = req.params
             const { address } = req.body
+            console.log(id, address);
             await Mamang.updateAddressMamang(id, address)
             const mamang = await Mamang.findOneMamang(id)
             res.status(200).json(mamang)
         } catch (error) {
+            console.log(error);
             if (error.code === 400) {
                 res.status(400).json({ message: error.message })
             } else {
