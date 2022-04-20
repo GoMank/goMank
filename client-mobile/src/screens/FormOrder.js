@@ -153,7 +153,7 @@ export default function FormOrder(mamank) {
               <Text style={styles.textLocation}>My Location</Text>
             </TouchableOpacity>
 
-            <View style={{ bottom: "7%" }}>
+            <View style={{ bottom: "12%" }}>
               {/* select date */}
               <View style={styles.cardDateTime}>
                 {!isPickerShow && (
@@ -229,6 +229,7 @@ export default function FormOrder(mamank) {
           </View>
           <View style={{ flex: 2.3, justifyContent: "space-evenly" }}>
             <View>
+              <Text style={styles.textPrice2}>{dataMamank.name}</Text>
               <Text style={styles.textPrice}>Rp {dataMamank.price}</Text>
             </View>
             <View style={{ alignItems: "center" }}>
@@ -255,7 +256,7 @@ export default function FormOrder(mamank) {
             <View style={styles.modalView}>
               <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                 <View >
-                  <Text style={styles.textModalName}>Nama User</Text>
+                  <Text style={styles.textModalName}>Adul Fikri</Text>
                   <Text style={styles.textModalName}>085689651234</Text>
                 </View>
                 <View >
@@ -284,7 +285,7 @@ export default function FormOrder(mamank) {
               <Text style={styles.textModalJudul}>Address</Text>
               <Text style={styles.textModalIsi}>{ formAddress }</Text>
               
-              <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:50}}>
+              <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:40}}>
 
               <Pressable
                 style={[styles.buttonBack]}
@@ -455,15 +456,23 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFB300",
     borderRadius: 25,
     // position:'absolute',
-    left: "20%",
-    bottom: "10%",
+    left: "25%",
+    bottom: "20%",
   },
 
   textPrice: {
     color: "#003B6A",
-    fontSize: 36,
+    fontSize: 32,
     fontWeight: "bold",
     marginLeft: "10%",
+  },
+  textPrice2: {
+    color: "#003B6A",
+    fontSize: 24,
+    fontWeight: "bold",
+    marginLeft: "10%",
+    marginBottom:-5,
+    marginTop:10
   },
 
   imageProduct: {
@@ -526,7 +535,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   textStyle2: {
-    color: "#003B6A",
+    color: "#FFB300",
     fontWeight: "bold",
     textAlign: "center",
   },
@@ -541,7 +550,6 @@ const styles = StyleSheet.create({
     // marginTop: 22,
     backgroundColor: "rgba(0,0,0,0.8)",
   },
-
 
   textModalName: {
     fontSize: 22,
@@ -572,7 +580,7 @@ const styles = StyleSheet.create({
   },
   buttonCheckout: {
     width: "47%",
-    backgroundColor:"#003B6A",
+    backgroundColor:"#FFB300",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,

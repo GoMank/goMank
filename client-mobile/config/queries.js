@@ -33,6 +33,8 @@ query Orders {
     clientId
     address
     paymentMethod
+    date
+    time
     mamangId
     client {
       name

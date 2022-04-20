@@ -30,7 +30,7 @@ export default function LogPage() {
     </View>
     )
   } 
-  console.log(data.histories, "INI HISTORY")
+  // console.log(data.histories, "INI HISTORY")
   return (
     <ScrollView contentContainerStyle={ {alignItems: "center"}} style={{flex: 1, backgroundColor: "#E5E5E5",}}>
       <View style={{ marginTop: 20 }} />
