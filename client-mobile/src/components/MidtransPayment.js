@@ -19,7 +19,7 @@ const MidtransPayment = (urlData) => {
       service: order.service, 
       date: order.date, 
       time: order.time, 
-      address: "Jl. Pasar Rebo", 
+      address: order.address,
       paymentMethod: order.payment
   }
   console.log(variables, "INI VARIABLES")
@@ -32,7 +32,7 @@ const MidtransPayment = (urlData) => {
                 service: order.service, 
                 date: order.date, 
                 time: order.time, 
-                address: "Adress", 
+                address: order.address, 
                 paymentMethod: order.payment
             },
         });
@@ -44,7 +44,7 @@ const MidtransPayment = (urlData) => {
     document.body.style.backgroundColor = 'blue';
     true;
   `
-  
+
   return (
     <View style={{ flex: 1 }}>
       <WebView
