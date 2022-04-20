@@ -222,7 +222,7 @@ export default function Mamangs() {
         try {
           const mamang = await axios({
             method: "get",
-            url: "https://big-penguin-91.loca.lt/mamangs",
+            url: "https://gomank-server-mamang.herokuapp.com/mamangs",
           })
           console.log(mamang.data)
           setMamangs(mamang.data)
@@ -236,7 +236,7 @@ export default function Mamangs() {
     }, [])
 
     if(loading) return <p>Loading...</p>
-    console.log(mamangs)
+    // console.log(mamangs)
     return (
 
         <Table>
@@ -254,10 +254,10 @@ export default function Mamangs() {
                         <th style={{ textAlign: 'center' }}>Button Detail</th>
                     </tr>
                 </thead>
-                {listMamangs.map((el, index) => {
+                {mamangs.map((el, index) => {
                     return (
-                        <tbody>
-                            <tr key={el._id}>
+                        <tbody key={el._id}>
+                            <tr>
                                 <td style={{ textAlign: 'center' }}>{index + 1}</td>
                                 <td style={{ textAlign: 'center' }}>{el._id}</td>
                                 <td style={{ textAlign: 'center' }}>{el.name}</td>

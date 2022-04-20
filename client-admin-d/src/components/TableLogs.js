@@ -35,16 +35,19 @@ export default function TableLogs() {
     });
 
     logs.sort(function(a, b){return b.time - a.time});
-    console.log(logs);
+    // console.log(logs);
     return (
         <Table>
             <table>
-                <tr>
-                    <th style={{textAlign: 'center'}}>No.</th>
-                    <th style={{textAlign: 'center'}}>Description</th>
-                    <th style={{textAlign: 'center'}}>Type</th>
-                    <th style={{textAlign: 'center'}}>Crated Time</th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th style={{textAlign: 'center'}}>No.</th>
+                        <th style={{textAlign: 'center'}}>Description</th>
+                        <th style={{textAlign: 'center'}}>Type</th>
+                        <th style={{textAlign: 'center'}}>Created Time</th>
+                    </tr>
+                </thead>
+                <tbody>
                 {logs.map((el, index) => {
                     return (
                         <tr key={el.id}>
@@ -55,6 +58,7 @@ export default function TableLogs() {
                         </tr>
                     )
                 })}
+                </tbody>
             </table>
         </Table>
     )
