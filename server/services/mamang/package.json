@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --collectCoverage --detectOpenHandles --forceExit --runInBand"
+    "test": "jest --collectCoverage --detectOpenHandles --forceExit --runInBand",
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
