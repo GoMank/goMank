@@ -150,7 +150,6 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Order',
   });
-
   Order.beforeCreate((instance, options) => {
     const {date, invNumber} = localizer()
     instance.invoiceNumber = `INV-${invNumber}-${date}`;
