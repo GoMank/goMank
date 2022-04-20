@@ -39,12 +39,12 @@ export default function App() {
             headerShown: false,
           }}
         >
+          <Stack.Screen name="SandboxTest" component={SandboxTest} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="TabNav" component={TabNav} />
           
           <Stack.Screen name="ChatClient" component={ChatClient} />
           <Stack.Screen name="mapsClient" component={MapsClient} />
-          <Stack.Screen name="SandboxTest" component={SandboxTest} />
           {/* <Stack.Screen name="LoginBio" component={LoginBio} /> */}
           <Stack.Screen name="PaymentPage" component={PaymentPage} />
           <Stack.Screen name="FormOrder" component={FormOrder} />

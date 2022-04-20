@@ -20,7 +20,9 @@ export default function PaymentPage(order) {
         const data =  await axios.post('http://d839-139-0-237-101.ngrok.io/payments/xendit',{
             email:dataOrder.email,
             price:dataOrder.price,
+
         })
+        dataOrder.payment = "Xendit"
         return navigation.navigate('SandboxTest',{urlData: data.data, order: dataOrder})
     }
 
@@ -28,7 +30,7 @@ export default function PaymentPage(order) {
         const data =  await axios.post(`http://d839-139-0-237-101.ngrok.io/payments/midtrans`,{
             price:dataOrder.price,
         })
-        dataOrder.payment = "midtrans"
+        dataOrder.payment = "Midtrans"
         return navigation.navigate('MidtransPayment',{urlData: data.data, order: dataOrder})
     }
 

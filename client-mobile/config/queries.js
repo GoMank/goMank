@@ -40,8 +40,7 @@ query Orders {
       name
       _id
     }
-    
-
+    service
   }
 }
 `
@@ -119,3 +118,22 @@ query Mamangs {
   }
 }
 `
+
+export const GET_NEAREST_MAMANG = gql`
+mutation Mutation($location: [Float]) {
+  nearestMamang(location: $location) {
+    _id
+    name
+    email
+    password
+    address {
+      coordinates
+    }
+    phoneNumber
+    gender
+    image
+    rekNumber
+    saldo
+  }
+}
+`;

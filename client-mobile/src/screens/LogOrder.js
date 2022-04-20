@@ -6,6 +6,7 @@ import {
   FlatList,
   ScrollView,
   SafeAreaView,
+  TouchableOpacity
 } from "react-native";
 import { useQuery } from "@apollo/client";
 import { FETCH_ORDERS } from "../../config/queries";
@@ -45,7 +46,7 @@ export default function LogOrder() {
       </View>
     );
   }
-  console.log(data,"<<<<<<<<");
+  console.log(data.orders,"<<<<<<<<");
   return (
     <ScrollView
       contentContainerStyle={{ alignItems: "center" }}
@@ -94,25 +95,39 @@ export default function LogOrder() {
                 <Text style={styles.title}>INVOICE</Text>
                 <Text style={styles.subTitle}>No: {order.invoiceNumber}</Text>
             <View style={{ flexDirection: "row" }}>
-              <View>
-
-                <Text style={styles.liteTitle}>Time</Text>
-                <Text style={styles.description}>16 Oct 2019</Text>
-                <Text style={styles.description}>07.00</Text>
+              <View style={{flex:1.5}}>
 
                 <Text style={styles.liteTitle}>Customer</Text>
-                <Text style={styles.description}>{order.clientId}</Text>
-              </View>
-              <View style={{ marginLeft: "20%" }}>
-                <Text style={styles.price}> {order.price}</Text>
+                <Text style={styles.description}>{order.client.name}</Text>
+
+                <Text style={styles.liteTitle}>Date & Time</Text>
+                <Text style={styles.description}>{order.date}</Text>
+                <Text style={styles.description}>{order.time}</Text>
+
+                <Text style={styles.liteTitle}>Payment Method</Text>
                 <Text style={styles.description}>
                   {order.paymentMethod.toUpperCase()}
+                </Text>
+
+              </View>
+
+              <View style={{flex:1}}>
+                {/* <Text style={styles.price}> {order.price}</Text> */}
+                <Text style={styles.liteTitle}>Service</Text>
+                <Text style={styles.description}>
+                  {order.service}
+                </Text>
+
+                <Text style={styles.liteTitle}>Price</Text>
+                <Text style={styles.description}>
+                  Rp {order.price}
                 </Text>
 
                 <Text style={styles.liteTitle}>Payment</Text>
                 <Text style={styles.description}>
                   {order.paymentStatus.toUpperCase()}
                 </Text>
+
               </View>
             </View>
 
@@ -121,9 +136,15 @@ export default function LogOrder() {
               <Text style={styles.description}>{order.address}</Text>
             </View>
 
-            <Pressable style={styles.button}>
-              <Text style={styles.textButton}>Details</Text>
-            </Pressable>
+            <View style={{flexDirection: "row", flex:1}}>
+              <TouchableOpacity style={styles.button}>
+                <Text style={styles.textButton}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.button}>
+                <Text style={styles.textButton}>Done</Text>
+              </TouchableOpacity>
+            </View>
+
           </View>
         );
       })}
@@ -180,6 +201,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   button: {
+    flex:1,
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 12,
@@ -188,6 +210,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FEC900",
     borderRadius: 8,
     marginTop: 25,
+    marginHorizontal:5
   },
   textButton: {
     fontSize: 16,
