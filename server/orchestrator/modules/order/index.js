@@ -1,9 +1,9 @@
 const { gql } = require('apollo-server');
 const axios = require('axios');
 const redis = require('../../config');
-const urlPostgre = 'http://d839-139-0-237-101.ngrok.io/';
-const urlMamang = 'https://slippery-newt-22.loca.lt/';
-const urlClient = 'https://calm-badger-85.loca.lt/';
+const urlPostgre = 'https://gomank-server-app.herokuapp.com/';
+const urlMamang = 'https://gomank-server-mamang.herokuapp.com/';
+const urlClient = 'https://gomank-server-client.herokuapp.com/';
 // const urlClient: 'https://gomank-server-client.herokuapp.com/'
 // urlMamang: 'https://gomank-server-mamang.herokuapp.com/'
 

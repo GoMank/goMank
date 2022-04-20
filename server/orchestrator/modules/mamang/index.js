@@ -1,7 +1,7 @@
 const { gql } = require('apollo-server');
 const axios = require('axios');
 const redis = require('../../config');
-const url = 'https://slippery-newt-22.loca.lt/';
+const url = 'https://gomank-server-mamang.herokuapp.com/';
 // https://gomank-server-mamang.herokuapp.com/
 
 const typeDefs = gql`
