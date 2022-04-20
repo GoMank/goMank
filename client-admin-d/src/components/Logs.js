@@ -37,8 +37,39 @@ export default function Transfers() {
     el.date = dateNumber.toLocaleDateString('id-ID', options)
   });
 
-  logs.sort(function(a, b){return b.time - a.time});
-  const displayLogs = [logs[0], logs[1], logs[2]];
+  
+  const displayLogsFn = (logs) => {
+    const temp = []
+    for (let i = 0 ; i < logs.length ; i++){
+      temp.push(logs[i])
+      if(i = 2){
+        return temp
+      }
+    }
+  }
+  function display (data){
+    if (data.length === 0){
+      return <div><h1>No Logs</h1></div>
+    } else {
+      data.sort(function(a, b){return b.time - a.time});
+      return (data.map((el) => {
+        return (
+          <div key={el.id} className="transaction">
+            <div className="transaction__title">
+              <div className="transaction__title__details">
+                <h3>{el.description}</h3>
+                <h5>{el.date}</h5>
+              </div>
+            </div>
+            <div className="transaction__amount">
+              <span>{el.type}</span>
+            </div>
+          </div>
+        );
+      }))
+    }
+  }
+  const displayLogs = displayLogsFn(logs)
   
   return (
     <Section>
@@ -46,21 +77,7 @@ export default function Transfers() {
         <h2>List Logs</h2>
       </div>
       <div className="transactions">
-        {displayLogs.map((el) => {
-          return (
-            <div key={el.id} className="transaction">
-              <div className="transaction__title">
-                <div className="transaction__title__details">
-                  <h3>{el.description}</h3>
-                  <h5>{el.date}</h5>
-                </div>
-              </div>
-              <div className="transaction__amount">
-                <span>{el.type}</span>
-              </div>
-            </div>
-          );
-        })}
+        {display(logs)}
       </div>
       <Link className="view" to="/logs">
         View all <HiArrowNarrowRight />
