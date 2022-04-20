@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const LOGIN = gql`
+export const REGISTER = gql`
 mutation CreateClient($name: String, $email: String, $password: String, $address: String, $phone: String, $image: String, $norek: String, $saldo: Int) {
   createClient(name: $name, email: $email, password: $password, address: $address, phone: $phone, image: $image, norek: $norek, saldo: $saldo) {
     name
@@ -34,13 +34,14 @@ query Orders {
     clientId
     address
     paymentMethod
+    date
+    time
     mamangId
     client {
       name
       _id
     }
-    
-
+    service
   }
 }
 `
@@ -89,32 +90,37 @@ histories {
       id
       orderStatus
     }
-
-
-
-  
-
   }
 }
 `
-export const GET_NEAREST_MAMANG = gql`
-    mutation Mutation($location: [Float]) {
-        nearestMamang(location: $location) {
-            _id
-            name
-            email
-            password
-            address {
-                coordinates
-            }
-            phoneNumber
-            gender
-            image
-            rekNumber
-            saldo
-        }
-    }
-`;
+
+export const LOGIN = gql`
+mutation Mutation($email: String, $password: String) {
+  loginClient(email: $email, password: $password) {
+    _id
+    name
+    email
+    phoneNumber
+  }
+}`
+// export const GET_NEAREST_MAMANG = gql`
+//     mutation Mutation($location: [Float]) {
+//         nearestMamang(location: $location) {
+//             _id
+//             name
+//             email
+//             password
+//             address {
+//                 coordinates
+//             }
+//             phoneNumber
+//             gender
+//             image
+//             rekNumber
+//             saldo
+//         }
+//     }
+// `;
 
 export const FETCH_MAMANGS = gql`
 query Mamangs {
@@ -135,3 +141,22 @@ query Mamangs {
   }
 }
 `
+
+export const GET_NEAREST_MAMANG = gql`
+mutation Mutation($location: [Float]) {
+  nearestMamang(location: $location) {
+    _id
+    name
+    email
+    password
+    address {
+      coordinates
+    }
+    phoneNumber
+    gender
+    image
+    rekNumber
+    saldo
+  }
+}
+`;

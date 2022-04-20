@@ -1,26 +1,40 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { ScrollView } from "react-native-gesture-handler";
+import { useNavigation } from '@react-navigation/native'
+import {useState} from 'react'
 
 export default function CardPaymank() {
+  
+  const navigation = useNavigation();
+  const [saldo, setSaldo] = useState(500000);
+
+  const scans = ()=>{
+    navigation.navigate('ScanBarcode')
+      setTimeout(() => {
+        setSaldo(saldo-175000)
+    }, 500)
+  }
   return (
     <View style={{ alignItems: "center" }}>
       <View style={styles.boxGomank}>
+        {/* <ScrollView></ScrollView> */}
         <View style={styles.boxGomankIn}>
           <View>
             <View style={{flexDirection:"row", alignItems:'flex-end'}}>
               <Image style={styles.image} source={require('../../assets/LogoGomank.png')} />
               <Text style={{ color: "#003B6A", fontSize: 16, fontWeight: "bold" }}>PayMank</Text>
             </View>
-            <Text style={{ color: "#003B6A", fontSize: 18, fontWeight: "bold" }}>Rp400.000</Text>
+            <Text style={{ color: "#003B6A", fontSize: 18, fontWeight: "bold" }}>Rp {saldo}</Text>
             <Text style={{ color: "#FFB300", fontSize: 12 }}>See Details</Text>
           </View>
         </View>
       
         <View style={{ flexDirection: "row", justifyContent: "space-evenly", width: "55%" }}>
           <View style={{ alignItems: "center" }}>
-            <View style={styles.iconBoxGomank}>
+            <TouchableOpacity style={styles.iconBoxGomank} onPress={() => scans()} >
               <MaterialCommunityIcons name="arrow-up-bold-box" size={28} color="white" />
-            </View>
+            </TouchableOpacity>
             <Text style={{ color: "black", fontSize:12, fontWeight:'bold', color:"white" }}>Pay</Text>
           </View>
           <View style={{ alignItems: "center" }}>
