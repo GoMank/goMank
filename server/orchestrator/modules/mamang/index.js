@@ -1,7 +1,8 @@
 const { gql } = require('apollo-server');
 const axios = require('axios');
 const redis = require('../../config');
-const url = 'https://big-penguin-91.loca.lt/';
+const url = 'https://slippery-newt-22.loca.lt/';
+// https://gomank-server-mamang.herokuapp.com/
 
 const typeDefs = gql`
     extend type Query {
@@ -107,6 +108,7 @@ const resolvers = {
                 const mamangs = await axios.post(url + 'mamangs/nearest', {
                     location: JSON.stringify(args.location),
                 });
+                console.log(mamangs);
                 return mamangs.data.mamangs;
             } catch (err) {
                 throw new Error(err);
