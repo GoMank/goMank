@@ -1,8 +1,8 @@
 FROM node:16.4.2
 
-WORKDIR /goMank/server/services/client
+WORKDIR /goMank/server/services/app
 
-ENV PORT=4005
+ENV PORT=4003
 
 COPY package.json package-lock.json ./
 
