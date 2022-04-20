@@ -38,13 +38,16 @@ export default function MapsOrder() {
                 return;
             }
 
-            let location = await Location.getCurrentPositionAsync({});
-            let address = await Location.reverseGeocodeAsync({
+            let currentLocation = await Location.getCurrentPositionAsync({});
+            let currentAddress = await Location.reverseGeocodeAsync({
                 latitude: -6.2547686,
                 longitude: 106.8654622,
             });
-            setAddress(address);
-            setLocation(location);
+            if (currentLocation) {
+                console.log(currentLocation);
+            }
+            setAddress(currentAddress);
+            setLocation(currentLocation);
         })();
     }, []);
 
@@ -52,10 +55,10 @@ export default function MapsOrder() {
     if (errorMsg) {
         text = errorMsg;
     } else if (location) {
-        // text = JSON.stringify(location);
         text = location;
     }
 
+    console.log(location);
     const car = [
         {
             latitude: -6.254782,
