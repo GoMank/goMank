@@ -28,4 +28,4 @@ if(process.env.NODE_ENV !== 'production') {
       return db
   }
   
-  module.exports = {connection, getData};
+  module.exports = {connection, getData, client};

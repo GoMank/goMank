@@ -71,7 +71,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         isIn: {
-          args:[['Cash', 'Cashless']],
+          args:[['Xendit', 'Midtrans']],
           msg:'Payment method must be either Cash or Cashless'
         }, 
         notNull: {
@@ -150,7 +150,6 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Order',
   });
-
   Order.beforeCreate((instance, options) => {
     const {date, invNumber} = localizer()
     instance.invoiceNumber = `INV-${invNumber}-${date}`;

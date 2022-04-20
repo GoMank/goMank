@@ -55,6 +55,7 @@ class ClientController {
             }
             const data = req.body
             const client = await Client.loginClient(data)
+            console.log(client);
             if(!client){
                 throw({
                     code:400,
