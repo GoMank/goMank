@@ -10,7 +10,7 @@ import {
   Modal,
   Pressable,
 } from "react-native";
-import { useState, useEffect, } from "react";
+import { useState, useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import * as Location from "expo-location";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
@@ -18,12 +18,14 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import ModalOrder from "../components/ModalOrder";
 // import { YellowBox } from 'react-native';
 // YellowBox.ignoreWarnings(['Remote debugger']);
-import { LogBox } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { LogBox } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function FormOrder(mamank) {
+  const [client, setClient] = useState(null);
   const navigation = useNavigation();
-  LogBox.ignoreLogs(['Remote debugger']);
+  LogBox.ignoreLogs(["Remote debugger"]);
   const dataMamank = mamank.route.params.mamank.mamank;
   console.log(mamank.route.params.mamank.mamank, 1111111111111111);
   // buat maps
@@ -41,14 +43,25 @@ export default function FormOrder(mamank) {
   // buat modal
   const [modalVisible, setModalVisible] = useState(false);
 
-  console.log(
-    time.toLocaleTimeString("en-US", {
-      hour12: false,
-      hour: "numeric",
-      minute: "numeric",
-    })
-    // .slice(0, -4), 222222222
-  );
+  useEffect(() => {
+    AsyncStorage.getItem("user_info")
+      .then((res) => {
+        setClient(JSON.parse(res));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  console.log("🚀 ~ file: FormOrder.js ~ line 27 ~ FormOrder ~ client", client);
+
+  //   console.log(
+  //     time.toLocaleTimeString("en-US", {
+  //       hour12: false,
+  //     hour: "numeric",
+  //     minute: "numeric",
+  //   })
+  // );
   // console.log(time);
   const datePlus = new Date(Date.now());
   datePlus.setDate(datePlus.getDate() + 7);
@@ -105,12 +118,19 @@ export default function FormOrder(mamank) {
 
   if (text === "Waiting..") {
     return (
-      <View style={{  flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor:"white"}}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "white",
+        }}
+      >
         <Text>tunggu</Text>
-        <Image source={require("../../assets/loadingLogo.gif")} style={styles.logo} />
+        <Image
+          source={require("../../assets/loadingLogo.gif")}
+          style={styles.logo}
+        />
       </View>
     );
   } else {
@@ -206,12 +226,11 @@ export default function FormOrder(mamank) {
                 )}
                 <View style={styles.textTime}>
                   <Text style={styles.textTimeInner}>
-                    {time
-                      .toLocaleTimeString("en-US", {
-                        hour12: false,
-                        hour: "numeric",
-                        minute: "numeric",
-                      })}
+                    {time.toLocaleTimeString("en-US", {
+                      hour12: false,
+                      hour: "numeric",
+                      minute: "numeric",
+                    })}
                   </Text>
                 </View>
               </View>
@@ -254,61 +273,83 @@ export default function FormOrder(mamank) {
         >
           <View style={styles.centeredView2}>
             <View style={styles.modalView}>
-              <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                <View >
-                  <Text style={styles.textModalName}>Adul Fikri</Text>
-                  <Text style={styles.textModalName}>085689651234</Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <View>
+                  <Text style={styles.textModalName}>{client.name}</Text>
+                  <Text style={styles.textModalName}>{client.phoneNumber}</Text>
                 </View>
-                <View >
-                  <Image style={styles.image} source={require('../../assets/LogoGomank.png')} />
+                <View>
+                  <Image
+                    style={styles.image}
+                    source={require("../../assets/LogoGomank.png")}
+                  />
                 </View>
               </View>
 
               <Text style={styles.textModalJudul}>Price</Text>
               <Text style={styles.textModalIsi}>Rp {dataMamank.price}</Text>
 
-            <View style={{flexDirection:'row'}}>
-              
-            <View style={{marginRight:"20%"}}>
-              <Text style={styles.textModalJudul}>Date</Text>
-              <Text style={styles.textModalIsi}>
-                {date.toUTCString().split(" ").slice(1, 4).join(" ")}
-              </Text>
-            </View>
-            <View>
-              <Text style={styles.textModalJudul}>Time</Text>
-              <Text style={styles.textModalIsi}>
-                {time.toLocaleTimeString("en-US", {hour12: false, hour: "numeric", minute: "numeric",})}
-              </Text>
+              <View style={{ flexDirection: "row" }}>
+                <View style={{ marginRight: "20%" }}>
+                  <Text style={styles.textModalJudul}>Date</Text>
+                  <Text style={styles.textModalIsi}>
+                    {date.toUTCString().split(" ").slice(1, 4).join(" ")}
+                  </Text>
+                </View>
+                <View>
+                  <Text style={styles.textModalJudul}>Time</Text>
+                  <Text style={styles.textModalIsi}>
+                    {time.toLocaleTimeString("en-US", {
+                      hour12: false,
+                      hour: "numeric",
+                      minute: "numeric",
+                    })}
+                  </Text>
+                </View>
               </View>
-            </View>
               <Text style={styles.textModalJudul}>Address</Text>
-              <Text style={styles.textModalIsi}>{ formAddress }</Text>
-              
-              <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:40}}>
+              <Text style={styles.textModalIsi}>{formAddress}</Text>
 
-              <Pressable
-                style={[styles.buttonBack]}
-                onPress={() => setModalVisible(!modalVisible)}
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginTop: 40,
+                }}
               >
-                <Text style={styles.textStyle2}>Back</Text>
-              </Pressable>
-              <Pressable
-                style={styles.buttonCheckout}
-                onPress={() => navigation.navigate("PaymentPage",{
-                  clientId:`625584887e8eeed032147b55`,
-                  mamangId:`62603805c6c29c9308948b08`,
-                  service:+dataMamank.id,
-                  price:+dataMamank.price,
-                  email:"test@gmail.com",
-                  date:date.toUTCString().split(" ").slice(1, 4).join(" "),
-                  time:time.toLocaleTimeString("en-US", {hour12: false, hour: "numeric", minute: "numeric",}),
-                })}
-              >
-                <Text style={styles.textStyle}>Checkout</Text>
-              </Pressable>
+                <Pressable
+                  style={[styles.buttonBack]}
+                  onPress={() => setModalVisible(!modalVisible)}
+                >
+                  <Text style={styles.textStyle2}>Back</Text>
+                </Pressable>
+                <Pressable
+                  style={styles.buttonCheckout}
+                  onPress={() =>
+                    navigation.navigate("PaymentPage", {
+                      clientId: client._id,
+                      mamangId: `62603805c6c29c9308948b08`,
+                      service: +dataMamank.id,
+                      price: +dataMamank.price,
+                      email: "test@gmail.com",
+                      address: formAddress,
+                      date: date.toUTCString().split(" ").slice(1, 4).join(" "),
+                      time: time.toLocaleTimeString("en-US", {
+                        hour12: false,
+                        hour: "numeric",
+                        minute: "numeric",
+                      }),
+                    })
+                  }
+                >
+                  <Text style={styles.textStyle}>Checkout</Text>
+                </Pressable>
               </View>
-
             </View>
           </View>
         </Modal>
@@ -471,8 +512,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginLeft: "10%",
-    marginBottom:-5,
-    marginTop:10
+    marginBottom: -5,
+    marginTop: 10,
   },
 
   imageProduct: {
@@ -569,7 +610,7 @@ const styles = StyleSheet.create({
   },
   buttonBack: {
     width: "47%",
-    backgroundColor:"white",
+    backgroundColor: "white",
     borderColor: "#FFB300",
     justifyContent: "center",
     alignItems: "center",
@@ -580,7 +621,7 @@ const styles = StyleSheet.create({
   },
   buttonCheckout: {
     width: "47%",
-    backgroundColor:"#FFB300",
+    backgroundColor: "#FFB300",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
@@ -591,7 +632,7 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     width: 53,
     height: 53,
-    resizeMode: 'contain',
+    resizeMode: "contain",
   },
 
   logo: {
@@ -599,4 +640,4 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     marginBottom: "20%",
   },
-})
+});
