@@ -109,10 +109,10 @@ const resolvers = {
                         client,
                     };
                 });
-                console.log(
-                    orders.filter((e) => e.client !== undefined && e.mamang !== undefined)
-                );
-                return orders.filter((e) => e.client !== undefined && e.mamang !== undefined);
+
+                return orders
+                    .filter((e) => e.client !== undefined && e.mamang !== undefined)
+                    .reverse();
             } catch (err) {
                 throw new Error(err);
             }
@@ -181,6 +181,7 @@ const resolvers = {
 
                 console.log(`masuk`, order.data);
                 await redis.del('orders');
+                await redis.del('logs');
                 return order.data;
             } catch (err) {
                 throw new Error(err);
@@ -264,7 +265,6 @@ const resolvers = {
                 } else {
                     orderCache = JSON.parse(orderCache);
                 }
-                console.log(orderCache, parent.orderId);
                 return orderCache.find((order) => order.id == parent.orderId);
             } catch (err) {
                 throw new Error(err);

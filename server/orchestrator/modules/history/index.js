@@ -35,7 +35,7 @@ const resolvers = {
                     histories = JSON.parse(historiesCache);
                 }
 
-                return histories;
+                return histories.reverse();
             } catch (err) {
                 throw new Error(err);
             }

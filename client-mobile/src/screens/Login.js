@@ -66,15 +66,15 @@ export default function Login({ navigation }) {
 
     if (data) {
         console.log('ini data', data);
-        (async () => {
-            await AsyncStorage.setItem('user_info', {
-                name: data.loginClient.name,
-                email: data.loginClient.email,
-                _id: data.loginClient._id,
-                phoneNumber: data.loginClient.phoneNumber,
-            });
-        })();
-        navigation.navigate('TabNav');
+
+        AsyncStorage.setItem('user_info', {
+            name: data.loginClient.name,
+            email: data.loginClient.email,
+            _id: data.loginClient._id,
+            phoneNumber: data.loginClient.phoneNumber,
+        }).then(() => {
+            navigation.navigate('TabNav');
+        });
     }
     return (
         <View style={styles.container}>
