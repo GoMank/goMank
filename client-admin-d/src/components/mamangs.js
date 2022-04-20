@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from "styled-components";
+import axios from 'axios'
 // import { useQuery } from '@apollo/client';
-// import { GET_MAMANGS } from '../config/queries';
+// import { FETCH_MAMANGS } from '../config/queries';
 const listMamangs = [
     {
         "_id": "62559dcfc9054d53a273fb14",
@@ -210,10 +211,32 @@ const listMamangs = [
 ]
 
 export default function Mamangs() {
-    // const {loading, error, data} = useQuery(GET_MAMANGS)
+    // const {loading, error, data} = useQuery(FETCH_MAMANGS)
     // if(loading) return <p>Loading...</p>
     // if(error) return <p>Error: {error.message}</p>
-    // console.log(data)
+    
+    const [mamangs, setMamangs] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    async function fetchMamangs() {
+        try {
+          const mamang = await axios({
+            method: "get",
+            url: "https://big-penguin-91.loca.lt/mamangs",
+          })
+          console.log(mamang.data)
+          setMamangs(mamang.data)
+          setLoading(false)
+        } catch (err) {
+          console.log(err)
+        }
+      }
+    useEffect(() => {
+        fetchMamangs()
+    }, [])
+
+    if(loading) return <p>Loading...</p>
+    console.log(mamangs)
     return (
 
         <Table>

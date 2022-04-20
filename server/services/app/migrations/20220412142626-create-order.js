@@ -34,11 +34,22 @@ module.exports = {
       },
       clientId: {
         allowNull: false,
+<<<<<<< HEAD
+=======
+        type: Sequelize.INTEGER
+      },
+      clientName: {
+        allowNull: false,
+>>>>>>> bb037b366554c7bd603e6f8b81329dfa92ea31fa
         type: Sequelize.STRING
       },
       mamangId: {
         allowNull: false,
+<<<<<<< HEAD
         type: Sequelize.STRING
+=======
+        type: Sequelize.INTEGER
+>>>>>>> bb037b366554c7bd603e6f8b81329dfa92ea31fa
       },
       date: {
         allowNull: false,

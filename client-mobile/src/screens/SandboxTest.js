@@ -383,13 +383,28 @@ import { View } from 'react-native'
 import { WebView } from 'react-native-webview'
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios';
+import { CREATE_ORDER } from "../../config/queries";
 
 const SandboxTest = (urlData) => {
     const navigation = useNavigation();
 
     console.log(urlData.route.params.urlData, "ini url");
     // const url = urlData;
-
+    const [addOrder] = useMutation(CREATE_ORDER);
+    const submitOrder = () => {
+        addOrder({
+            variables: {
+                clientId: 30, 
+                mamangId: 33, 
+                service: 'Wash', 
+                date: new Date(), 
+                time: new Date(), 
+                address: "Adress", 
+                paymentMethod: paymentInput
+            },
+        });
+        
+    };
     console.log("masuk222");
   const webViewRef = useRef(null);
   const run = `
@@ -398,7 +413,7 @@ const SandboxTest = (urlData) => {
   `
   setTimeout(() => {
     webViewRef.current.injectJavaScript(run)
-  }, 10000)
+  }, 3000)
   return (
     <View style={{ flex: 1 }}>
       <WebView
@@ -409,16 +424,16 @@ const SandboxTest = (urlData) => {
         }}
         onNavigationStateChange={(newNavState) => {
             
-            if(newNavState.url.includes('#/success')){
-              setTimeout(() => {
-                        navigation.navigate('TabNav')
-                      }, 3000)
-            }
-            // else if (newNavState.canGoBack) {
-            //     setTimeout(() => {
-            //         navigation.navigate('TabNav')
-            //       }, 10000)
+            // if(newNavState.url.includes('#/success')){
+            //   setTimeout(() => {
+            //             navigation.navigate('TabNav')
+            //           }, 3000)
             // }
+            if (newNavState.canGoBack) {
+                setTimeout(() => {
+                    navigation.navigate('TabNav')
+                  }, 10000)
+            }
             //  if (newNavState.title !== `Random`) {
             //   navigation.navigate('TabNav')
             // }
