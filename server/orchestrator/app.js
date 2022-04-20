@@ -2,13 +2,10 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 const { ApolloServer } = require('apollo-server');
-const PORT = process.env.PORT || 4001;
+const PORT = process.env.PORT || 4000;
 
 const server = new ApolloServer({
-    cors: {
-        origin: '*',
-        credentials: true,
-    },
+    cors: true,
     modules: [
         require('./modules/mamang'),
         require('./modules/order'),

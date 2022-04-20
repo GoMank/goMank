@@ -28,7 +28,7 @@ export default function PaymentPage(order) {
 
     async function midTrans() {
         const data =  await axios.post(`http://d839-139-0-237-101.ngrok.io/payments/midtrans`,{
-            price:dataOrder.price,
+            price:dataOrder.price+'000',
         })
         dataOrder.payment = "Midtrans"
         return navigation.navigate('MidtransPayment',{urlData: data.data, order: dataOrder})

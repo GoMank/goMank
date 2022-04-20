@@ -28,6 +28,7 @@ query Orders {
     id
     invoiceNumber
     price
+    date
     orderStatus
     paymentStatus
     clientId
@@ -97,7 +98,24 @@ histories {
   }
 }
 `
-
+// export const GET_NEAREST_MAMANG = gql`
+//     mutation Mutation($location: [Float]) {
+//         nearestMamang(location: $location) {
+//             _id
+//             name
+//             email
+//             password
+//             address {
+//                 coordinates
+//             }
+//             phoneNumber
+//             gender
+//             image
+//             rekNumber
+//             saldo
+//         }
+//     }
+// `;
 
 export const FETCH_MAMANGS = gql`
 query Mamangs {

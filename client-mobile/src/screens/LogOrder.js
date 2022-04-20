@@ -14,11 +14,41 @@ import { FETCH_ORDERS } from "../../config/queries";
 export default function LogOrder() {
   const { loading, error, data } = useQuery(FETCH_ORDERS);
 
-  // const { data, loading, error } = useQuery(FETCH_ORDER_BY_ID, {
+import { useEffect, useState } from "react";
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from "react";
+
+export default function LogOrder() {
+  const [data2, setData2] = useState([])
+  const {loading, error, data, refetch} = useQuery(FETCH_ORDERS)
+  // useEffect( () => {
+  //   const {loading, error, data} = useQuery(FETCH_ORDERS)
+    
+  // }, [])
+  useFocusEffect(
+    useCallback(() => {
+      console.log("Terpanggil, USEFOCUS")
+      // Do something when the screen is focused
+      refetch()
+      return () => {
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+      };
+    }, [])
+  );
+
+ 
+  // if(loading ) {
+    
+    // return (
+    //   <View style={styles.container} >
+      
+
+  {/* // const { data, loading, error } = useQuery(FETCH_ORDER_BY_ID, {
   //   variables: {
   //     id: 1,
   //   },
-  // });
+  // }); */}
 
   if (loading) {
     return (
@@ -47,6 +77,7 @@ export default function LogOrder() {
     );
   }
   console.log(data.orders,"<<<<<<<<");
+
   return (
     <ScrollView
       contentContainerStyle={{ alignItems: "center" }}
