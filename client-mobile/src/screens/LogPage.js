@@ -19,8 +19,6 @@ export default function LogPage() {
         }, [])
     );
 
-    console.log(data.histories, 'INI HISTORY');
-
     if (loading) {
         return (
             <View
@@ -49,7 +47,7 @@ export default function LogPage() {
             </View>
         );
     }
-    // console.log(data.histories, "INI HISTORY")
+    console.log(data.histories, 'INI HISTORY');
     return (
         <ScrollView
             contentContainerStyle={{ alignItems: 'center' }}

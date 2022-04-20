@@ -297,7 +297,7 @@ export default function FormOrder(mamank) {
                 style={styles.buttonCheckout}
                 onPress={() => navigation.navigate("PaymentPage",{
                   clientId:`625584887e8eeed032147b55`,
-                  mamangId:`62559dcfc9054d53a273fb14`,
+                  mamangId:`62603805c6c29c9308948b08`,
                   service:+dataMamank.id,
                   price:+dataMamank.price,
                   email:"test@gmail.com",

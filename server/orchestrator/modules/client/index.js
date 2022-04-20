@@ -15,6 +15,7 @@ const typeDefs = gql`
     # }
 
     extend type Mutation {
+        loginClient(email: String, password: String): Client
         createClient(
             name: String
             email: String
@@ -40,12 +41,12 @@ const typeDefs = gql`
     }
 
     type Client {
-        _id: ID!
-        name: String!
-        email: String!
-        password: String!
-        address: Address!
-        phoneNumber: String!
+        _id: ID
+        name: String
+        email: String
+        password: String
+        address: Address
+        phoneNumber: String
     }
 `;
 
@@ -88,6 +89,16 @@ const resolvers = {
     },
 
     Mutation: {
+        loginClient: async (parent, args, context, info) => {
+            try {
+                const { data } = await axios.post(url + 'clients/login', args);
+                console.log(data);
+                return data;
+            } catch (err) {
+                console.log(err);
+            }
+        },
+
         createClient: async (parent, args, context, info) => {
             console.log(`masuk create client`, args, context);
             try {

@@ -76,8 +76,8 @@ const resolvers = {
                 let ordersCache = await redis.get('orders');
                 let clientCache = await redis.get('clients');
                 let mamangCache = await redis.get('mamangs');
-                let orders;
 
+                console.log(ordersCache);
                 if (!mamangCache) {
                     mamangCache = await axios.get(urlMamang + 'mamangs');
                     mamangCache = mamangCache.data;
@@ -99,7 +99,8 @@ const resolvers = {
                 } else {
                     ordersCache = JSON.parse(ordersCache);
                 }
-                return ordersCache.map((order) => {
+
+                const orders = ordersCache.map((order) => {
                     const mamang = mamangCache.find((mamang) => mamang._id == order.mamangId);
                     const client = clientCache.find((client) => client._id == order.clientId);
                     return {
@@ -108,6 +109,10 @@ const resolvers = {
                         client,
                     };
                 });
+                console.log(
+                    orders.filter((e) => e.client !== undefined && e.mamang !== undefined)
+                );
+                return orders.filter((e) => e.client !== undefined && e.mamang !== undefined);
             } catch (err) {
                 throw new Error(err);
             }
@@ -259,6 +264,7 @@ const resolvers = {
                 } else {
                     orderCache = JSON.parse(orderCache);
                 }
+                console.log(orderCache, parent.orderId);
                 return orderCache.find((order) => order.id == parent.orderId);
             } catch (err) {
                 throw new Error(err);
