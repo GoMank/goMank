@@ -75,7 +75,7 @@ class orderController {
     static async updateStatusOrderDone(req, res, next) {
         const { id } = req.params
         const orderStatus = "Done"
-        const paymentStatus = "Paid"
+        
         // const t = await sequelize.transaction();
         try {
             const found = await Order.findByPk(id)
@@ -112,7 +112,7 @@ class orderController {
     static async updateStatusOrderCancel(req, res, next) {
         const { id } = req.params
         const orderStatus = "Cancelled"
-
+        const paymentStatus = "Returned"
         try {
             const found = await Order.findByPk(id)
             if (!found) {
@@ -122,7 +122,7 @@ class orderController {
                     message: 'no order found'
                 })
             }
-            const updated = await Order.update({ orderStatus: orderStatus }, {
+            const updated = await Order.update({ orderStatus: orderStatus, paymentStatus: paymentStatus }, {
                 where: {
                     id: id,
                     // transaction: t
