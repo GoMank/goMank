@@ -5,6 +5,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from "react";
 
 export default function LogPage() {
+  
   const {loading, error, data, refetch} = useQuery(FETCH_HISTORY)
   useFocusEffect(
     useCallback(() => {
