@@ -21,59 +21,41 @@ export default function LogPage() {
  
   if(loading) {
     return (
-      <View style={styles.container} >
-      
-
-      <View nestedScrollEnabled={true} >
-       
-        
-
-        <ScrollView >
-          <View >
-          <Text>Loading .....</Text>
-          </View>
-
-
-
-          
-
-
-
-        </ScrollView>
-
-
-      </View>
-
+    // <View style={styles.container} >
+    //   <View nestedScrollEnabled={true} >
+    //     <ScrollView >
+    //       <View >
+    //       <Text>Loading .....</Text>
+    //       </View>
+    //     </ScrollView>
+    //   </View>
+    // </View>
+    <View style={{  flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor:"white"}}>
+      <Text>tunggu</Text>
+      <Image source={require("../../assets/loadingLogo.gif")} style={styles.logo} />
     </View>
-    )
-    
-  }
+    )}
   if(error) {
     return (
-      <View style={styles.container}>
-      
+    <View style={styles.container}>
       <View nestedScrollEnabled={true} >
-       
         <ScrollView>
           <View >
-          <Text >Error:  {error.message}</Text>
+          <Text >Error: {error.message}</Text>
           </View>
-
         </ScrollView>
-
-
       </View>
-
     </View>
     )
   } 
-  console.log(data.histories, "INI HISTORY")
+  // console.log(data.histories, "INI HISTORY")
   return (
-    <ScrollView contentContainerStyle={ {alignItems: "center"}} style={{flex: 1,
-      backgroundColor: "#E5E5E5",
-     }}>
+    <ScrollView contentContainerStyle={ {alignItems: "center"}} style={{flex: 1, backgroundColor: "#E5E5E5",}}>
       <View style={{ marginTop: 20 }} />
-      <View style={styles.card}>
+      {/* <View style={styles.card}>
         <View style={{ justifyContent: "center" }}>
           <Image source={require("../../assets/LogoGomank.png")} style={styles.Image} />
         </View>
@@ -82,10 +64,10 @@ export default function LogPage() {
           <Text style={styles.subTitle}>No: 2019100007</Text>
           <Text style={styles.description}>Your booking status no. 2019100007 has been canceled</Text>
         </View>
-      </View>
-      {data.histories.map(history => {
+      </View> */}
+      {data.histories.map((history,index) => {
           return (
-            <View style={styles.card}>
+            <View style={styles.card} key={index}>
         <View style={{ justifyContent: "center" }}>
           <Image source={require("../../assets/LogoGomank.png")} style={styles.Image} />
         </View>
@@ -142,5 +124,11 @@ const styles = StyleSheet.create({
     width: 55,
     marginRight: 20,
     resizeMode: "contain",
+  },
+  
+  logo: {
+    width: 230,
+    resizeMode: "contain",
+    marginBottom: "20%",
   },
 });

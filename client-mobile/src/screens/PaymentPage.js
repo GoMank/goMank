@@ -20,7 +20,9 @@ export default function PaymentPage(order) {
         const data =  await axios.post('http://d839-139-0-237-101.ngrok.io/payments/xendit',{
             email:dataOrder.email,
             price:dataOrder.price,
+
         })
+        dataOrder.payment = "Xendit"
         return navigation.navigate('SandboxTest',{urlData: data.data, order: dataOrder})
     }
 
@@ -34,6 +36,13 @@ export default function PaymentPage(order) {
 
     return(
        <View style={styles.container}>
+           <View style={{marginLeft:'5%', marginBottom:25, marginTop:20, flexDirection:'row', justifyContent:'space-between' }}>
+               <View>
+                <Text style={{fontSize:36, fontWeight:'bold', marginBottom:-10, color:'#003B6A'}}>Select Your</Text>
+                <Text style={{fontSize:36, fontWeight:'bold', color:'#003B6A'}}>Payment</Text>
+               </View>
+               <Image source={require("../../assets/LogoGomank.png")} style={styles.image2}/>
+           </View>
            <TouchableOpacity style={styles.containerImage} value={xendit} onPress={xendit}>
                 <Image source={require("../../assets/xendit.png")} style={styles.image} />
            </TouchableOpacity>
@@ -55,12 +64,20 @@ const styles = StyleSheet.create({
     },
     containerImage: {
         alignItems: 'center',
-        marginVertical: 10
+        marginVertical: 5,
+        width: "100%"
     },
     image: {
-        width: "85%",
-        height: 155,
+        width: "95%",
+        height: 170,
         resizeMode: "contain",
         borderRadius: 10,
+        // backgroundColor:'blue' prikitiw meshmew
     },
+    image2: {
+        height: 100,
+        width: 55,
+        marginRight: 20,
+        resizeMode: "contain",
+      },
 })

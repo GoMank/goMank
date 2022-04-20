@@ -1,6 +1,20 @@
-import { StyleSheet, Text, View, Pressable, FlatList, ScrollView, SafeAreaView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  FlatList,
+  ScrollView,
+  SafeAreaView,
+  TouchableOpacity,
+  Image
+} from "react-native";
 import { useQuery } from "@apollo/client";
 import { FETCH_ORDERS } from "../../config/queries";
+
+// export default function LogOrder() {
+  // const { loading, error, data } = useQuery(FETCH_ORDERS);
+
 import { useEffect, useState } from "react";
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from "react";
@@ -25,70 +39,61 @@ export default function LogOrder() {
   );
 
  
-  if(loading ) {
+  // if(loading ) {
     
-    return (
-      <View style={styles.container} >
+    // return (
+    //   <View style={styles.container} >
       
 
-      <View nestedScrollEnabled={true} >
-       
-        
+  {/* // const { data, loading, error } = useQuery(FETCH_ORDER_BY_ID, {
+  //   variables: {
+  //     id: 1,
+  //   },
+  // }); */}
 
-        <ScrollView >
-          <View >
-          <Text>Loading .....</Text>
-          </View>
-
-
-
-          
-
-
-
-        </ScrollView>
-
-
+  if (loading) {
+    return (
+      // <View style={styles.container}>
+      //   <View nestedScrollEnabled={true}>
+      //     <ScrollView>
+      //       <View>
+      //         <Text>Loading .....</Text>
+      //       </View>
+      //     </ScrollView>
+      //   </View>
+      // </View>
+      <View style={{  flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor:"white"}}>
+        <Text>tunggu</Text>
+        <Image source={require("../../assets/loadingLogo.gif")} style={styles.logo} />
       </View>
-
-    </View>
-    )
-    
+    );
   }
-  if(error) {
+  if (error) {
     return (
       <View style={styles.container}>
-      
-
-      <View nestedScrollEnabled={true} >
-       
-        <ScrollView>
-          <View >
-          <Text >Error:  {error.message}</Text>
-          </View>
-
-
-
-          
-
-
-
-        </ScrollView>
-
-
+        <View nestedScrollEnabled={true}>
+          <ScrollView>
+            <View>
+              <Text>Error: {error.message}</Text>
+            </View>
+          </ScrollView>
+        </View>
       </View>
+    );
+  }
+  console.log(data.orders,"<<<<<<<<");
 
-    </View>
-    )
-  } 
-  console.log(data.orders, "INI DATA")
   return (
-    <ScrollView contentContainerStyle={ {alignItems: "center"}} style={{flex: 1,
-      backgroundColor: "#E5E5E5",
-     }}>
+    <ScrollView
+      contentContainerStyle={{ alignItems: "center" }}
+      style={{ flex: 1, backgroundColor: "#E5E5E5" }}
+      >
       <View style={{ marginTop: 20 }} />
-   
-      <View style={styles.card}>
+
+      {/* <View style={styles.card}>
         <View style={{ flexDirection: "row" }}>
           <View>
             <Text style={styles.title}>CANCEL</Text>
@@ -118,45 +123,70 @@ export default function LogOrder() {
         <Pressable style={styles.button}>
           <Text style={styles.textButton}>Details</Text>
         </Pressable>
-      </View>
-      {data.orders.map(order => {
-          return (
-            <View style={styles.card}>
-        <View style={{ flexDirection: "row" }}>
-          <View>
-            <Text style={styles.title}>CANCEL</Text>
-            <Text style={styles.subTitle}>No: {order.invoiceNumber}</Text>
+      </View> */}
 
-            <Text style={styles.liteTitle}>Time</Text>
-            <Text style={styles.description}>{order.date}</Text>
-            <Text style={styles.description}>07.00</Text>
 
-            <Text style={styles.liteTitle}>Customer</Text>
-            <Text style={styles.description}>{order.client.name}</Text>
+      {data.orders.map((order,index) => {
+        return (
+          // <></>
+
+          <View style={styles.card} key={index}>
+                <Text style={styles.title}>INVOICE</Text>
+                <Text style={styles.subTitle}>No: {order.invoiceNumber}</Text>
+            <View style={{ flexDirection: "row" }}>
+              <View style={{flex:1.5}}>
+
+                <Text style={styles.liteTitle}>Customer</Text>
+                <Text style={styles.description}>{order.client.name}</Text>
+
+                <Text style={styles.liteTitle}>Date & Time</Text>
+                <Text style={styles.description}>{order.date}</Text>
+                <Text style={styles.description}>{order.time}</Text>
+
+                <Text style={styles.liteTitle}>Payment Method</Text>
+                <Text style={styles.description}>
+                  {order.paymentMethod.toUpperCase()}
+                </Text>
+
+              </View>
+
+              <View style={{flex:1}}>
+                {/* <Text style={styles.price}> {order.price}</Text> */}
+                <Text style={styles.liteTitle}>Service</Text>
+                <Text style={styles.description}>
+                  {order.service}
+                </Text>
+
+                <Text style={styles.liteTitle}>Price</Text>
+                <Text style={styles.description}>
+                  Rp {order.price}
+                </Text>
+
+                <Text style={styles.liteTitle}>Payment</Text>
+                <Text style={styles.description}>
+                  {order.paymentStatus.toUpperCase()}
+                </Text>
+
+              </View>
+            </View>
+
+            <View>
+              <Text style={styles.liteTitle}>Address</Text>
+              <Text style={styles.description}>{order.address}</Text>
+            </View>
+
+            <View style={{flexDirection: "row", flex:1}}>
+              <TouchableOpacity style={styles.button}>
+                <Text style={styles.textButton}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.button}>
+                <Text style={styles.textButton}>Done</Text>
+              </TouchableOpacity>
+            </View>
+
           </View>
-          <View style={{ marginLeft: "20%" }}>
-            <Text style={styles.price}> {order.price}</Text>
-            <Text style={styles.description}>{order.paymentMethod.toUpperCase()}</Text>
-
-            <Text style={styles.liteTitle}>Payment</Text>
-            <Text style={styles.description}>{order.paymentStatus.toUpperCase()}</Text>
-          </View>
-        </View>
-
-        <View>
-          <Text style={styles.liteTitle}>Address</Text>
-          <Text style={styles.description}>{order.address}</Text>
-        </View>
-
-        <Pressable style={styles.button}>
-          <Text style={styles.textButton}>Details</Text>
-        </Pressable>
-      </View>
-          )
-        })}
-  
-      
-      
+        );
+      })}
     </ScrollView>
   );
 }
@@ -200,7 +230,7 @@ const styles = StyleSheet.create({
     color: "#929292",
   },
   description: {
-    fontSize: 16,
+    fontSize: 18,
     color: "#606060",
   },
   Image: {
@@ -210,6 +240,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   button: {
+    flex:1,
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 12,
@@ -218,6 +249,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FEC900",
     borderRadius: 8,
     marginTop: 25,
+    marginHorizontal:5
   },
   textButton: {
     fontSize: 16,
@@ -225,5 +257,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "white",
+  },
+
+  logo: {
+    width: 230,
+    resizeMode: "contain",
+    marginBottom: "20%",
   },
 });
