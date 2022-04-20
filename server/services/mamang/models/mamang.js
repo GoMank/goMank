@@ -1,11 +1,11 @@
 const { ObjectId } = require("mongodb");
-const { getDataBase } = require("../config/mongoDb");
+const { getData } = require("../config/mongoDb");
 
 
 class Mamang {
     static async findAllMamang() {
         try {
-            const db = getDataBase()
+            const db = getData()
             const mamangs = await db
                 .collection('mamangs')
                 .find()
@@ -19,7 +19,7 @@ class Mamang {
 
     static async findOneMamang(id) {
         try {
-            const db = getDataBase()
+            const db = getData()
             const mamang = await db
                 .collection('mamangs')
                 .findOne({ _id: ObjectId(id) })
@@ -37,7 +37,7 @@ class Mamang {
                 coordinates: JSON.parse(data.address)
             }
             data.address = loc
-            const db = getDataBase()
+            const db = getData()
             const mamang = await db
                 .collection('mamangs')
                 .insertOne(data)
@@ -49,7 +49,7 @@ class Mamang {
 
     static async loginMamang(data) {
         try {
-            const db = getDataBase()
+            const db = getData()
             const mamang = await db
                 .collection('mamangs')
                 .findOne({ email: data.email })
@@ -61,7 +61,7 @@ class Mamang {
 
     static async deleteOneMamang(id) {
         try {
-            const db = getDataBase()
+            const db = getData()
             await db
                 .collection('mamangs')
                 .deleteOne({ _id: ObjectId(id) })
@@ -77,7 +77,7 @@ class Mamang {
                 type: 'Point',
                 coordinates: JSON.parse(address)
             }
-            const db = getDataBase()
+            const db = getData()
             await db
                 .collection('mamangs')
                 .updateOne({ _id: ObjectId(id) },
@@ -94,7 +94,7 @@ class Mamang {
 
     static async updateSaldoMamang(id, saldo) {
         try {
-            const db = getDataBase()
+            const db = getData()
             await db
                 .collection('mamangs')
                 .updateOne({ _id: ObjectId(id) },
@@ -111,7 +111,7 @@ class Mamang {
 
     static async findNearestMamang(location) {
         try {
-            const db = getDataBase()
+            const db = getData()
             await db
                 .collection('mamangs')
                 .createIndex({ address: "2dsphere" })

@@ -29,6 +29,9 @@ module.exports = (sequelize, DataTypes) => {
       //   }
       // }
     },
+    service: {
+      type: DataTypes.STRING,
+    },
     price: {
       type: DataTypes.INTEGER,
       defaultValue: 50000,
@@ -94,7 +97,7 @@ module.exports = (sequelize, DataTypes) => {
       // }
     },
     clientId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notNull: {
@@ -103,33 +106,13 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    clientName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          args: true,
-          msg: 'Client Name cannot be empty'
-        }
-      }
-    },
     mamangId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notNull: {
           args: true,
           msg: 'Mamang ID cannot be empty'
-        }
-      }
-    },
-    mamangName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          args: true,
-          msg: 'Mamang Name cannot be empty'
         }
       }
     },
@@ -140,6 +123,26 @@ module.exports = (sequelize, DataTypes) => {
         notNull: {
           args: true,
           msg: 'Address cannot be empty'
+        }
+      }
+    },
+    date: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: 'Date cannot be empty'
+        }
+      }
+    },
+    time: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: 'Time cannot be empty'
         }
       }
     },
