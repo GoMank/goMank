@@ -107,6 +107,7 @@ const resolvers = {
                 const mamangs = await axios.post(url + 'mamangs/nearest', {
                     location: JSON.stringify(args.location),
                 });
+                console.log(mamangs);
                 return mamangs.data.mamangs;
             } catch (err) {
                 throw new Error(err);
