@@ -28,6 +28,7 @@ query Orders {
     id
     invoiceNumber
     price
+    date
     orderStatus
     paymentStatus
     clientId
