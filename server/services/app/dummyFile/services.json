@@ -1,0 +1,8 @@
+[
+    { "name": "Car Wash", "title": "Mank Wash", "image": "https://i.ibb.co/vkGXsc9/CarWash.jpg", "price": 850000, "id": 1 },
+    { "name": "Engine Wash", "title": "Mank Engine", "image": "https://i.ibb.co/PYHJT0t/engine-Wash.jpg", "price": 500000, "id": 2 },
+    { "name": "Interior Wash", "title": "Mank Interior", "image": "https://i.ibb.co/qJMVsqS/interior-Wash.jpg", "price": 450000, "id": 3 },
+    { "name": "Eksterior Wash", "title": "Mank Eksterior", "image": "https://i.ibb.co/t3tRWTm/eksterior-Wash.jpg", "price": 350000, "id": 4 },
+    { "name": "Window Wash", "title": "Mank Window", "image": "https://i.ibb.co/Bzb23q4/window-Wash.jpg", "price": 235000, "id": 5 },
+    { "name": "Velg Wash", "title": "Mank Velg", "image": "https://i.ibb.co/372wDvq/VelgWash.jpg", "price": 185000, "id": 6 }
+]
