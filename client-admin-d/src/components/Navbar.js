@@ -10,10 +10,10 @@ export default function Navbar() {
           <span>Welcome to GOMANK DASHBOARD</span>
         </h1>
       </div>
-      <div className="search">
+      {/* <div className="search">
         <BiSearch />
         <input type="text" placeholder="Search" />
-      </div>
+      </div> */}
     </Nav>
   );
 }
