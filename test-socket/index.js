@@ -15,7 +15,8 @@ const io = require('socket.io')(server, {
 });
 
 const PORT = process.env.PORT || 3000;
-const mongodb = process.env.MONGODB_URI || 'mongodb://localhost:27017/test';
+const mongodb =
+    'mongodb+srv://dzulfiqarzaky:2sGulkifj5FJpoSF@cluster0.zvlbq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 mongoose
     .connect(mongodb, {
         useNewUrlParser: true,
@@ -52,6 +53,8 @@ io.on('connection', (socket) => {
         .catch((err) => {
             console.log(err);
         });
+
+    console.log('connected');
 
     socket.on('postMessage', (msg) => {
         const message = new Msg({ ...msg });

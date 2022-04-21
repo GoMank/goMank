@@ -4,9 +4,10 @@ import io from 'socket.io-client';
 // import tw from 'twrnc';
 import { GiftedChat } from 'react-native-gifted-chat';
 
-const socketUrl = 'https://b3ba-180-252-115-233.ngrok.io';
+const socketUrl = 'https://84bf-180-252-115-233.ngrok.io';
 // const socket = io(socketUrl);
 const Chat = () => {
+    console.log(`ini chat`);
     const [socket, setSocket] = useState(null);
     const [connected, setConnected] = useState(false);
     const [message, setMessage] = useState('');
