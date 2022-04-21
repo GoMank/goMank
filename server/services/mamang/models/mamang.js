@@ -128,7 +128,7 @@ class Mamang {
                         }
                     }
                 })
-                .limit(2)
+                .limit(4)
                 .toArray()
             const distances = await db
                 .collection('mamangs')

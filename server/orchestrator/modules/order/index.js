@@ -93,9 +93,11 @@ const resolvers = {
                     clientCache = JSON.parse(clientCache);
                 }
                 if (!ordersCache) {
+                    console.log('masuk order cache gak ada');
                     ordersCache = await axios.get(urlPostgre + 'orders');
                     ordersCache = ordersCache.data;
                     redis.set('orders', JSON.stringify(ordersCache));
+                    console.log(ordersCache);
                 } else {
                     ordersCache = JSON.parse(ordersCache);
                 }
@@ -109,9 +111,9 @@ const resolvers = {
                         client,
                     };
                 });
-                console.log(
-                    orders.filter((e) => e.client !== undefined && e.mamang !== undefined)
-                );
+                // console.log(
+                //     orders.filter((e) => e.client !== undefined && e.mamang !== undefined)
+                // );
                 return orders.filter((e) => e.client !== undefined && e.mamang !== undefined);
             } catch (err) {
                 throw new Error(err);
@@ -192,6 +194,7 @@ const resolvers = {
                 await redis.del('orders');
                 await redis.del('logs');
                 console.log(order.data);
+                console.log('order sama data harusnya ke delete')
                 return order.data;
             } catch (err) {
                 throw new Error(err);
