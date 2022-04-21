@@ -17,10 +17,10 @@ export default function PaymentPage(order) {
         console.log('masuk');
         const data = await axios.post('https://gomank-server-app.herokuapp.com/payments/xendit', {
             email: dataOrder.email,
-            price: dataOrder.price,
+            price: dataOrder.price + '000',
         });
         console.log('masuk 2');
-        return navigation.navigate('SandboxTest', { urlData: data.data, order: dataOrder });
+        return navigation.navigate('XenditPayment', { urlData: data.data, order: dataOrder });
     }
     //heroku logs -t
     // https://angry-lizard-62.loca.lt/payments/xendit
