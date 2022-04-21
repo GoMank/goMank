@@ -45,7 +45,7 @@ export default function Mamangs() {
                         <th style={{ textAlign: 'center' }}>Gender</th>
                         <th style={{ textAlign: 'center' }}>Bank Account</th>
                         <th style={{ textAlign: 'center' }}>Saldo</th>
-                        <th style={{ textAlign: 'center' }}>Button Detail</th>
+                        {/* <th style={{ textAlign: 'center' }}>Button Detail</th> */}
                     </tr>
                 </thead>
                 {mamangs.map((el, index) => {
@@ -61,9 +61,9 @@ export default function Mamangs() {
                                 <td style={{ textAlign: 'center' }}>{el.phoneNumber}</td>
                                 <td style={{ textAlign: 'center' }}>{el.gender}</td>
                                 <td style={{ textAlign: 'center' }}>{el.rekNumber}</td>
-                                <td style={{ textAlign: 'center' }}>{el.saldo}</td>
+                                <td style={{ textAlign: 'center' }}>{el.saldo.toLocaleString('id-ID', {style: 'currency', currency: 'IDR'})}</td>
                                 <td style={{ display:'flex', justifyContent: 'center' }}>
-                                    <button style={{paddingInline: '20%', paddingBlock: 8, marginTop: 30}}>Detail</button>
+                                    {/* <button style={{paddingInline: '20%', paddingBlock: 8, marginTop: 30}}>Detail</button> */}
                                 </td>
                             </tr>
                         </tbody>
