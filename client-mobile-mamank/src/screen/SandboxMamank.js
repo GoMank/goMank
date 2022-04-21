@@ -19,13 +19,8 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import Chat from '../components/Chat';
 import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { GET_NEAREST_MAMANG } from '../../config/queries';
-import { useMutation, useQuery } from '@apollo/client';
 
 export default function Maps() {
-    const [nearestMamang, { data: mamangLoc, loading: mamangLoading, error: mamangtError }] =
-        useMutation(GET_NEAREST_MAMANG);
-
     const navigation = useNavigation();
     LogBox.ignoreLogs(['Remote debugger']);
     const [address, setAddress] = useState([]);
@@ -43,23 +38,14 @@ export default function Maps() {
 
             let currentLocation = await Location.getCurrentPositionAsync({});
             let currentAddress = await Location.reverseGeocodeAsync({
-                latitude: currentLocation.coords.longitude,
-                longitude: currentLocation.coords.latitude,
+                latitude: currentLocation.coords.latitude,
+                longitude: currentLocation.coords.longitude,
             });
+
             setAddress(currentAddress);
             setLocation(currentLocation);
-            await nearestMamang({
-                variables: {
-                    location: [
-                        currentLocation.coords.longitude,
-                        currentLocation.coords.latitude,
-                    ],
-                },
-            });
         })();
     }, []);
-
-    console.log(mamangLoc, '<<<<<<<<<<<');
 
     let text = 'Waiting..';
     if (errorMsg) {
@@ -67,36 +53,6 @@ export default function Maps() {
     } else if (location) {
         text = location;
     }
-
-    const car = [
-        // {
-        //     latitude: -6.254782,
-        //     longitude: 106.86587,
-        //     latitudeDelta: 0.01,
-        //     longitudeDelta: 0.01,
-        // },
-        {
-            latitude: -6.254558,
-            longitude: 106.864834,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01,
-        },
-        // {
-        //   latitude: -6.255126,
-        //   longitude: 106.865199,
-        //   latitudeDelta: 0.01,
-        //   longitudeDelta: 0.01,
-        // },
-    ];
-
-    // console.log(mamangLoc);
-
-    // const tokyoRegion = {
-    //     latitude: -6.254782,
-    //     longitude: 106.86587,
-    //     latitudeDelta: 0.01,
-    //     longitudeDelta: 0.01,
-    // };
 
     if (text === 'Waiting..') {
         return (
@@ -120,9 +76,13 @@ export default function Maps() {
                         showsUserLocation
                         initialRegion={currentLocation} //your region data goes here.
                     >
-                        {car.map((item, index) => (
-                            <Marker coordinate={item} key={index}></Marker>
-                        ))}
+                        <Marker
+                            coordinate={{
+                                latitude: -6.256059,
+                                longitude: 106.863338,
+                                latitudeDelta: 0.01,
+                                longitudeDelta: 0.01,
+                            }}></Marker>
                     </MapView>
 
                     <View style={{ alignItems: 'flex-start' }}>
@@ -131,7 +91,6 @@ export default function Maps() {
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 position: 'absolute',
-                                //   width:'25%',
                                 padding: 10,
                                 bottom: 2,
                             }}>
@@ -152,7 +111,6 @@ export default function Maps() {
                                     borderRadius: 10,
                                 }}>
                                 <Entypo name='chat' size={32} color='white' />
-                                {/* <Text style={{color:'white', fontWeight:'bold', fontSize:16}}>Orders</Text> */}
                             </TouchableOpacity>
                         </View>
                     </View>
