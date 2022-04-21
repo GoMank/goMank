@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import io from 'socket.io-client';
 import { GiftedChat } from 'react-native-gifted-chat';
 
-const socketUrl = 'https://9b86-180-252-115-233.ngrok.io';
+const socketUrl = 'https://981a-180-252-115-233.ngrok.io';
 
 const Chat = () => {
     const [socket, setSocket] = useState(null);
@@ -75,6 +75,7 @@ const Chat = () => {
             onInputTextChanged={(text) => setMessage(text)}
             onSend={sendChat}
             scrollToBottom={true}
+            renderAvatar={null}
             placeholder='Type a message...'
             isTyping={true}
             user={{

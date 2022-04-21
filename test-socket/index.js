@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
-const Redis = require('ioredis');
 const mongoose = require('mongoose');
+const { MongoClient, ServerApiVersion } = require('mongodb');
 const Msg = require('./models/messages');
 const { v4 } = require('uuid');
 const server = require('http').createServer(app);
@@ -12,11 +12,13 @@ const io = require('socket.io')(server, {
 });
 
 const PORT = process.env.PORT || 3000;
-const mongodb = 'mongodb://localhost:27017/chat';
+const mongodb =
+    'mongodb+srv://dzulfiqarzaky:2sGulkifj5FJpoSF@cluster0.zvlbq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 mongoose
     .connect(mongodb, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        serverApi: ServerApiVersion.v1,
     })
     .then(() => {
         console.log('connected to mongodb');

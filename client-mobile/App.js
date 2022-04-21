@@ -48,6 +48,7 @@ export default function App() {
                     <Stack.Screen name='ChatClient' component={ChatClient} />
                     <Stack.Screen name='mapsClient' component={MapsClient} />
                     <Stack.Screen name='MapsDetail' component={MapsDetail} />
+                    <Stack.Screen name='MoveMapsMamang' component={MoveMapsMamang} />
                     {/* <Stack.Screen name="LoginBio" component={LoginBio} /> */}
                     <Stack.Screen name='PaymentPage' component={PaymentPage} />
                     <Stack.Screen name='FormOrder' component={FormOrder} />

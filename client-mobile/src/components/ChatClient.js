@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 // import tw from 'twrnc';
 import { GiftedChat } from 'react-native-gifted-chat';
 
-const socketUrl = 'https://9b86-180-252-115-233.ngrok.io';
+const socketUrl = 'https://b3ba-180-252-115-233.ngrok.io';
 // const socket = io(socketUrl);
 const Chat = () => {
     const [socket, setSocket] = useState(null);
@@ -47,13 +47,16 @@ const Chat = () => {
 
     if (!connected) {
         return (
-            <View style={{  flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor:"white"}}>
+            <View
+                style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: 'white',
+                }}>
                 <Text>tunggu</Text>
-                <Image source={require("../../assets/loadingLogo.gif")} style={styles.logo} />
-              </View>
+                <Image source={require('../../assets/loadingLogo.gif')} style={styles.logo} />
+            </View>
         );
     }
 
@@ -80,6 +83,7 @@ const Chat = () => {
             onSend={sendChat}
             scrollToBottom={true}
             placeholder='Type a message...'
+            renderAvatar={null}
             isTyping={true}
             user={{
                 _id: 'client',
@@ -88,13 +92,12 @@ const Chat = () => {
     );
 };
 
-
 const styles = StyleSheet.create({
     logo: {
-      width: 230,
-      resizeMode: "contain",
-      marginBottom: "20%",
-    }, 
-  });
+        width: 230,
+        resizeMode: 'contain',
+        marginBottom: '20%',
+    },
+});
 
 export default Chat;

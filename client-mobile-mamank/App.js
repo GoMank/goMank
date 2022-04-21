@@ -19,7 +19,7 @@ import { ApolloProvider } from '@apollo/client';
 import client from './config/apollo';
 const Stack = createNativeStackNavigator();
 
-const socketUrl = 'https://512c-180-252-127-246.ngrok.io';
+const socketUrl = 'https://ad91-180-252-115-233.ngrok.io';
 const socket = io(socketUrl);
 
 export default function App() {
