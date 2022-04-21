@@ -62,7 +62,7 @@ const assetMamank = [
 
 export default function Homepage() {
     const [data, setData] = useState(null);
-    
+
     useEffect(() => {
         AsyncStorage.getItem("user_info")
           .then((res) => {
@@ -85,7 +85,6 @@ export default function Homepage() {
               backgroundColor: "white",
             }}
           >
-            <Text>tunggu</Text>
             <Image
               source={require("../../assets/loadingLogo.gif")}
               style={styles.logo}
@@ -96,15 +95,17 @@ export default function Homepage() {
    
     return (<>
     
-        <View style={{width:'100%',flexDirection: "row", backgroundColor:'#003B6A', height:90, elevation: 3, alignItems:'center'}}>
-            <View style={{flex:1, }}></View>
+        <View style={{width:'100%',flexDirection: "row", backgroundColor:'#003B6A', height:70, elevation: 3, alignItems:'center'}}>
+            <View style={{flex:1,}}>
+            <Image style={styles.imageGomank} source={require('../../assets/logo-gomank-main.png')} />
+            </View>
             <View style={{flex:1, flexDirection: "row",}}>
 
-                <View style={{justifyContent:'center'}}>
-                    <Text style={{textAlign:"right"}}>
+                <View style={{justifyContent:'center',}}>
+                    <Text style={{textAlign:"right", color:'white', fontSize:16}}>
                         {data.name}
                         </Text>
-                    <Text style={{textAlign:"right"}}>
+                    <Text style={{textAlign:"right", color:'white', fontSize:12}}>
                         {data.phoneNumber}
                     </Text>
                 </View>
@@ -154,6 +155,8 @@ export default function Homepage() {
                         keyExtractor={(item) => item.id}
                     />
                 </View>
+                <Image style={styles.imageBanner} source={require('../../assets/b1.png')} />
+                <Image style={styles.imageBanner2} source={require('../../assets/b2.png')} />
             </View>
         </ScrollView>
         </>
@@ -191,9 +194,38 @@ const styles = StyleSheet.create({
     image: {
         // backgroundColor: "pink",
         paddingTop: 5,
-        width: 65,
-        height: 65,
+        width: 50,
+        height: 50,
         resizeMode: 'contain',
         borderRadius: 100,
+        marginLeft:10
+      },
+      imageGomank: {
+        // backgroundColor: "pink",
+        paddingTop: 5,
+        width: 150,
+        height: 55,
+        resizeMode: 'contain',
+        borderRadius: 100,
+        marginLeft:10
+      },
+      imageBanner: {
+        // backgroundColor: "pink",
+        paddingTop: 5,
+        width: '100%',
+        height: 200,
+        resizeMode: 'contain',
+        marginTop:10
+        // borderRadius: 100,
+        // marginLeft:10
+      },
+      imageBanner2: {
+        // backgroundColor: "pink",
+        paddingTop: 5,
+        width: '100%',
+        height: 160,
+        resizeMode: 'contain',
+        // borderRadius: 100,
+        // marginLeft:10
       }
 });

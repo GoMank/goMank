@@ -56,15 +56,6 @@ export default function LogOrder() {
 
     if (loading) {
         return (
-            // <View style={styles.container}>
-            //   <View nestedScrollEnabled={true}>
-            //     <ScrollView>
-            //       <View>
-            //         <Text>Loading .....</Text>
-            //       </View>
-            //     </ScrollView>
-            //   </View>
-            // </View>
             <View
                 style={{
                     flex: 1,
@@ -72,7 +63,6 @@ export default function LogOrder() {
                     alignItems: 'center',
                     backgroundColor: 'white',
                 }}>
-                <Text>tunggu</Text>
                 <Image source={require('../../assets/loadingLogo.gif')} style={styles.logo} />
             </View>
         );
@@ -119,7 +109,6 @@ export default function LogOrder() {
                                 <Text style={styles.subTitle}>No: {order.invoiceNumber}</Text>
                             </View>
 
-                          
                         {/* </View> */}
 
                         <View style={{ flexDirection: 'row' }}>

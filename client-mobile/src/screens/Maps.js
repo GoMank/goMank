@@ -306,7 +306,7 @@ export default function Maps() {
 
             {car.map((item, index) => (
               <Marker coordinate={item} key={index} >
-                <Image source={require("../../assets/card-dummy.png")} style={{ width: 50, height: 50, resizeMode: "contain" }} />
+                <Image source={require("../../assets/LogoGomank.png")} style={{ width: 45, height: 45, resizeMode: "contain" }} />
               </Marker>
             ))}
           </MapView>
