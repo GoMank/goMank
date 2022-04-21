@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 // import tw from 'twrnc';
 import { GiftedChat } from 'react-native-gifted-chat';
 
-const socketUrl = 'https://84bf-180-252-115-233.ngrok.io';
+const socketUrl = 'https://gomank-chat.herokuapp.com/';
 // const socket = io(socketUrl);
 const Chat = () => {
     console.log(`ini chat`);

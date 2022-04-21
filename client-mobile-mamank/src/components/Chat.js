@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import io from 'socket.io-client';
 import { GiftedChat } from 'react-native-gifted-chat';
 
-const socketUrl = 'https://84bf-180-252-115-233.ngrok.io';
+const socketUrl = 'https://gomank-chat.herokuapp.com/';
 
 const Chat = () => {
     console.log(`ini chat`);
