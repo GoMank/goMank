@@ -8,7 +8,6 @@ import { gql, useMutation } from '@apollo/client';
 // import Anchor from './Linking';
 // import axios from 'axios';
 import { LogBox } from 'react-native';
-const delay = 10;
 let foregroundSubscription = null;
 export default function Maps() {
     LogBox.ignoreLogs(['Remote debugger']);
@@ -30,54 +29,6 @@ export default function Maps() {
     const GOOGLE_MAPS_APIKEY = 'AIzaSyAlqVN_Y9I6JGPrCIgA5LR0iytHX1hIRaY';
 
     let t;
-    // useEffect(() => {
-    //     t = setInterval(() => {
-    //         (async () => {
-    //             let { status } = await Location.requestForegroundPermissionsAsync();
-    //             if (status !== 'granted') {
-    //                 setErrorMsg('Permission to access location was denied');
-    //                 return;
-    //             }
-    //             let location = await Location.getCurrentPositionAsync({});
-    //             let address = await Location.reverseGeocodeAsync({
-    //                 latitude: location.coords.latitude,
-    //                 longitude: location.coords.longitude,
-    //             });
-    //             if (countRef.current <= 1) {
-    //                 clearInterval(t);
-    //                 // navigator.navigate();
-    //             } else {
-    //                 setAddress(address);
-    //                 setLocation(location);
-    //                 setDistance(
-    //                     getDistance(
-    //                         location?.coords?.latitude,
-    //                         location?.coords?.longitude,
-    //                         -6.269459394758885,
-    //                         107.01111910348448
-    //                     ) * 1000
-    //                 );
-    //             }
-    //         })();
-    //     }, delay * 1000);
-
-    //     // return () => {
-    //     //     clearInterval(t);
-    //     // };
-    // }, []);
-
-    // useEffect(() => {
-    //     if (location) {
-    //         updateMamangLoc({
-    //             variables: {
-    //                 address: [location.coords.longitude, location.coords.latitude],
-    //                 id: '62559ddfc9054d53a273fb15',
-    //             },
-    //         });
-    //         console.log(`masuk`);
-    //     }
-    // }, [countRef.current]);
-
     useEffect(() => {
         t = setInterval(() => {
             (async () => {
@@ -87,11 +38,11 @@ export default function Maps() {
                     return;
                 }
                 let currentLocation = await Location.getCurrentPositionAsync({});
-                // let currentAddress = await Location.reverseGeocodeAsync({
-                //     latitude: currentLocation.coords.latitude,
-                //     longitude: currentLocation.coords.longitude,
-                // });
-                // setAddress(address);
+                let currentAddress = await Location.reverseGeocodeAsync({
+                    latitude: currentLocation.coords.latitude,
+                    longitude: currentLocation.coords.longitude,
+                });
+                setAddress(currentAddress);
 
                 const _currentDistance =
                     getDistance(
@@ -115,7 +66,7 @@ export default function Maps() {
                     clearInterval(t);
                 }
             })();
-        }, 30000);
+        }, 5000);
 
         return () => {
             clearInterval(t);
@@ -183,6 +134,10 @@ export default function Maps() {
                 <Text>{text}</Text>
             </View>
         );
+    }
+
+    if (mamangLoc) {
+        console.log(mamangLoc);
     }
 
     // ini user location nih bisa hard code

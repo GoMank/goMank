@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache, ApolloProvider, useQuery, gql } from '@apollo/client';
 
 const client = new ApolloClient({
-    uri: 'https://c2f7-180-252-122-92.ngrok.io',
+    uri: 'https://nervous-baboon-89.loca.lt',
     fetchOptions: {
         mode: 'no-cors',
     },

@@ -1,13 +1,12 @@
-
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import * as Location from 'expo-location';
 import React, { useState, useEffect, useRef } from 'react';
 import MapViewDirections from 'react-native-maps-directions';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 // import Anchor from './Linking';
-import axios from 'axios';
+
 import PermissionsButton from '../components/PermissionButton';
-import { LogBox } from 'react-native'
+import { LogBox } from 'react-native';
 const delay = 20;
 let foregroundSubscription = null;
 export default function MapsClient() {
@@ -54,9 +53,6 @@ export default function MapsClient() {
             })();
         }, delay * 1000);
 
-        // fetch order disini => ambil map nya => ambil distance nya
-        // set ke clientLoc
-
         return () => {
             clearInterval(t);
         };
@@ -65,16 +61,11 @@ export default function MapsClient() {
     useEffect(() => {
         try {
             // axios('') send loc to server
-            console.log(countRef.current,11111111111111111111111111111111111);
+            console.log(countRef.current, 11111111111111111111111111111111111);
         } catch (error) {
             console.log(error);
         }
-            
-    },[countRef.current])
-
-    
-
-    
+    }, [countRef.current]);
 
     // hitung jarak
     const getDistance = (lat1 = 0, lon1 = 0, lat2 = 1000, lon2 = 1000) => {
@@ -95,7 +86,6 @@ export default function MapsClient() {
     const deg2rad = (deg) => {
         return deg * (Math.PI / 180);
     };
-
 
     // hasil client location
 
@@ -140,7 +130,7 @@ export default function MapsClient() {
                 showsCompass={true}
                 showsUserLocation={true}
                 initialRegion={currentLocation} //your region data goes here.
-                >
+            >
                 <MapViewDirections
                     origin={location.coords}
                     destination={car[0]}
@@ -151,9 +141,9 @@ export default function MapsClient() {
 
                 {car.map((item, index) => (
                     <MapView.Marker coordinate={item} key={index}></MapView.Marker>
-                    ))}
+                ))}
             </MapView>
-            <PermissionsButton/>
+            <PermissionsButton />
         </View>
     );
 }

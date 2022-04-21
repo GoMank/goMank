@@ -152,7 +152,6 @@ export default function MapsOrder() {
                         height={400}
                         closeOnDragDown={true}
                         closeOnPressMask={true}
-                        // openDuration={250}
                         customStyles={{
                             wrapper: {
                                 backgroundColor: 'transparent',

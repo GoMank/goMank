@@ -2,6 +2,7 @@ const { gql } = require('apollo-server');
 const axios = require('axios');
 const redis = require('../../config');
 const url = 'https://gomank-server-mamang.herokuapp.com/';
+// const url = 'https://a159-125-164-18-154.ngrok.io/';
 // https://gomank-server-mamang.herokuapp.com/
 
 const typeDefs = gql`
@@ -18,11 +19,6 @@ const typeDefs = gql`
         type: String
         coordinates: [Float]
     }
-
-    # input AddressInput {
-    #     type: String
-    #     coordinates: [Float]
-    # }
 
     extend type Mutation {
         createMamang(
@@ -118,11 +114,12 @@ const resolvers = {
         updateMamang: async (parent, args, context, info) => {
             try {
                 // console.log(url + 'mamangs/address/' + args._id);
-                // console.log(`masuk`, args.address, args._id);
+                console.log(`masuk`, JSON.stringify(args.address), args._id);
 
                 const { data } = await axios.patch(url + 'mamangs/address/' + args._id, {
                     address: JSON.stringify(args.address),
                 });
+                console.log(`mask`);
                 console.log(data, '<<<<<<<<<<<<');
                 return data;
             } catch (err) {

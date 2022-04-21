@@ -33,6 +33,35 @@ export default function Maps() {
     const [errorMsg, setErrorMsg] = useState(null);
     const refRBSheet = useRef();
 
+    // useEffect(() => {
+    //     (async () => {
+    //         let { status } = await Location.requestForegroundPermissionsAsync();
+    //         if (status !== 'granted') {
+    //             setErrorMsg('Permission to access location was denied');
+    //             return;
+    //         }
+
+    //         let currentLocation = await Location.getCurrentPositionAsync({});
+    //         let currentAddress = await Location.reverseGeocodeAsync({
+    //             latitude: currentLocation.coords.latitude,
+    //             longitude: currentLocation.coords.longitude,
+    //         });
+
+    //         setLocation(currentLocation);
+    //         setAddress(currentAddress);
+    //     })();
+    // }, []);
+
+    // useEffect(() => {
+    //     if (location) {
+    //         nearestMamang({
+    //             variables: {
+    //                 lat: location.coords.latitude,
+    //                 long: location.coords.longitude,
+    //             },
+    //         });
+    //     }
+    // }, []);
     useEffect(() => {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
@@ -43,52 +72,50 @@ export default function Maps() {
 
             let currentLocation = await Location.getCurrentPositionAsync({});
             let currentAddress = await Location.reverseGeocodeAsync({
-                latitude: currentLocation.coords.longitude,
-                longitude: currentLocation.coords.latitude,
+                latitude: currentLocation.coords.latitude,
+                longitude: currentLocation.coords.longitude,
             });
-            setAddress(currentAddress);
-            setLocation(currentLocation);
+            if (currentLocation) {
+                setAddress(currentAddress);
+                setLocation(currentLocation);
+                nearestMamang({
+                    variables: {
+                        location: [
+                            currentLocation.coords.longitude,
+                            currentLocation.coords.latitude,
+                        ],
+                    },
+                });
+            }
         })();
     }, []);
 
-    console.log(mamangLoc, '<<<<<<<<<<<');
-
+    console.log(mamangLoc, 'mamangLoc');
     let text = 'Waiting..';
+    if (mamangLoading) {
+        text = 'Loading..';
+    }
+    if (mamangtError) {
+        text = 'Error..';
+    }
     if (errorMsg) {
         text = errorMsg;
     } else if (location) {
         text = location;
     }
 
-    const car = [
-        // {
-        //     latitude: -6.254782,
-        //     longitude: 106.86587,
-        //     latitudeDelta: 0.01,
-        //     longitudeDelta: 0.01,
-        // },
-        {
-            latitude: -6.254558,
-            longitude: 106.864834,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01,
-        },
-        // {
-        //   latitude: -6.255126,
-        //   longitude: 106.865199,
-        //   latitudeDelta: 0.01,
-        //   longitudeDelta: 0.01,
-        // },
-    ];
-
-    // console.log(mamangLoc);
-
-    // const tokyoRegion = {
-    //     latitude: -6.254782,
-    //     longitude: 106.86587,
-    //     latitudeDelta: 0.01,
-    //     longitudeDelta: 0.01,
-    // };
+    let nearest = [];
+    if (mamangLoc) {
+        // console.log(mamangLoc, '<<<<');
+        mamangLoc.nearestMamang.forEach((e) => {
+            nearest.push({
+                latitude: e.address.coordinates[1],
+                longitude: e.address.coordinates[0],
+                latitudeDelta: 0.01,
+                longitudeDelta: 0.01,
+            });
+        });
+    }
 
     if (text === 'Waiting..') {
         return (
@@ -112,7 +139,7 @@ export default function Maps() {
                         showsUserLocation
                         initialRegion={currentLocation} //your region data goes here.
                     >
-                        {car.map((item, index) => (
+                        {nearest.map((item, index) => (
                             <Marker coordinate={item} key={index}></Marker>
                         ))}
                     </MapView>
@@ -123,7 +150,6 @@ export default function Maps() {
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 position: 'absolute',
-                                //   width:'25%',
                                 padding: 10,
                                 bottom: 2,
                             }}>
@@ -144,7 +170,6 @@ export default function Maps() {
                                     borderRadius: 10,
                                 }}>
                                 <Entypo name='chat' size={32} color='white' />
-                                {/* <Text style={{color:'white', fontWeight:'bold', fontSize:16}}>Orders</Text> */}
                             </TouchableOpacity>
                         </View>
                     </View>
