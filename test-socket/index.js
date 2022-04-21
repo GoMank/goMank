@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
@@ -12,8 +15,7 @@ const io = require('socket.io')(server, {
 });
 
 const PORT = process.env.PORT || 3000;
-const mongodb =
-    'mongodb+srv://dzulfiqarzaky:2sGulkifj5FJpoSF@cluster0.zvlbq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+const mongodb = process.env.MONGODB_URI || 'mongodb://localhost:27017/test';
 mongoose
     .connect(mongodb, {
         useNewUrlParser: true,
