@@ -60,7 +60,8 @@ const assetMamank = [
 ];
 
 export default function Homepage() {
-    console.log(AsyncStorage.getItem('user_info'));
+    // AsyncStorage.getItem('user_info').then((res) => {console.log(res);}).catch((err) => {console.log(err)});
+   
     return (
         <ScrollView>
             <View style={styles.container}>

@@ -9,8 +9,9 @@ import {
     TouchableOpacity,
     Image,
 } from 'react-native';
-import { useQuery } from '@apollo/client';
-import { FETCH_ORDERS } from '../../config/queries';
+import { useQuery, useMutation } from '@apollo/client';
+import { FETCH_ORDERS, UPDATE_CANCEL_ORDER } from '../../config/queries';
+import { useNavigation } from '@react-navigation/native'
 
 // export default function LogOrder() {
 // const { loading, error, data } = useQuery(FETCH_ORDERS);
@@ -20,8 +21,11 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
 
 export default function LogOrder() {
+    const navigation = useNavigation();
     const [data2, setData2] = useState([]);
     const { loading, error, data, refetch } = useQuery(FETCH_ORDERS);
+    const [updateCancelOrder] = useMutation(UPDATE_CANCEL_ORDER);
+
 
     useFocusEffect(
         useCallback(() => {
@@ -88,6 +92,15 @@ export default function LogOrder() {
     }
     console.log(data.orders, '<<<<<<<<');
 
+    const cancelOrder = (id) => {
+        updateCancelOrder({
+            variables: {
+                updateStatusOrderId: id,
+            },
+        });
+        refetch();
+    };
+
     return (
         <ScrollView
             contentContainerStyle={{ alignItems: 'center' }}
@@ -99,8 +112,16 @@ export default function LogOrder() {
                     // <></>
 
                     <View style={styles.card} key={index}>
-                        <Text style={styles.title}>INVOICE</Text>
-                        <Text style={styles.subTitle}>No: {order.invoiceNumber}</Text>
+                        
+                        {/* <View style={{ flexDirection: 'row' }}> */}
+                            <View style={{ justifyContent: 'center' }}>
+                                <Text style={styles.title}>INVOICE</Text>
+                                <Text style={styles.subTitle}>No: {order.invoiceNumber}</Text>
+                            </View>
+
+                          
+                        {/* </View> */}
+
                         <View style={{ flexDirection: 'row' }}>
                             <View style={{ flex: 1.5 }}>
                                 <Text style={styles.liteTitle}>Customer</Text>
@@ -136,14 +157,20 @@ export default function LogOrder() {
                             <Text style={styles.description}>{order.address}</Text>
                         </View>
 
-                        <View style={{ flexDirection: 'row', flex: 1 }}>
+                        <TouchableOpacity style={styles.button2} onPress={navigation.navigate('MapsDetail')}>
+                            <Text style={styles.textButton2}>My Order</Text>
+                        </TouchableOpacity>
+
+                        <View style={{ flexDirection: 'row', flex: 1, justifyContent:'space-between'}}>
                             <TouchableOpacity style={styles.button}>
                                 <Text style={styles.textButton}>Cancel</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.button}>
+                            <View style={{marginHorizontal:10}}/>
+                            <TouchableOpacity style={styles.button} onPress={() => cancelOrder(order.id) }>
                                 <Text style={styles.textButton}>Done</Text>
                             </TouchableOpacity>
                         </View>
+
                     </View>
                 );
             })}
@@ -208,11 +235,32 @@ const styles = StyleSheet.create({
         elevation: 3,
         backgroundColor: '#FEC900',
         borderRadius: 8,
-        marginTop: 25,
-        marginHorizontal: 5,
+        marginTop: 10,
+        // marginHorizontal: 5,
     },
     textButton: {
         fontSize: 16,
+        lineHeight: 21,
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
+        color: 'white',
+    },
+
+    button2: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 12,
+        borderRadius: 4,
+        elevation: 3,
+        backgroundColor: '#001527',
+        borderRadius: 8,
+        marginTop: 10,
+        width:"100%"
+        // marginHorizontal: 0,
+    },
+    textButton2: {
+        fontSize: 14,
         lineHeight: 21,
         fontWeight: 'bold',
         letterSpacing: 0.25,
