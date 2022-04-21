@@ -23,7 +23,7 @@ class Mamang {
             const db = getData()
             const mamang = await db
                 .collection('mamangs')
-                .findOne({ _id: id })
+                .findOne({ _id: ObjectId(id) })
             delete mamang.password
             return mamang
         } catch (error) {
