@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache, ApolloProvider, useQuery, gql } from '@apollo/client';
 
 const client = new ApolloClient({
-    uri: 'https://nervous-baboon-89.loca.lt',
+    uri: 'https://gomank-apollo.herokuapp.com/',
     cache: new InMemoryCache(),
 });
 

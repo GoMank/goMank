@@ -51,7 +51,6 @@ export default function MoveMapsMamang() {
                     ) * 1000;
                 if (currentLocation && _currentDistance >= 5) {
                     mamang();
-                    console.log('mamangLoc', mamangPollLoc);
                 } else {
                     clearInterval(t);
                 }
@@ -117,6 +116,7 @@ export default function MoveMapsMamang() {
             longitudeDelta: 0.005,
         };
         if (mamangPollLoc) {
+            console.log('mamangPollLoc', mamangPollLoc);
             mamangLocation = {
                 latitude: mamangPollLoc?.mamang?.address?.coordinates[0],
                 longitude: mamangPollLoc?.mamang?.address?.coordinates[1],
