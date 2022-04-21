@@ -3,6 +3,7 @@ const { getData } = require("../config/mongoDb");
 
 
 class Client {
+    
     static async findAllClient() {
         try {
             const db = getData()
