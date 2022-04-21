@@ -16,7 +16,7 @@ import { LogBox } from 'react-native';
 import MapsClient from './src/screens/MapsClient';
 import ChatClient from './src/components/ChatClient';
 import MidtransPayment from './src/components/MidtransPayment';
-import XendinPayment from './src/components/XenditPayment';
+import XenditPayment from './src/components/XenditPayment';
 import ScanBarcode from './src/components/ScanBarcode';
 import MapsDetail from './src/components/MapsDetail';
 
@@ -42,7 +42,6 @@ export default function App() {
                         headerShown: false,
                     }}>
                     {/* <Stack.Screen name="SandboxTest" component={SandboxTest} /> */}
-                    <Stack.Screen name='MoveMapsMamang' component={MoveMapsMamang} />
                     <Stack.Screen name='Login' component={Login} />
                     <Stack.Screen name='TabNav' component={TabNav} />
                     <Stack.Screen name='ScanBarcode' component={ScanBarcode} />
@@ -52,7 +51,7 @@ export default function App() {
                     {/* <Stack.Screen name="LoginBio" component={LoginBio} /> */}
                     <Stack.Screen name='PaymentPage' component={PaymentPage} />
                     <Stack.Screen name='FormOrder' component={FormOrder} />
-                    <Stack.Screen name='XendinPayment' component={XendinPayment} />
+                    <Stack.Screen name='XenditPayment' component={XenditPayment} />
                     <Stack.Screen name='MidtransPayment' component={MidtransPayment} />
                     <Stack.Screen name='Register' component={Register} />
                     <Stack.Screen name='LogNavigator' component={LogNavigator} />

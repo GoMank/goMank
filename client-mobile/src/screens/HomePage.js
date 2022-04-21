@@ -13,6 +13,7 @@ import CardPaymank from '../components/CardPaymank';
 import SearchBar from '../components/SearchBar';
 import CardPopular from '../components/CardPopular';
 import CardProduct from '../components/CardProduct';
+import {useState, useEffect} from 'react';
 
 const assetMamank = [
     {
@@ -60,13 +61,62 @@ const assetMamank = [
 ];
 
 export default function Homepage() {
-    // AsyncStorage.getItem('user_info').then((res) => {console.log(res);}).catch((err) => {console.log(err)});
+    const [data, setData] = useState(null);
+
+    useEffect(() => {
+        AsyncStorage.getItem("user_info")
+          .then((res) => {
+            setData(JSON.parse(res))
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }, []);
+
+    console.log(data, '<<<<<<<<');
+
+    if (!data) {
+        return (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "white",
+            }}
+          >
+            <Image
+              source={require("../../assets/loadingLogo.gif")}
+              style={styles.logo}
+            />
+          </View>
+        );
+      } else {
    
-    return (
+    return (<>
+    
+        <View style={{width:'100%',flexDirection: "row", backgroundColor:'#003B6A', height:70, elevation: 3, alignItems:'center'}}>
+            <View style={{flex:1,}}>
+            <Image style={styles.imageGomank} source={require('../../assets/logo-gomank-main.png')} />
+            </View>
+            <View style={{flex:1, flexDirection: "row",}}>
+
+                <View style={{justifyContent:'center',}}>
+                    <Text style={{textAlign:"right", color:'white', fontSize:16}}>
+                        {data.name}
+                        </Text>
+                    <Text style={{textAlign:"right", color:'white', fontSize:12}}>
+                        {data.phoneNumber}
+                    </Text>
+                </View>
+
+                <Image style={styles.image} source={require('../../assets/For-Men.jpg')} />
+            </View>
+        </View>
         <ScrollView>
             <View style={styles.container}>
                 {/* <View style={styles.header} /> */}
-                <View style={{ marginTop: 20 }}>
+                <View style={{ marginTop: 5 }}>
                     <Text></Text>
                 </View>
                 <CardPaymank />
@@ -105,9 +155,13 @@ export default function Homepage() {
                         keyExtractor={(item) => item.id}
                     />
                 </View>
+                <Image style={styles.imageBanner} source={require('../../assets/b1.png')} />
+                <Image style={styles.imageBanner2} source={require('../../assets/b2.png')} />
             </View>
         </ScrollView>
+        </>
     );
+}
 }
 
 const styles = StyleSheet.create({
@@ -137,4 +191,41 @@ const styles = StyleSheet.create({
         color: '#003B6A',
         // marginTop: -20,
     },
+    image: {
+        // backgroundColor: "pink",
+        paddingTop: 5,
+        width: 50,
+        height: 50,
+        resizeMode: 'contain',
+        borderRadius: 100,
+        marginLeft:10
+      },
+      imageGomank: {
+        // backgroundColor: "pink",
+        paddingTop: 5,
+        width: 150,
+        height: 55,
+        resizeMode: 'contain',
+        borderRadius: 100,
+        marginLeft:10
+      },
+      imageBanner: {
+        // backgroundColor: "pink",
+        paddingTop: 5,
+        width: '100%',
+        height: 200,
+        resizeMode: 'contain',
+        marginTop:10
+        // borderRadius: 100,
+        // marginLeft:10
+      },
+      imageBanner2: {
+        // backgroundColor: "pink",
+        paddingTop: 5,
+        width: '100%',
+        height: 160,
+        resizeMode: 'contain',
+        // borderRadius: 100,
+        // marginLeft:10
+      }
 });

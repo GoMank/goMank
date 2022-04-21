@@ -29,9 +29,10 @@ export default function LogOrder() {
 
     useFocusEffect(
         useCallback(() => {
-            console.log('Terpanggil, LOG/HISTORIES USEFOCUS');
+            
             // Do something when the screen is focused
             refetch();
+            console.log('Terpanggil, ORDERS USEFOCUS');
             return () => {
                 // Do something when the screen is unfocused
                 // Useful for cleanup functions
@@ -56,15 +57,6 @@ export default function LogOrder() {
 
     if (loading) {
         return (
-            // <View style={styles.container}>
-            //   <View nestedScrollEnabled={true}>
-            //     <ScrollView>
-            //       <View>
-            //         <Text>Loading .....</Text>
-            //       </View>
-            //     </ScrollView>
-            //   </View>
-            // </View>
             <View
                 style={{
                     flex: 1,
@@ -72,7 +64,6 @@ export default function LogOrder() {
                     alignItems: 'center',
                     backgroundColor: 'white',
                 }}>
-                <Text>tunggu</Text>
                 <Image source={require('../../assets/loadingLogo.gif')} style={styles.logo} />
             </View>
         );
@@ -93,14 +84,17 @@ export default function LogOrder() {
     console.log(data.orders, '<<<<<<<<');
 
     const cancelOrder = (id) => {
+        console.log("Cancel Ke trigger ", + id)
         updateCancelOrder({
             variables: {
                 updateStatusOrderId: id,
             },
         });
         refetch();
+        console.log("Ke refecth")
+        
     };
-
+    
     return (
         <ScrollView
             contentContainerStyle={{ alignItems: 'center' }}
@@ -119,7 +113,6 @@ export default function LogOrder() {
                                 <Text style={styles.subTitle}>No: {order.invoiceNumber}</Text>
                             </View>
 
-                          
                         {/* </View> */}
 
                         <View style={{ flexDirection: 'row' }}>
@@ -157,16 +150,16 @@ export default function LogOrder() {
                             <Text style={styles.description}>{order.address}</Text>
                         </View>
 
-                        <TouchableOpacity style={styles.button2} onPress={navigation.navigate('MapsDetail')}>
+                        <TouchableOpacity style={styles.button2} >
                             <Text style={styles.textButton2}>My Order</Text>
                         </TouchableOpacity>
 
                         <View style={{ flexDirection: 'row', flex: 1, justifyContent:'space-between'}}>
                             <TouchableOpacity style={styles.button}>
-                                <Text style={styles.textButton}>Cancel</Text>
+                                <Text style={styles.textButton} onPress={() => cancelOrder(order.id) }>Cancel</Text>
                             </TouchableOpacity>
                             <View style={{marginHorizontal:10}}/>
-                            <TouchableOpacity style={styles.button} onPress={() => cancelOrder(order.id) }>
+                            <TouchableOpacity style={styles.button} >
                                 <Text style={styles.textButton}>Done</Text>
                             </TouchableOpacity>
                         </View>
@@ -233,7 +226,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         borderRadius: 4,
         elevation: 3,
-        backgroundColor: '#FEC900',
+        backgroundColor: '#FFB300',
         borderRadius: 8,
         marginTop: 10,
         // marginHorizontal: 5,
@@ -253,7 +246,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         borderRadius: 4,
         elevation: 3,
-        backgroundColor: '#001527',
+        backgroundColor: '#FFB300',
         borderRadius: 8,
         marginTop: 10,
         width:"100%"
@@ -272,4 +265,25 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         marginBottom: '20%',
     },
+    textStyle2: {
+        color: "#FFB300",
+        fontSize: 16,
+        lineHeight: 21,
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
+      },
+      buttonBack: {
+        backgroundColor: "white",
+        borderColor: "#FFB300",
+        borderWidth: 3,
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 12,
+        borderRadius: 4,
+        elevation: 3,
+        borderRadius: 8,
+        marginTop: 10,
+        width:"100%",
+      },
 });
