@@ -161,7 +161,7 @@ export default function LogOrder() {
                             <Text style={styles.description}>{order.address}</Text>
                         </View>
 
-                        <TouchableOpacity style={styles.button2} onPress={navigation.navigate('MapsDetail')}>
+                        <TouchableOpacity style={styles.button2} >
                             <Text style={styles.textButton2}>My Order</Text>
                         </TouchableOpacity>
 
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         borderRadius: 4,
         elevation: 3,
-        backgroundColor: '#FEC900',
+        backgroundColor: '#FFB300',
         borderRadius: 8,
         marginTop: 10,
         // marginHorizontal: 5,
@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         borderRadius: 4,
         elevation: 3,
-        backgroundColor: '#001527',
+        backgroundColor: '#FFB300',
         borderRadius: 8,
         marginTop: 10,
         width:"100%"
@@ -276,4 +276,25 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         marginBottom: '20%',
     },
+    textStyle2: {
+        color: "#FFB300",
+        fontSize: 16,
+        lineHeight: 21,
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
+      },
+      buttonBack: {
+        backgroundColor: "white",
+        borderColor: "#FFB300",
+        borderWidth: 3,
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 12,
+        borderRadius: 4,
+        elevation: 3,
+        borderRadius: 8,
+        marginTop: 10,
+        width:"100%",
+      },
 });

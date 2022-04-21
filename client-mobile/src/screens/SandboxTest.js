@@ -450,54 +450,150 @@
 // export default SandboxTest
 
 
-import * as React from 'react';
-import { View, StyleSheet, Text, TouchableHighlight } from 'react-native';
-import Constants from 'expo-constants';
-import { Card } from 'react-native-paper';
+// import * as React from 'react';
+// import { View, StyleSheet, Text, TouchableHighlight } from 'react-native';
+// import Constants from 'expo-constants';
+// import { Card } from 'react-native-paper';
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   btnNormal: {
+//     borderColor: 'blue',
+//     borderWidth: 1,
+//     borderRadius: 10,
+//     height: 30,
+//     width: 100,
+//   },
+//   btnPress: {
+//     borderColor: 'blue',
+//     borderWidth: 1,
+//     height: 30,
+//     width: 100,
+//   },
+//   btn: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     display: 'flex'
+//   }
+// });
+// export default function App() {
+//   const [isPress, setIsPress] = React.useState(false);
+
+//   const touchProps = {
+//     activeOpacity: 1,
+//     underlayColor: 'blue',
+//     style: isPress ? styles.btnPress : styles.btnNormal,
+//     onHideUnderlay: () => setIsPress(false),
+//     onShowUnderlay: () => setIsPress(true),
+//     onPress: () => console.log('hello'),
+//   };
+
+//   return (
+//     <View style={styles.container}>
+//       <TouchableHighlight {...touchProps}>
+//         <Text style={styles.btn}>Click here</Text>
+//       </TouchableHighlight>
+//     </View>
+//   );
+// }
+
+
+//Example to Hide Show Component in React Native
+//https://aboutreact.com/example-to-hide-show-component-in-react-native/
+
+//import React in our code
+import React, { useState } from 'react';
+
+//import all the components we are going to use
+import { SafeAreaView, StyleSheet, View, Button, Image, TouchableOpacity, Text } from 'react-native';
+
+const App = () => {
+  const [shouldShow, setShouldShow] = useState(true);
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
+        {/*Here we will return the view when state is true 
+        and will return false if state is false*/}
+
+        {/* {shouldShow ? (
+          <Image
+            source={{
+              uri:
+                'https://raw.githubusercontent.com/AboutReact/sampleresource/master/old_logo.png',
+            }}
+            style={{ width: 250, height: 250 }}
+          />
+        ) : null} */}
+
+
+          {/* {!shouldShow ? (<TouchableOpacity 
+          style={styles.red}
+          onPress={() => setShouldShow(true)}
+        >
+          <Text>red</Text>
+        </TouchableOpacity>
+        ) : null} */}
+
+
+        {/* {shouldShow ? (<TouchableOpacity 
+          style={styles.blue}
+          onPress={() => setShouldShow(!shouldShow)}
+        >
+          <Text>blue</Text>
+        </TouchableOpacity>
+        ) : null} */}
+
+        
+      {shouldShow ? (<TouchableOpacity 
+          style={styles.blue}
+          onPress={() => setShouldShow(false)}
+        >
+          <Text>blue</Text>
+        </TouchableOpacity>
+        ) : (<TouchableOpacity 
+          style={styles.red}
+          onPress={() => setShouldShow(true)}
+        >
+          <Text>red</Text>
+        </TouchableOpacity>
+        )}
+
+
+        {/* <TouchableOpacity 
+          style={styles.button1}
+          onPress={() => setShouldShow(shouldShow)}
+        >
+          <Text>button1</Text>
+        </TouchableOpacity> */}
+
+
+
+      </View>
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  btnNormal: {
-    borderColor: 'blue',
-    borderWidth: 1,
-    borderRadius: 10,
-    height: 30,
-    width: 100,
-  },
-  btnPress: {
-    borderColor: 'blue',
-    borderWidth: 1,
-    height: 30,
-    width: 100,
-  },
-  btn: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    display: 'flex'
+    margin: 10,
+  },
+  red:{
+    backgroundColor: 'red',
+    padding: 10,
+  },
+  blue:{
+    backgroundColor: 'blue',
+    padding: 10,
   }
 });
-export default function App() {
-  const [isPress, setIsPress] = React.useState(false);
 
-  const touchProps = {
-    activeOpacity: 1,
-    underlayColor: 'blue',
-    style: isPress ? styles.btnPress : styles.btnNormal,
-    onHideUnderlay: () => setIsPress(false),
-    onShowUnderlay: () => setIsPress(true),
-    onPress: () => console.log('hello'),
-  };
-
-  return (
-    <View style={styles.container}>
-      <TouchableHighlight {...touchProps}>
-        <Text style={styles.btn}>Click here</Text>
-      </TouchableHighlight>
-    </View>
-  );
-}
+export default App;
