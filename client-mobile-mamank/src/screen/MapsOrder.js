@@ -100,6 +100,7 @@ export default function MapsOrder() {
             latitudeDelta: 0.005,
             longitudeDelta: 0.005,
         };
+
         return (
             <View style={styles.container}>
                 <View style={styles.container}>
@@ -192,7 +193,9 @@ export default function MapsOrder() {
                                                 <TouchableOpacity
                                                     style={styles.buttonUser}
                                                     onPress={() =>
-                                                        navigation.navigate('SandboxMamank')
+                                                        navigation.navigate('SandboxMamank', {
+                                                            alamatClient: car[0],
+                                                        })
                                                     }>
                                                     <Text>Accept</Text>
                                                 </TouchableOpacity>

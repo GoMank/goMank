@@ -19,13 +19,8 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import Chat from '../components/Chat';
 import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { GET_NEAREST_MAMANG } from '../../config/queries';
-import { useMutation, useQuery } from '@apollo/client';
 
 export default function Maps() {
-    const [nearestMamang, { data: mamangLoc, loading: mamangLoading, error: mamangtError }] =
-        useMutation(GET_NEAREST_MAMANG);
-
     const navigation = useNavigation();
     LogBox.ignoreLogs(['Remote debugger']);
     const [address, setAddress] = useState([]);
@@ -33,35 +28,6 @@ export default function Maps() {
     const [errorMsg, setErrorMsg] = useState(null);
     const refRBSheet = useRef();
 
-    // useEffect(() => {
-    //     (async () => {
-    //         let { status } = await Location.requestForegroundPermissionsAsync();
-    //         if (status !== 'granted') {
-    //             setErrorMsg('Permission to access location was denied');
-    //             return;
-    //         }
-
-    //         let currentLocation = await Location.getCurrentPositionAsync({});
-    //         let currentAddress = await Location.reverseGeocodeAsync({
-    //             latitude: currentLocation.coords.latitude,
-    //             longitude: currentLocation.coords.longitude,
-    //         });
-
-    //         setLocation(currentLocation);
-    //         setAddress(currentAddress);
-    //     })();
-    // }, []);
-
-    // useEffect(() => {
-    //     if (location) {
-    //         nearestMamang({
-    //             variables: {
-    //                 lat: location.coords.latitude,
-    //                 long: location.coords.longitude,
-    //             },
-    //         });
-    //     }
-    // }, []);
     useEffect(() => {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
@@ -75,46 +41,17 @@ export default function Maps() {
                 latitude: currentLocation.coords.latitude,
                 longitude: currentLocation.coords.longitude,
             });
-            if (currentLocation) {
-                setAddress(currentAddress);
-                setLocation(currentLocation);
-                nearestMamang({
-                    variables: {
-                        location: [
-                            currentLocation.coords.longitude,
-                            currentLocation.coords.latitude,
-                        ],
-                    },
-                });
-            }
+
+            setAddress(currentAddress);
+            setLocation(currentLocation);
         })();
     }, []);
 
-    console.log(mamangLoc, 'mamangLoc');
     let text = 'Waiting..';
-    if (mamangLoading) {
-        text = 'Loading..';
-    }
-    if (mamangtError) {
-        text = 'Error..';
-    }
     if (errorMsg) {
         text = errorMsg;
     } else if (location) {
         text = location;
-    }
-
-    let nearest = [];
-    if (mamangLoc) {
-        // console.log(mamangLoc, '<<<<');
-        mamangLoc.nearestMamang.forEach((e) => {
-            nearest.push({
-                latitude: e.address.coordinates[1],
-                longitude: e.address.coordinates[0],
-                latitudeDelta: 0.01,
-                longitudeDelta: 0.01,
-            });
-        });
     }
 
     if (text === 'Waiting..') {
@@ -139,9 +76,13 @@ export default function Maps() {
                         showsUserLocation
                         initialRegion={currentLocation} //your region data goes here.
                     >
-                        {nearest.map((item, index) => (
-                            <Marker coordinate={item} key={index}></Marker>
-                        ))}
+                        <Marker
+                            coordinate={{
+                                latitude: -6.256059,
+                                longitude: 106.863338,
+                                latitudeDelta: 0.01,
+                                longitudeDelta: 0.01,
+                            }}></Marker>
                     </MapView>
 
                     <View style={{ alignItems: 'flex-start' }}>

@@ -59,10 +59,6 @@ export default function App() {
                         component={Chat}
                     />
                 </Stack.Navigator>
-                {/* <Chat socket={socket} /> */}
-                {/* <ChatScreen /> */}
-                {/* <Example /> */}
-                {/* <PermissionsButton /> */}
             </NavigationContainer>
         </ApolloProvider>
     );
