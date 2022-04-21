@@ -29,9 +29,10 @@ export default function LogOrder() {
 
     useFocusEffect(
         useCallback(() => {
-            console.log('Terpanggil, LOG/HISTORIES USEFOCUS');
+            
             // Do something when the screen is focused
             refetch();
+            console.log('Terpanggil, ORDERS USEFOCUS');
             return () => {
                 // Do something when the screen is unfocused
                 // Useful for cleanup functions
@@ -93,14 +94,17 @@ export default function LogOrder() {
     console.log(data.orders, '<<<<<<<<');
 
     const cancelOrder = (id) => {
+        console.log("Cancel Ke trigger ", + id)
         updateCancelOrder({
             variables: {
                 updateStatusOrderId: id,
             },
         });
         refetch();
+        console.log("Ke refecth")
+        
     };
-
+    
     return (
         <ScrollView
             contentContainerStyle={{ alignItems: 'center' }}
@@ -163,10 +167,10 @@ export default function LogOrder() {
 
                         <View style={{ flexDirection: 'row', flex: 1, justifyContent:'space-between'}}>
                             <TouchableOpacity style={styles.button}>
-                                <Text style={styles.textButton}>Cancel</Text>
+                                <Text style={styles.textButton} onPress={() => cancelOrder(order.id) }>Cancel</Text>
                             </TouchableOpacity>
                             <View style={{marginHorizontal:10}}/>
-                            <TouchableOpacity style={styles.button} onPress={() => cancelOrder(order.id) }>
+                            <TouchableOpacity style={styles.button} >
                                 <Text style={styles.textButton}>Done</Text>
                             </TouchableOpacity>
                         </View>

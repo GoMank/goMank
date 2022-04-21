@@ -15,16 +15,17 @@ export default function PaymentPage(order) {
 
     async function xendit() {
         console.log('masuk');
-        const data = await axios.post('https://angry-lizard-62.loca.lt/payments/xendit', {
+        const data = await axios.post('https://gomank-server-app.herokuapp.com/payments/xendit', {
             email: dataOrder.email,
             price: dataOrder.price,
         });
+        console.log('masuk 2');
         return navigation.navigate('SandboxTest', { urlData: data.data, order: dataOrder });
     }
-
+    //heroku logs -t
     // https://angry-lizard-62.loca.lt/payments/xendit
     async function midTrans() {
-        const data = await axios.post(`https://angry-lizard-62.loca.lt/payments/midtrans`, {
+        const data = await axios.post(`https://gomank-server-app.herokuapp.com/payments/midtrans`, {
             price: dataOrder.price + '000',
         });
         dataOrder.payment = 'Midtrans';
