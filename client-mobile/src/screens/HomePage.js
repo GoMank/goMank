@@ -13,6 +13,7 @@ import CardPaymank from '../components/CardPaymank';
 import SearchBar from '../components/SearchBar';
 import CardPopular from '../components/CardPopular';
 import CardProduct from '../components/CardProduct';
+import {useState, useEffect} from 'react';
 
 const assetMamank = [
     {
@@ -60,13 +61,61 @@ const assetMamank = [
 ];
 
 export default function Homepage() {
-    // AsyncStorage.getItem('user_info').then((res) => {console.log(res);}).catch((err) => {console.log(err)});
+    const [data, setData] = useState(null);
+    
+    useEffect(() => {
+        AsyncStorage.getItem("user_info")
+          .then((res) => {
+            setData(JSON.parse(res))
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }, []);
+
+    console.log(data, '<<<<<<<<');
+
+    if (!data) {
+        return (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "white",
+            }}
+          >
+            <Text>tunggu</Text>
+            <Image
+              source={require("../../assets/loadingLogo.gif")}
+              style={styles.logo}
+            />
+          </View>
+        );
+      } else {
    
-    return (
+    return (<>
+    
+        <View style={{width:'100%',flexDirection: "row", backgroundColor:'#003B6A', height:90, elevation: 3, alignItems:'center'}}>
+            <View style={{flex:1, }}></View>
+            <View style={{flex:1, flexDirection: "row",}}>
+
+                <View style={{justifyContent:'center'}}>
+                    <Text style={{textAlign:"right"}}>
+                        {data.name}
+                        </Text>
+                    <Text style={{textAlign:"right"}}>
+                        {data.phoneNumber}
+                    </Text>
+                </View>
+
+                <Image style={styles.image} source={require('../../assets/For-Men.jpg')} />
+            </View>
+        </View>
         <ScrollView>
             <View style={styles.container}>
                 {/* <View style={styles.header} /> */}
-                <View style={{ marginTop: 20 }}>
+                <View style={{ marginTop: 5 }}>
                     <Text></Text>
                 </View>
                 <CardPaymank />
@@ -107,7 +156,9 @@ export default function Homepage() {
                 </View>
             </View>
         </ScrollView>
+        </>
     );
+}
 }
 
 const styles = StyleSheet.create({
@@ -137,4 +188,12 @@ const styles = StyleSheet.create({
         color: '#003B6A',
         // marginTop: -20,
     },
+    image: {
+        // backgroundColor: "pink",
+        paddingTop: 5,
+        width: 65,
+        height: 65,
+        resizeMode: 'contain',
+        borderRadius: 100,
+      }
 });
