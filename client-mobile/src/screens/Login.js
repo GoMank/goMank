@@ -47,11 +47,15 @@ export default function Login({ navigation }) {
     };
     if (loading) {
         return (
-            <View style={styles.container}>
-                <View>
-                    <Text>Loading .....</Text>
-                </View>
-            </View>
+            <View
+            style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'white',
+            }}>
+            <Image source={require('../../assets/loadingLogo.gif')} style={styles.logo} />
+        </View>
         );
     }
     if (error) {
@@ -109,7 +113,7 @@ export default function Login({ navigation }) {
                     />
 
                     <TextInput
-                        secureTextEntry={false}
+                        secureTextEntry={true}
                         style={styles.button}
                         value={loginInput.password}
                         onChangeText={(password) => setLoginInput({ ...loginInput, password })}
@@ -206,5 +210,10 @@ const styles = StyleSheet.create({
     textCreate: {
         color: '#0386EE',
         fontSize: 16,
+    },
+    logo: {
+        width: 230,
+        resizeMode: 'contain',
+        marginBottom: '20%',
     },
 });
