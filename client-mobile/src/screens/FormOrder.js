@@ -207,7 +207,7 @@ export default function FormOrder(mamank) {
               <View style={styles.cardDateTime}>
                 {!isPickerShowTime && (
                   <TouchableOpacity
-                    style={styles.buttonTime}
+                    style={styles.buttonDate}
                     onPress={showPickerTime}
                   >
                     <Text style={styles.textButtonBook}>Select Time</Text>
@@ -224,8 +224,8 @@ export default function FormOrder(mamank) {
                     style={styles.datePicker}
                   />
                 )}
-                <View style={styles.textTime}>
-                  <Text style={styles.textTimeInner}>
+                <View style={styles.textDate}>
+                  <Text style={styles.textDateInner}>
                     {time.toLocaleTimeString("en-US", {
                       hour12: false,
                       hour: "numeric",
