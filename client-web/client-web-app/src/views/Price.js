@@ -23,7 +23,7 @@ export default function Price() {
 
                 </div>
                 {/* <PriceNavbar></PriceNavbar> */}
-                <div className='flex flex-row px-4 py-2 justify-center'>
+                <div className='grid grid-cols-3 px-3 py-2 justify-items-center'>
                     {assetMamank.map(asset => 
                         <PriceCard key={asset.id} asset={asset}></PriceCard>
                         ) 

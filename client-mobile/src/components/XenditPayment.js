@@ -56,7 +56,7 @@ const XendinPayment = (urlData) => {
                 setTimeout(() => {
                   submitOrder()
                     navigation.navigate('TabNav')
-                  }, 10000)
+                  }, 3000)
             }
             //  if (newNavState.title !== `Random`) {
             //   navigation.navigate('TabNav')

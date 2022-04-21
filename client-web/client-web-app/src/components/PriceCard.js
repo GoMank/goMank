@@ -9,7 +9,7 @@ export default function PriceCard({asset}) {
             <div className="font-semibold text-xl mb-2">{asset.name}</div>
             <p className='text-gray-500 font-semibold'>Estimasi 2 jam</p>
             <p className="py-3 text-gray-700 text-base font-semibold text-2xl  text-left">
-                {asset.price}
+                Rp {asset.price}
             </p>
         </div>
 
