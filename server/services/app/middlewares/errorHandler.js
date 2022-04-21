@@ -1,4 +1,5 @@
 const errorHandler = (error, req, res, next) => {
+    console.log('masuk')
     if (error.type === 'known') {
         res.status(error.code).json({
             message: error.message

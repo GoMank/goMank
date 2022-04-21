@@ -169,71 +169,85 @@ class orderController {
         }
 
     }
-    static async  midTransPayment(req, res, next) {
+
+    static async midTransPayment(req, res, next) {
         try {
-            
-           const timestamp = Date.now()
-           const noInvoice = Math.floor(Math.random(999) * 999)
+            if (!req.body.price) {
+                throw ({
+                    type: 'known',
+                    code: 400,
+                    message: 'please send your price'
+                })
+            }
+            const timestamp = Date.now()
+            const noInvoice = Math.floor(Math.random(999) * 999)
             const body = {
                 "transaction_details": {
-                  "order_id": `invoice-${timestamp}`,
-                  "gross_amount":50000
+                    "order_id": `invoice-${timestamp}`,
+                    "gross_amount": req.body.price
                 },
                 "credit_card": {
-                  "secure": true
+                    "secure": true
                 },
                 "item_details": [{
-                  "id": `invoice-${timestamp}`,
-                  "price": 50000,
-                  "quantity": 1,
-                  "name": `invoice # ${noInvoice}`
+                    "id": `invoice-${timestamp}`,
+                    "price": req.body.price,
+                    "quantity": 1,
+                    "name": `invoice # ${noInvoice}`
                 }],
-                "customer_details": {
-                  "first_name": `Customer`,
-                  "last_name": `Name`,
-                  "email": `anemone@mail.com`,
-                  "phone": ""
-                  
+                // "customer_details": {
+                //     "first_name": `Customer`,
+                //     "last_name": `Name`,
+                //     "email": `anemone@mail.com`,
+                //     "phone": ""
+
+                // }
+            }
+            const { data } = await axios.post(`https://app.sandbox.midtrans.com/snap/v1/transactions`, body, {
+                headers: {
+                    'Authorization': process.env.MIDTRANS
                 }
-              }
-          
-          
-          const {data} = await midTrans.post(`/v1/transactions`, body)
-          console.log(data, "INI MIDTRANS TRANSACTION TOKEN")
-          res.status(200).json(data.redirect_url)
+            })
+            // console.log(data, "INI MIDTRANS TRANSACTION TOKEN")
+            res.status(200).json(data.redirect_url)
         } catch (err) {
-          console.log(err)
-          next(err)
+            console.log(err)
+            next(err)
         }
-      }
+    }
       
 
       static async xendintPayment(req, res, next) {
         try {
-        // console.log(req.requestAccess,"ini reqbody");
-        // console.log(req.body.price,"ini reqbody");
-        console.log('masuk xendit');
-          const timestamp = Date.now()
-          const noInvoice = Math.floor(Math.random(999) * 999)
-          const data = {
-            external_id: `invoice-${timestamp}`,
-            amount: 15000000,
-            payer_email: 'gantengmaut@maung.kiw',
-            description: "Invoice #"+ noInvoice
-          };
-          let response = await axios.post("https://api.xendit.co/v2/invoices",data,{
-            headers: {
-                'Authorization': 'Basic eG5kX2RldmVsb3BtZW50X0VpSHBaVGFyUHFDQzVqTHVncGdWNDRZaEhLN3QzQVhTOTkwUDI1MEIxQklsR3E2UzQ1ZXRQb3ZBQ3l3OTd3Ojo=',
+            console.log(req.body);
+            if (!req.body.email || !req.body.price) {
+                throw ({
+                    type: 'known',
+                    code: 400,
+                    message: 'please send your email and price'
+                })
             }
-        })
-          console.log(response, "response masuk");
-          let responseUrl = response.data.invoice_url;
-          res.status(200).json(responseUrl);
+            const timestamp = Date.now()
+            const noInvoice = Math.floor(Math.random(999) * 999)
+            const data = {
+                external_id: `invoice-${timestamp}`,
+                amount: req.body.price,
+                payer_email: req.body.email,
+                description: "Invoice #" + noInvoice
+            };
+            let response = await axios.post("https://api.xendit.co/v2/invoices", data, {
+                headers: {
+                    'Authorization': process.env.XENDITKEY,
+                }
+            })
+            let responseUrl = response.data.invoice_url;
+            res.status(200).json(responseUrl);
         } catch (err) {
-          // console.log(err, "logo");
-          next(err);
+            console.log(err);
+            // console.log(err, "logo");
+            next(err);
         }
-      }
+    }
     
       static async xendintCallback(req, res, next) {
         try {
